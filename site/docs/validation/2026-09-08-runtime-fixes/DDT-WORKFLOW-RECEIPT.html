@@ -1,0 +1,46 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DDT Workflow Receipt — JOB-69 · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="DDT-WORKFLOW-RECEIPT.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="ddt-workflow-receipt--job-69">DDT Workflow Receipt — JOB-69</h1>
+<h2 id="접수-범위">접수 범위</h2>
+<ul>
+<li>정확한 JOB 경로: <code>/opt/data/workspace/jobs/JOB-69-MindCraft-Windows-빌드·TUI-검증-수정-작업-외부-사후-접수</code></li>
+<li>접수 주체: DDT 에이전트</li>
+<li>제품 수정·검증 주체: Codex</li>
+<li>DDT 역할: 기존 JOB에 대한 외부 사후 접수·검토</li>
+<li>별도 JOB 생성: 없음</li>
+<li>다른 JOB 갱신: 없음</li>
+</ul>
+<h2 id="연결된-변경-및-산출물">연결된 변경 및 산출물</h2>
+<ul>
+<li>제품 수정 커밋: <code>57c859f6ea6f229fe3260dbd5f5a1a18ca530fb6</code></li>
+<li>검증 보고서 커밋: <code>627ad7e</code></li>
+<li>산출물 root: <code>/opt/data/workspace/mindcraft/artifacts/windows-runtime-fixes-20260908</code></li>
+<li>연결 파일: <code>WORK-RESULT.md</code>, <code>RECEIPT.json</code>, <code>fixes.patch</code>, 원시 로그, <code>tui-session.json</code>, <code>tui-results.json</code></li>
+<li>JOB 기록: <code>phase-record.md</code>, <code>follow-up.md</code>, <code>external-result.md</code>, <code>artifacts-manifest.json</code>, <code>.workflow-audit.log</code></li>
+</ul>
+<h2 id="실제-상태">실제 상태</h2>
+<ul>
+<li>workflow state: <code>request/in_progress</code></li>
+<li>완료 전이: 수행하지 않음</li>
+<li>gate: canonical gate 누락 상태를 보존</li>
+<li>정식 릴리즈 승인: 없음</li>
+<li>제품 코드/릴리즈 변경: DDT가 수행하지 않음</li>
+</ul>
+<h2 id="개선-및-검증-결과">개선 및 검증 결과</h2>
+<p>F1–F4는 이번 검증 범위에서 수정·재검증됨으로 추적한다.</p>
+<ul>
+<li>전체 회귀: 158개 중 144개 통과</li>
+<li>기존 실패: 14개 유지, 새 실패로 재분류하지 않음</li>
+<li>신규 회귀: 3개 통과</li>
+<li>실제 <code>MindCraft.exe</code> 기본 mock 환경 CLI 종단시험: 2/2 통과</li>
+<li>실제 ConPTY: resize 및 quit 통과</li>
+<li>제한환경 최초 timeout: 별도 실패 시도로 보존, 통과 수에 합산하지 않음</li>
+</ul>
+<h2 id="미해결미검증-사항">미해결·미검증 사항</h2>
+<ul>
+<li>외부 LLM 실행: 미검증</li>
+<li>장시간 안정성/soak: 미검증</li>
+<li>기존 14개 회귀 실패: 열린 사항</li>
+<li>canonical gate 누락: 열린 사항</li>
+<li>JOB 번호 충돌: 열린 사항</li>
+</ul>
+<p>본 영수증은 개선 이력과 검증 산출물의 JOB-69 연결을 증명하는 접수 기록이며, gate 없는 workflow 완료 또는 릴리즈 승인으로 해석하지 않는다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#접수-범위">접수 범위</a></li><li><a href="#연결된-변경-및-산출물">연결된 변경 및 산출물</a></li><li><a href="#실제-상태">실제 상태</a></li><li><a href="#개선-및-검증-결과">개선 및 검증 결과</a></li><li><a href="#미해결미검증-사항">미해결·미검증 사항</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

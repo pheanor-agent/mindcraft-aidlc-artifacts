@@ -1,0 +1,11 @@
+✔ TUI transcript preserves previous line alignment after repeated output (7.8159ms)
+✔ TUI setup refreshes Model count and removes the obsolete first-run guidance (2.5676ms)
+✔ TUI quit stops the screen and triggers process-exit callback (5.1068ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 761.6525

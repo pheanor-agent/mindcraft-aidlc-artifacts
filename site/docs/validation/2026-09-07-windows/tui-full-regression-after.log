@@ -1,0 +1,1343 @@
+TAP version 13
+# Subtest: write remains pending without approval and executes only after approval
+ok 1 - write remains pending without approval and executes only after approval
+  ---
+  duration_ms: 55.1468
+  type: 'test'
+  ...
+# Subtest: rejected writes have no side effect and produce a rejection audit state
+ok 2 - rejected writes have no side effect and produce a rejection audit state
+  ---
+  duration_ms: 21.7805
+  type: 'test'
+  ...
+# Subtest: CommandQueue preserves rapid input order even when commands await
+ok 3 - CommandQueue preserves rapid input order even when commands await
+  ---
+  duration_ms: 24.5177
+  type: 'test'
+  ...
+# Subtest: application command flow selects a Task and lists its Run state
+ok 4 - application command flow selects a Task and lists its Run state
+  ---
+  duration_ms: 1.6919
+  type: 'test'
+  ...
+# Subtest: minimal Pi TUI adapter renders passive status only
+ok 5 - minimal Pi TUI adapter renders passive status only
+  ---
+  duration_ms: 3.2098
+  type: 'test'
+  ...
+# Subtest: resume rejects non-recoverable runs without asking
+ok 6 - resume rejects non-recoverable runs without asking
+  ---
+  duration_ms: 9.5833
+  type: 'test'
+  ...
+# Subtest: release demo fixture creates the documented workspace from an empty checkout
+ok 7 - release demo fixture creates the documented workspace from an empty checkout
+  ---
+  duration_ms: 168.8573
+  type: 'test'
+  ...
+# Subtest: fixture generation is deterministic and refuses unsafe content
+ok 8 - fixture generation is deterministic and refuses unsafe content
+  ---
+  duration_ms: 114.6006
+  type: 'test'
+  ...
+# Subtest: scenario acceptance states are explicit
+ok 9 - scenario acceptance states are explicit
+  ---
+  duration_ms: 0.809
+  type: 'test'
+  ...
+# Subtest: execution scope normalizes root and distinguishes contained paths
+not ok 10 - execution scope normalizes root and distinguishes contained paths
+  ---
+  duration_ms: 2.9832
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\execution-root.test.mjs:5:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'C:/tmp/mindcraft-root'
+    - '/tmp/mindcraft-root'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '/tmp/mindcraft-root'
+  actual: 'C:/tmp/mindcraft-root'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/execution-root.test.mjs:8:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: first-run setup configures a model and makes the same app runnable
+ok 11 - first-run setup configures a model and makes the same app runnable
+  ---
+  duration_ms: 260.0204
+  type: 'test'
+  ...
+# Subtest: installer stages, activates, rolls back, and preserves user data
+ok 12 - installer stages, activates, rolls back, and preserves user data
+  ---
+  duration_ms: 257.983
+  type: 'test'
+  ...
+# Subtest: metric separates promoted, matched, and included candidates
+ok 13 - metric separates promoted, matched, and included candidates
+  ---
+  duration_ms: 167.9293
+  type: 'test'
+  ...
+# Subtest: executionPromptChars equals the prompt sent to the session
+ok 14 - executionPromptChars equals the prompt sent to the session
+  ---
+  duration_ms: 30.2229
+  type: 'test'
+  ...
+# Subtest: execution prompt budget fails hard before session creation without truncation
+ok 15 - execution prompt budget fails hard before session creation without truncation
+  ---
+  duration_ms: 8.1007
+  type: 'test'
+  ...
+# Subtest: baseline context is never smaller than selected context
+ok 16 - baseline context is never smaller than selected context
+  ---
+  duration_ms: 12.3918
+  type: 'test'
+  ...
+# Subtest: no Knowledge produces zero savings
+ok 17 - no Knowledge produces zero savings
+  ---
+  duration_ms: 23.2511
+  type: 'test'
+  ...
+# Subtest: zero baseline has finite zero metrics
+ok 18 - zero baseline has finite zero metrics
+  ---
+  duration_ms: 69.4141
+  type: 'test'
+  ...
+# Subtest: oversized and query matching policies are reflected in metrics
+ok 19 - oversized and query matching policies are reflected in metrics
+  ---
+  duration_ms: 27.5391
+  type: 'test'
+  ...
+# Subtest: Run metric survives repository reload
+ok 20 - Run metric survives repository reload
+  ---
+  duration_ms: 417.5832
+  type: 'test'
+  ...
+# Subtest: failed Run retains metric calculated before execution
+ok 21 - failed Run retains metric calculated before execution
+  ---
+  duration_ms: 353.9625
+  type: 'test'
+  ...
+# Subtest: metric JSON does not duplicate Knowledge content or credentials
+ok 22 - metric JSON does not duplicate Knowledge content or credentials
+  ---
+  duration_ms: 479.0656
+  type: 'test'
+  ...
+# Subtest: successful Run still completes with Knowledge capture after metric calculation
+ok 23 - successful Run still completes with Knowledge capture after metric calculation
+  ---
+  duration_ms: 291.0084
+  type: 'test'
+  ...
+# Subtest: Knowledge candidate stores metadata and raw data reference
+not ok 24 - Knowledge candidate stores metadata and raw data reference
+  ---
+  duration_ms: 34.3293
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\knowledge-fallback.test.mjs:5:1'
+  failureType: 'testCodeFailure'
+  error: "EPERM: operation not permitted, open 'C:\\tmp\\mindcraft-knowledge-metadata.jsonl'"
+  code: 'EPERM'
+  stack: |-
+    async open (node:internal/fs/promises:641:25)
+    async writeFile (node:internal/fs/promises:1215:14)
+    async KnowledgeService.append (file:///<VALIDATION_ROOT>/repo/src/knowledge.mjs:44:78)
+    async TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/knowledge-fallback.test.mjs:7:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Knowledge search falls back from relevant results to all Knowledge then files
+not ok 25 - Knowledge search falls back from relevant results to all Knowledge then files
+  ---
+  duration_ms: 5.7642
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\knowledge-fallback.test.mjs:14:1'
+  failureType: 'testCodeFailure'
+  error: "EPERM: operation not permitted, open 'C:\\tmp\\mindcraft-knowledge-fallback.jsonl'"
+  code: 'EPERM'
+  stack: |-
+    async open (node:internal/fs/promises:641:25)
+    async writeFile (node:internal/fs/promises:1215:14)
+    async KnowledgeService.append (file:///<VALIDATION_ROOT>/repo/src/knowledge.mjs:44:78)
+    async TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/knowledge-fallback.test.mjs:16:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a meaningful query token selects related Knowledge
+ok 26 - a meaningful query token selects related Knowledge
+  ---
+  duration_ms: 4.0046
+  type: 'test'
+  ...
+# Subtest: matching is case-insensitive
+ok 27 - matching is case-insensitive
+  ---
+  duration_ms: 0.3255
+  type: 'test'
+  ...
+# Subtest: punctuation differences do not prevent matching
+ok 28 - punctuation differences do not prevent matching
+  ---
+  duration_ms: 0.2244
+  type: 'test'
+  ...
+# Subtest: completely unrelated Knowledge is excluded
+ok 29 - completely unrelated Knowledge is excluded
+  ---
+  duration_ms: 0.2509
+  type: 'test'
+  ...
+# Subtest: captured and rejected Knowledge are excluded
+ok 30 - captured and rejected Knowledge are excluded
+  ---
+  duration_ms: 0.2587
+  type: 'test'
+  ...
+# Subtest: empty query preserves existing all-promoted behavior
+ok 31 - empty query preserves existing all-promoted behavior
+  ---
+  duration_ms: 0.35
+  type: 'test'
+  ...
+# Subtest: punctuation-only query does not select every Knowledge
+ok 32 - punctuation-only query does not select every Knowledge
+  ---
+  duration_ms: 0.1655
+  type: 'test'
+  ...
+# Subtest: newer related Knowledge remains first
+ok 33 - newer related Knowledge remains first
+  ---
+  duration_ms: 0.2836
+  type: 'test'
+  ...
+# Subtest: maxChars and oversized-item skipping remain in force
+ok 34 - maxChars and oversized-item skipping remain in force
+  ---
+  duration_ms: 0.7058
+  type: 'test'
+  ...
+# Subtest: existing exact substring matching continues to work
+ok 35 - existing exact substring matching continues to work
+  ---
+  duration_ms: 0.6425
+  type: 'test'
+  ...
+# Subtest: mixed Korean and English query matches lexical overlap
+ok 36 - mixed Korean and English query matches lexical overlap
+  ---
+  duration_ms: 0.9364
+  type: 'test'
+  ...
+# Subtest: matching does not mutate stored Knowledge items
+ok 37 - matching does not mutate stored Knowledge items
+  ---
+  duration_ms: 2.2723
+  type: 'test'
+  ...
+# Subtest: oversized latest item does not stop the whole slice
+ok 38 - oversized latest item does not stop the whole slice
+  ---
+  duration_ms: 3.3091
+  type: 'test'
+  ...
+# Subtest: small valid promoted item after an oversized item is included
+ok 39 - small valid promoted item after an oversized item is included
+  ---
+  duration_ms: 0.7139
+  type: 'test'
+  ...
+# Subtest: captured and rejected items are excluded
+ok 40 - captured and rejected items are excluded
+  ---
+  duration_ms: 0.5614
+  type: 'test'
+  ...
+# Subtest: final slice never exceeds maxChars
+ok 41 - final slice never exceeds maxChars
+  ---
+  duration_ms: 0.4812
+  type: 'test'
+  ...
+# Subtest: separator length is included in the budget
+ok 42 - separator length is included in the budget
+  ---
+  duration_ms: 0.4686
+  type: 'test'
+  ...
+# Subtest: an item exactly matching the budget is included
+ok 43 - an item exactly matching the budget is included
+  ---
+  duration_ms: 0.2575
+  type: 'test'
+  ...
+# Subtest: non-positive maxChars returns an empty slice
+ok 44 - non-positive maxChars returns an empty slice
+  ---
+  duration_ms: 0.3392
+  type: 'test'
+  ...
+# Subtest: no matching items returns an empty slice
+ok 45 - no matching items returns an empty slice
+  ---
+  duration_ms: 0.394
+  type: 'test'
+  ...
+# Subtest: selection does not mutate stored Knowledge items
+ok 46 - selection does not mutate stored Knowledge items
+  ---
+  duration_ms: 1.9315
+  type: 'test'
+  ...
+# Subtest: Knowledge capture, promote, save, and reload remain compatible
+ok 47 - Knowledge capture, promote, save, and reload remain compatible
+  ---
+  duration_ms: 64.6474
+  type: 'test'
+  ...
+# Subtest: knowledge candidate provenance, review, bounded slice, and redaction
+ok 48 - knowledge candidate provenance, review, bounded slice, and redaction
+  ---
+  duration_ms: 46.8385
+  type: 'test'
+  ...
+# Subtest: Korean UI catalog covers onboarding and runtime statuses
+ok 49 - Korean UI catalog covers onboarding and runtime statuses
+  ---
+  duration_ms: 2.2434
+  type: 'test'
+  ...
+# Subtest: launch options preserve structured workspace and explicit modes
+ok 50 - launch options preserve structured workspace and explicit modes
+  ---
+  duration_ms: 1.7554
+  type: 'test'
+  ...
+# Subtest: cli launch mode remains explicit and unknown flags fail closed
+ok 51 - cli launch mode remains explicit and unknown flags fail closed
+  ---
+  duration_ms: 0.8152
+  type: 'test'
+  ...
+# Subtest: default selection remains airouter/Qwen3.6
+ok 52 - default selection remains airouter/Qwen3.6
+  ---
+  duration_ms: 4.7684
+  type: 'test'
+  ...
+# Subtest: OpenAI-compatible selection is inferred and validates required values
+ok 53 - OpenAI-compatible selection is inferred and validates required values
+  ---
+  duration_ms: 1.157
+  type: 'test'
+  ...
+# Subtest: local preset is keyless and supports base URL override
+ok 54 - local preset is keyless and supports base URL override
+  ---
+  duration_ms: 0.6434
+  type: 'test'
+  ...
+# Subtest: optional auth prefers environment key and falls back to local placeholder
+ok 55 - optional auth prefers environment key and falls back to local placeholder
+  ---
+  duration_ms: 0.8167
+  type: 'test'
+  ...
+# Subtest: vLLM provider registration exposes the selected model and useful missing-model error
+ok 56 - vLLM provider registration exposes the selected model and useful missing-model error
+  ---
+  duration_ms: 86.9235
+  type: 'test'
+  ...
+# Subtest: MindCraft runs an OpenAI-compatible SSE endpoint with the selected model
+ok 57 - MindCraft runs an OpenAI-compatible SSE endpoint with the selected model
+  ---
+  duration_ms: 878.9395
+  type: 'test'
+  ...
+# Subtest: one user-selected Model serves every purpose
+ok 58 - one user-selected Model serves every purpose
+  ---
+  duration_ms: 1.8395
+  type: 'test'
+  ...
+# Subtest: two Models select only the explicitly mapped purpose
+ok 59 - two Models select only the explicitly mapped purpose
+  ---
+  duration_ms: 1.3869
+  type: 'test'
+  ...
+# Subtest: two Models require a purpose
+ok 60 - two Models require a purpose
+  ---
+  duration_ms: 0.8154
+  type: 'test'
+  ...
+# Subtest: zero enabled Models fails closed
+ok 61 - zero enabled Models fails closed
+  ---
+  duration_ms: 0.4291
+  type: 'test'
+  ...
+# Subtest: duplicate purposes and more than two Models are rejected
+ok 62 - duplicate purposes and more than two Models are rejected
+  ---
+  duration_ms: 0.571
+  type: 'test'
+  ...
+# Subtest: unavailable selected Model fails closed without fallback
+ok 63 - unavailable selected Model fails closed without fallback
+  ---
+  duration_ms: 0.2429
+  type: 'test'
+  ...
+# Subtest: offline vertical slice completes without API access
+ok 64 - offline vertical slice completes without API access
+  ---
+  duration_ms: 73.1148
+  type: 'test'
+  ...
+# Subtest: onboarding draft validates mock mode and commits without credential plaintext
+ok 65 - onboarding draft validates mock mode and commits without credential plaintext
+  ---
+  duration_ms: 137.282
+  type: 'test'
+  ...
+# Subtest: onboarding stores credential in session and removes it when config commit fails
+ok 66 - onboarding stores credential in session and removes it when config commit fails
+  ---
+  duration_ms: 41.5516
+  type: 'test'
+  ...
+# Subtest: cancelled onboarding cannot be committed and leaves no active draft
+ok 67 - cancelled onboarding cannot be committed and leaves no active draft
+  ---
+  duration_ms: 5.3484
+  type: 'test'
+  ...
+# Subtest: read/write reject parent traversal and symlink escape
+not ok 68 - read/write reject parent traversal and symlink escape
+  ---
+  duration_ms: 23.1151
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\path-security.test.mjs:9:1'
+  failureType: 'testCodeFailure'
+  error: "EPERM: operation not permitted, symlink '<USERPROFILE>\\AppData\\Local\\Temp\\mindcraft-outside-Z0ReD0' -> '<USERPROFILE>\\AppData\\Local\\Temp\\mindcraft-path-WugdCs\\safe\\link'"
+  code: 'EPERM'
+  stack: |-
+    async symlink (node:internal/fs/promises:1008:10)
+    async TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/path-security.test.mjs:14:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: command is default-deny, allowlisted, workspace-bound, and approval-gated
+ok 69 - command is default-deny, allowlisted, workspace-bound, and approval-gated
+  ---
+  duration_ms: 4.6879
+  type: 'test'
+  ...
+# Subtest: default preflight storage diagnosis does not create directories
+ok 70 - default preflight storage diagnosis does not create directories
+  ---
+  duration_ms: 11.7864
+  type: 'test'
+  ...
+# Subtest: control commands can use a separate path while work is queued
+ok 71 - control commands can use a separate path while work is queued
+  ---
+  duration_ms: 7.3431
+  type: 'test'
+  ...
+# Subtest: approval request snapshots mutable command arguments and rejects duplicate decisions
+ok 72 - approval request snapshots mutable command arguments and rejects duplicate decisions
+  ---
+  duration_ms: 6.3551
+  type: 'test'
+  ...
+# Subtest: cancelRun invalidates pending tool approval before execution
+ok 73 - cancelRun invalidates pending tool approval before execution
+  ---
+  duration_ms: 21.9253
+  type: 'test'
+  ...
+# Subtest: command string allowlist does not authorize arbitrary arguments
+ok 74 - command string allowlist does not authorize arbitrary arguments
+  ---
+  duration_ms: 1.8932
+  type: 'test'
+  ...
+# Subtest: agent tools cannot target MindCraft control files
+ok 75 - agent tools cannot target MindCraft control files
+  ---
+  duration_ms: 6.5788
+  type: 'test'
+  ...
+# Subtest: approval journal failure blocks the side effect
+ok 76 - approval journal failure blocks the side effect
+  ---
+  duration_ms: 3.6412
+  type: 'test'
+  ...
+# Subtest: execution-start journal failure blocks the side effect
+ok 77 - execution-start journal failure blocks the side effect
+  ---
+  duration_ms: 4.884
+  type: 'test'
+  ...
+# Subtest: capture is candidate-only, promote is required, and promoted item is in real Run 2 context manifest
+ok 78 - capture is candidate-only, promote is required, and promoted item is in real Run 2 context manifest
+  ---
+  duration_ms: 656.875
+  type: 'test'
+  ...
+# Subtest: workspace fallback excludes secrets/internal/binary/outside files and stays within budget
+not ok 79 - workspace fallback excludes secrets/internal/binary/outside files and stays within budget
+  ---
+  duration_ms: 2.9773
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\phase-04-knowledge-reuse.test.mjs:28:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /hidden|internal|outside|binary/. Input:
+
+    '[workspace:README.md]\nsafe release notes\n\n[workspace:../outside.md]\noutside'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    [workspace:README.md]
+    safe release notes
+
+    [workspace:../outside.md]
+    outside
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/phase-04-knowledge-reuse.test.mjs:34:111)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: capture retry is idempotent and preserves the original Run result
+ok 80 - capture retry is idempotent and preserves the original Run result
+  ---
+  duration_ms: 65.832
+  type: 'test'
+  ...
+# Subtest: journal repair preserves the corrupt original, replays only the valid prefix, and keeps new records
+ok 81 - journal repair preserves the corrupt original, replays only the valid prefix, and keeps new records
+  ---
+  duration_ms: 660.122
+  type: 'test'
+  ...
+# Subtest: status is derived from the journal and marks an execution without a result unknown
+ok 82 - status is derived from the journal and marks an execution without a result unknown
+  ---
+  duration_ms: 75.9731
+  type: 'test'
+  ...
+# Subtest: a completed execution with a matching result is not marked unknown after reload
+ok 83 - a completed execution with a matching result is not marked unknown after reload
+  ---
+  duration_ms: 188.4471
+  type: 'test'
+  ...
+# Subtest: terminal statuses remain terminal after reload and status exposes the next action
+ok 84 - terminal statuses remain terminal after reload and status exposes the next action
+  ---
+  duration_ms: 157.822
+  type: 'test'
+  ...
+# Subtest: workflow repository serializes concurrent commits and preserves order
+ok 85 - workflow repository serializes concurrent commits and preserves order
+  ---
+  duration_ms: 138.9213
+  type: 'test'
+  ...
+# Subtest: workflow repository blocks later writes after a persistence failure
+ok 86 - workflow repository blocks later writes after a persistence failure
+  ---
+  duration_ms: 172.5242
+  type: 'test'
+  ...
+# Subtest: release rehearsal command exists in a clean fixture copy
+ok 87 - release rehearsal command exists in a clean fixture copy
+  ---
+  duration_ms: 1911.3207
+  type: 'test'
+  ...
+# Subtest: provider readiness separates configured credentials from connectivity
+ok 88 - provider readiness separates configured credentials from connectivity
+  ---
+  duration_ms: 2.3868
+  type: 'test'
+  ...
+# Subtest: mock readiness never claims live readiness and unknown providers fail closed
+ok 89 - mock readiness never claims live readiness and unknown providers fail closed
+  ---
+  duration_ms: 0.6637
+  type: 'test'
+  ...
+# Subtest: release manifest records file hashes and verifies integrity
+ok 90 - release manifest records file hashes and verifies integrity
+  ---
+  duration_ms: 41.1145
+  type: 'test'
+  ...
+# Subtest: release manifest rejects missing version and non-file entries
+ok 91 - release manifest rejects missing version and non-file entries
+  ---
+  duration_ms: 3.3541
+  type: 'test'
+  ...
+# Subtest: runs lists only Runs belonging to the selected Task
+ok 92 - runs lists only Runs belonging to the selected Task
+  ---
+  duration_ms: 290.5458
+  type: 'test'
+  ...
+# Subtest: runs displays Run ID, Episode ID, and status
+ok 93 - runs displays Run ID, Episode ID, and status
+  ---
+  duration_ms: 5827.6871
+  type: 'test'
+  ...
+# Subtest: runs safely 안내s when no Task is selected
+ok 94 - runs safely 안내s when no Task is selected
+  ---
+  duration_ms: 4715.3103
+  type: 'test'
+  ...
+# Subtest: runs reports an explicit empty result
+ok 95 - runs reports an explicit empty result
+  ---
+  duration_ms: 3996.7071
+  type: 'test'
+  ...
+# Subtest: reloaded running Run is shown as recoverable
+ok 96 - reloaded running Run is shown as recoverable
+  ---
+  duration_ms: 45.6621
+  type: 'test'
+  ...
+# Subtest: resumeRun resumes an exact recoverable Run and stores resumedFrom
+ok 97 - resumeRun resumes an exact recoverable Run and stores resumedFrom
+  ---
+  duration_ms: 76.73
+  type: 'test'
+  ...
+# Subtest: completed, failed, and aborted Runs are rejected by resume
+ok 98 - completed, failed, and aborted Runs are rejected by resume
+  ---
+  duration_ms: 4.2714
+  type: 'test'
+  ...
+# Subtest: resume rejects a recoverable Run belonging to another Task
+ok 99 - resume rejects a recoverable Run belonging to another Task
+  ---
+  duration_ms: 26.9575
+  type: 'test'
+  ...
+# Subtest: CLI routes resume through the application guard
+ok 100 - CLI routes resume through the application guard
+  ---
+  duration_ms: 4065.8396
+  type: 'test'
+  ...
+# Subtest: resumed old and new Run states remain consistent after reload
+ok 101 - resumed old and new Run states remain consistent after reload
+  ---
+  duration_ms: 76.2638
+  type: 'test'
+  ...
+# Subtest: resume failure preserves the original recoverable Run
+ok 102 - resume failure preserves the original recoverable Run
+  ---
+  duration_ms: 62.2123
+  type: 'test'
+  ...
+# Subtest: session prompt failure persists failed Run and Episode
+ok 103 - session prompt failure persists failed Run and Episode
+  ---
+  duration_ms: 178.2808
+  type: 'test'
+  ...
+# Subtest: session creation failure persists failed Run and Episode
+ok 104 - session creation failure persists failed Run and Episode
+  ---
+  duration_ms: 92.6534
+  type: 'test'
+  ...
+# Subtest: missing model persists failed Run and Episode
+ok 105 - missing model persists failed Run and Episode
+  ---
+  duration_ms: 80.1989
+  type: 'test'
+  ...
+# Subtest: AbortError persists aborted Run and failed-status is not used
+ok 106 - AbortError persists aborted Run and failed-status is not used
+  ---
+  duration_ms: 147.0445
+  type: 'test'
+  ...
+# Subtest: reloaded failed and aborted Runs are not recoverable
+ok 107 - reloaded failed and aborted Runs are not recoverable
+  ---
+  duration_ms: 30.215
+  type: 'test'
+  ...
+# Subtest: only an actually running Run is recoverable after reload
+ok 108 - only an actually running Run is recoverable after reload
+  ---
+  duration_ms: 69.2647
+  type: 'test'
+  ...
+# Subtest: Knowledge capture failure does not turn a successful Run into failed
+ok 109 - Knowledge capture failure does not turn a successful Run into failed
+  ---
+  duration_ms: 239.6253
+  type: 'test'
+  ...
+# Subtest: session is disposed on both success and prompt failure paths
+ok 110 - session is disposed on both success and prompt failure paths
+  ---
+  duration_ms: 271.7604
+  type: 'test'
+  ...
+# Subtest: Pi custom tool enforces GrantedScope before read
+ok 111 - Pi custom tool enforces GrantedScope before read
+  ---
+  duration_ms: 2.68
+  type: 'test'
+  ...
+# Subtest: workflow repository reloads committed records and recovers running
+ok 112 - workflow repository reloads committed records and recovers running
+  ---
+  duration_ms: 33.2525
+  type: 'test'
+  ...
+# Subtest: GrantedScope fails closed and never invokes denied tools
+ok 113 - GrantedScope fails closed and never invokes denied tools
+  ---
+  duration_ms: 2.2516
+  type: 'test'
+  ...
+# Subtest: checkpoint recovery ignores torn tail and marks running as recoverable
+ok 114 - checkpoint recovery ignores torn tail and marks running as recoverable
+  ---
+  duration_ms: 69.6793
+  type: 'test'
+  ...
+# Subtest: sequential sessions persist identity and close records
+ok 115 - sequential sessions persist identity and close records
+  ---
+  duration_ms: 242.7806
+  type: 'test'
+  ...
+# Subtest: same workspace rejects a second process-style writer
+not ok 116 - same workspace rejects a second process-style writer
+  ---
+  duration_ms: 975.469
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\session-boundaries.test.mjs:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+
+    Caught error:
+
+    Error: Command failed: <VALIDATION_ROOT>\dist\windows-package\current\runtime\node.exe --input-type=module -e import { WorkspaceLock } from "<VALIDATION_ROOT>\\repo\\src\\workspace-lock.mjs"; const lock = new WorkspaceLock(process.argv[1]); try { await lock.acquire(); process.exit(0); } catch (error) { process.exit(error.code === "WORKSPACE_LOCKED" ? 42 : 43); } <USERPROFILE>\AppData\Local\Temp\mindcraft-session-tKTppE\state.jsonl
+    node:internal/modules/esm/load:184
+        throw new ERR_UNSUPPORTED_ESM_URL_SCHEME(parsed, schemes);
+              ^
+
+    Error [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'c:'
+        at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:184:11)
+        at defaultLoad (node:internal/modules/esm/load:82:3)
+        at ModuleLoader.load (node:internal/modules/esm/loader:801:12)
+        at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:586:43)
+        at #createModuleJob (node:internal/modules/esm/loader:610:36)
+        at #getJobFromResolveResult (node:internal/modules/esm/loader:341:34)
+        at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:309:41) {
+      code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    throwIfUnsupportedURLScheme (node:internal/modules/esm/load:184:11)
+    defaultLoad (node:internal/modules/esm/load:82:3)
+    ModuleLoader.load (node:internal/modules/esm/loader:801:12)
+    ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:586:43)
+    #createModuleJob (node:internal/modules/esm/loader:610:36)
+    #getJobFromResolveResult (node:internal/modules/esm/loader:341:34)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:309:41) {
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/session-boundaries.test.mjs:50:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: doctor separates local readiness from live provider readiness
+ok 117 - doctor separates local readiness from live provider readiness
+  ---
+  duration_ms: 44.284
+  type: 'test'
+  ...
+# Subtest: mode cannot switch after the first Run
+ok 118 - mode cannot switch after the first Run
+  ---
+  duration_ms: 416.9416
+  type: 'test'
+  ...
+# Subtest: shutdown coordinator executes the safety order exactly once
+ok 119 - shutdown coordinator executes the safety order exactly once
+  ---
+  duration_ms: 3.6799
+  type: 'test'
+  ...
+# Subtest: shutdown failure reports the phase and prevents false completion
+ok 120 - shutdown failure reports the phase and prevents false completion
+  ---
+  duration_ms: 7.2015
+  type: 'test'
+  ...
+# Subtest: Task creation immediately persists a task record
+ok 121 - Task creation immediately persists a task record
+  ---
+  duration_ms: 307.4021
+  type: 'test'
+  ...
+# Subtest: Task reloads without running an Episode
+ok 122 - Task reloads without running an Episode
+  ---
+  duration_ms: 310.47
+  type: 'test'
+  ...
+# Subtest: Task save failure does not return success
+ok 123 - Task save failure does not return success
+  ---
+  duration_ms: 50.7507
+  type: 'test'
+  ...
+# Subtest: Task save failure leaves no ghost Task in memory
+ok 124 - Task save failure leaves no ghost Task in memory
+  ---
+  duration_ms: 30.5705
+  type: 'test'
+  ...
+# Subtest: Task creation works in memory mode without a repository
+ok 125 - Task creation works in memory mode without a repository
+  ---
+  duration_ms: 16.8114
+  type: 'test'
+  ...
+# Subtest: CLI prints task ID only after Task persistence
+not ok 126 - CLI prints task ID only after Task persistence
+  ---
+  duration_ms: 751.5047
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\task-persistence.test.mjs:79:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI exited 1: node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+
+    Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-persistence.test.mjs:18:90)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: Existing offline Episode execution remains compatible
+ok 127 - Existing offline Episode execution remains compatible
+  ---
+  duration_ms: 18.2293
+  type: 'test'
+  ...
+# Subtest: all saved Tasks are listed after restart
+not ok 128 - all saved Tasks are listed after restart
+  ---
+  duration_ms: 807.3917
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\task-selection.test.mjs:35:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI exited 1: node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+
+    Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: tasks displays Task ID, title, and status
+not ok 129 - tasks displays Task ID, title, and status
+  ---
+  duration_ms: 639.8285
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\task-selection.test.mjs:45:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI exited 1: node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+
+    Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: use selects an existing Task by exact ID
+not ok 130 - use selects an existing Task by exact ID
+  ---
+  duration_ms: 658.5407
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\task-selection.test.mjs:52:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI exited 1: node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+
+    Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: status displays the selected Task
+not ok 131 - status displays the selected Task
+  ---
+  duration_ms: 574.6975
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\task-selection.test.mjs:59:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI exited 1: node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+
+    Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: unknown Task ID returns a safe error
+not ok 132 - unknown Task ID returns a safe error
+  ---
+  duration_ms: 620.7543
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\task-selection.test.mjs:67:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI exited 1: node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+
+    Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: tasks reports an explicit empty result for an empty repository
+not ok 133 - tasks reports an explicit empty result for an empty repository
+  ---
+  duration_ms: 631.8093
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\task-selection.test.mjs:73:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI exited 1: node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+
+    Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: run is safely rejected without a selected Task
+not ok 134 - run is safely rejected without a selected Task
+  ---
+  duration_ms: 626.9614
+  type: 'test'
+  location: '<VALIDATION_ROOT>\\repo\\test\\task-selection.test.mjs:79:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI exited 1: node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+
+    Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+
+    Node.js v22.19.0
+
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: existing Task creation and Episode execution remain compatible
+ok 135 - existing Task creation and Episode execution remain compatible
+  ---
+  duration_ms: 13.7108
+  type: 'test'
+  ...
+# Subtest: Token Doctor scores a prompt and returns actionable guidance
+ok 136 - Token Doctor scores a prompt and returns actionable guidance
+  ---
+  duration_ms: 6.3755
+  type: 'test'
+  ...
+# Subtest: Token Doctor handles empty and punctuation-only prompts safely
+ok 137 - Token Doctor handles empty and punctuation-only prompts safely
+  ---
+  duration_ms: 0.8991
+  type: 'test'
+  ...
+# Subtest: default mode does not add Token Doctor analysis
+ok 138 - default mode does not add Token Doctor analysis
+  ---
+  duration_ms: 33.912
+  type: 'test'
+  ...
+# Subtest: Token Doctor mode preserves the execution prompt and stores analysis
+ok 139 - Token Doctor mode preserves the execution prompt and stores analysis
+  ---
+  duration_ms: 4.8397
+  type: 'test'
+  ...
+# Subtest: Token Doctor report stores estimates explicitly, never as actual usage
+ok 140 - Token Doctor report stores estimates explicitly, never as actual usage
+  ---
+  duration_ms: 3.3794
+  type: 'test'
+  ...
+# Subtest: Token Doctor analysis survives Run persistence and reload
+ok 141 - Token Doctor analysis survives Run persistence and reload
+  ---
+  duration_ms: 47.2552
+  type: 'test'
+  ...
+# Subtest: TUI status renders streaming event and pending approval state
+ok 142 - TUI status renders streaming event and pending approval state
+  ---
+  duration_ms: 2.9854
+  type: 'test'
+  ...
+# Subtest: TUI transcript preserves previous line alignment after repeated output
+ok 143 - TUI transcript preserves previous line alignment after repeated output
+  ---
+  duration_ms: 10.9971
+  type: 'test'
+  ...
+# Subtest: TUI setup refreshes Model count and removes the obsolete first-run guidance
+ok 144 - TUI setup refreshes Model count and removes the obsolete first-run guidance
+  ---
+  duration_ms: 3.2526
+  type: 'test'
+  ...
+# Subtest: TUI quit stops the screen and triggers process-exit callback
+ok 145 - TUI quit stops the screen and triggers process-exit callback
+  ---
+  duration_ms: 5.4466
+  type: 'test'
+  ...
+# Subtest: wincred client passes secret through stdin, never argv
+ok 146 - wincred client passes secret through stdin, never argv
+  ---
+  duration_ms: 11.6211
+  type: 'test'
+  ...
+# Subtest: workspace selection is canonical and containment is boundary-safe
+ok 147 - workspace selection is canonical and containment is boundary-safe
+  ---
+  duration_ms: 16.6093
+  type: 'test'
+  ...
+# Subtest: bootstrap persists recent workspace only after explicit preparation
+ok 148 - bootstrap persists recent workspace only after explicit preparation
+  ---
+  duration_ms: 26.6837
+  type: 'test'
+  ...
+# Subtest: effective config has one revision and never contains credential values
+ok 149 - effective config has one revision and never contains credential values
+  ---
+  duration_ms: 1.5375
+  type: 'test'
+  ...
+# Subtest: credential store supports session/env references without plaintext persistence
+ok 150 - credential store supports session/env references without plaintext persistence
+  ---
+  duration_ms: 1.069
+  type: 'test'
+  ...
+# Subtest: credential adapter fails closed off Windows and never falls back to plaintext
+ok 151 - credential adapter fails closed off Windows and never falls back to plaintext
+  ---
+  duration_ms: 2.6136
+  type: 'test'
+  ...
+# Subtest: credential adapter delegates only when all native operations are supplied
+ok 152 - credential adapter delegates only when all native operations are supplied
+  ---
+  duration_ms: 1.0284
+  type: 'test'
+  ...
+# Subtest: launcher resolves active version and passes structured runtime context
+ok 153 - launcher resolves active version and passes structured runtime context
+  ---
+  duration_ms: 77.1089
+  type: 'test'
+  ...
+# Subtest: process tree adapter exposes Windows native capability without claiming it on Linux
+ok 154 - process tree adapter exposes Windows native capability without claiming it on Linux
+  ---
+  duration_ms: 0.8341
+  type: 'test'
+  ...
+# Subtest: install layout verification is explicit and does not confuse user data with current version
+ok 155 - install layout verification is explicit and does not confuse user data with current version
+  ---
+  duration_ms: 11.5399
+  type: 'test'
+  ...
+1..155
+# tests 155
+# suites 0
+# pass 141
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37084.3692

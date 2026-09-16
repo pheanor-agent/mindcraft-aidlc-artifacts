@@ -1,0 +1,74 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft Windows 실행 파일·신규 사용자 경험 설계 검토 및 승인요청 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="windows-executable-design-review-approval.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-windows-실행-파일신규-사용자-경험-설계-검토-및-승인요청">MindCraft Windows 실행 파일·신규 사용자 경험 설계 검토 및 승인요청</h1>
+<ul>
+<li>작업: <strong>JOB-68 — MindCraft Windows 실행 파일·신규 사용자 경험 설계 검토 및 승인요청</strong></li>
+<li>작업 방식: <strong>DDT 기본 작업 워크플로우</strong></li>
+<li>참고 자료: 첨부 <code>windows-executable-comprehensive-design.md</code></li>
+<li>참고 범위: 기존 MindCraft SSOT, 제품 설계 문서, 필요 시 AI-DLC 관련 자료</li>
+<li>상태: <strong>설계 검토 완료 — 다음 단계 진행 승인됨</strong></li>
+<li>구현 상태: <strong>미적용</strong></li>
+</ul>
+<h2 id="1-워크플로우-정정">1. 워크플로우 정정</h2>
+<p>이 작업은 AI-DLC 프로젝트가 아니다. MindCraft의 Windows 배포 기능을 검토·구현하는 일반 작업이며, DDT 기본 작업 워크플로우를 따른다.</p>
+<p>AI-DLC는 필요한 경우 관련 프로젝트의 요구사항·설계·검증 관행을 참고하는 자료일 뿐, MindCraft 작업의 기본 상태·승인·작업 단위를 대체하지 않는다.</p>
+<pre><code class="language-text">작업 등록
+→ 현재 상태·요구사항 확인
+→ 설계 검토
+→ 다음 작업 승인
+→ 구현
+→ 테스트·검증
+→ 결과 검토
+→ 릴리스 판단
+</code></pre>
+<h2 id="2-검토-결과">2. 검토 결과</h2>
+<p>현재 저장소 기준선:</p>
+<ul>
+<li><code>npm run build</code> — PASS</li>
+<li><code>npm test</code> — 130/130 PASS</li>
+<li><code>npm run release:check</code> — PASS</li>
+</ul>
+<p>설계와 정합한 방향:</p>
+<ul>
+<li>Task/Episode/Run 유지</li>
+<li>승인 전 side effect 차단</li>
+<li>Knowledge candidate/promote 분리</li>
+<li>자동 Model fallback/switching 금지</li>
+<li>mock/live와 local/live readiness 분리</li>
+<li>순차 session·단일 writer·복구 시 자동 재실행 금지</li>
+<li>설치 위치와 작업 폴더 분리</li>
+</ul>
+<p>현재 구현되지 않은 주요 영역:</p>
+<ul>
+<li>Windows launcher 및 동봉 runtime</li>
+<li>사용자 단위 installer/update/remove</li>
+<li>onboarding wizard와 기본 TUI 진입</li>
+<li>Windows Credential Manager 연동</li>
+<li>Windows 경로·process tree·IME 검증</li>
+<li>clean Windows 환경 설치·실행 검증</li>
+<li>signing 및 실제 live provider 검증</li>
+</ul>
+<p>Linux 기준선 결과는 Windows 완료 또는 live provider 완료 증거로 사용하지 않는다.</p>
+<h2 id="3-승인된-다음-작업">3. 승인된 다음 작업</h2>
+<p>다음 작업 단위를 기본 작업 워크플로우에 등록해 진행한다.</p>
+<ol>
+<li>Windows 실행 환경 기준선 확인</li>
+<li>동봉 runtime과 launcher feasibility 확인</li>
+<li>workspace/bootstrap과 기본 TUI 설계·구현</li>
+<li>설정·provider·credential 경계 설계·구현</li>
+<li>승인·경로·취소·복구 동작 연결</li>
+<li>installer/update/remove와 release metadata 구성</li>
+<li>Windows 환경 검증 및 결과 보고</li>
+</ol>
+<p>각 작업은 별도 상태와 검증 결과를 남기며, 구현 전 범위가 커지면 다시 승인받는다.</p>
+<h2 id="4-이번-승인에-포함되지-않는-범위">4. 이번 승인에 포함되지 않는 범위</h2>
+<ul>
+<li>첨부 문서의 patch/reference 코드 자동 적용</li>
+<li>AI-DLC 절차를 기본 작업 상태로 사용</li>
+<li>실제 유료 provider 호출 또는 credential 변경</li>
+<li>외부 push·공개 배포</li>
+<li>Windows 지원 완료 또는 signing 완료 판정</li>
+<li>단일 portable <code>.exe</code>를 필수 조건으로 확정</li>
+</ul>
+<h2 id="5-현재-판정">5. 현재 판정</h2>
+<p><strong>JOB-68은 기본 작업 워크플로우의 설계 검토 완료 상태로 진행한다.</strong></p>
+<p>AI-DLC 관련 문서는 참고 자료로만 유지하고, MindCraft 제품 작업 상태·승인·검증 기록과 섞지 않는다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-워크플로우-정정">1. 워크플로우 정정</a></li><li><a href="#2-검토-결과">2. 검토 결과</a></li><li><a href="#3-승인된-다음-작업">3. 승인된 다음 작업</a></li><li><a href="#4-이번-승인에-포함되지-않는-범위">4. 이번 승인에 포함되지 않는 범위</a></li><li><a href="#5-현재-판정">5. 현재 판정</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

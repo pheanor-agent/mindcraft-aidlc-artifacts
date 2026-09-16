@@ -1,0 +1,65 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DDT 로컬 작업 워크플로우 등록 결과 — JOB-69 · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="DDT-WORKFLOW-REGISTRATION.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="ddt-로컬-작업-워크플로우-등록-결과--job-69">DDT 로컬 작업 워크플로우 등록 결과 — JOB-69</h1>
+<ul>
+<li>등록 시각: 2026-09-07 현재 세션</li>
+<li>프로젝트: <code>ddt-mindcraft/mindcraft</code>, <code>master</code></li>
+<li>성격: 기존 AI-DLC 재개발과 분리된 Windows 검증 작업의 외부 사후 접수</li>
+<li>사용자 요청: <code>작업 워크플로우 방식으로 이력 남겨야 돼. 에이전트에게 직접 요청해봐</code></li>
+</ul>
+<h2 id="실제-사용한-시스템">실제 사용한 시스템</h2>
+<ul>
+<li>워크플로우 방식: DDT 표준 JOB workflow-agentic 9단계</li>
+<li>등록 스크립트: <code>/opt/data/scripts/create-job.sh</code> v3</li>
+<li>상태 파일: <code>/opt/data/workspace/jobs/JOB-69-MindCraft-Windows-빌드·TUI-검증-수정-작업-외부-사후-접수/.workflow-state</code></li>
+<li>작업대장: <code>/opt/data/workspace/JOB-QUEUE.md</code>, <code>/opt/data/workspace/JOB-INDEX.md</code></li>
+<li>감사 기록: 같은 JOB 폴더의 <code>.workflow-audit.log</code></li>
+<li>공식 gate wrapper: <code>/opt/data/scripts/workflow-gate.sh</code></li>
+</ul>
+<h2 id="등록-결과">등록 결과</h2>
+<ul>
+<li>작업 ID: <code>JOB-69</code></li>
+<li>실행 ID: 없음. 외부 과거 실행을 추정하지 않음.</li>
+<li>현재 상태: <code>running</code>, <code>currentStep=request</code>, <code>request=in_progress</code></li>
+<li>등록 결과: 실제 create-job.sh 생성 성공</li>
+<li>이벤트/단계 기록: JOB 폴더의 <code>.workflow-audit.log</code>, <code>phase-record.md</code></li>
+<li>산출물 연결: JOB 폴더의 <code>artifacts-manifest.json</code>에서 커밋·릴리즈·보고서·로컬 증거 디렉터리를 연결</li>
+<li>후속 작업 ID: 없음. 번호 충돌 및 gate 장애 중 임의 ID 생성하지 않음</li>
+</ul>
+<h2 id="gate-차단">Gate 차단</h2>
+<p><code>HERMES_ROOT=/opt/data /opt/data/scripts/workflow-gate.sh --help</code> 실행 결과:</p>
+<pre><code class="language-text">⛔ BLOCKED: canonical workflow gate unavailable
+</code></pre>
+<p>따라서 <code>request → investigation</code> 전이만 차단됐다. <code>.workflow-state</code>를 직접 전이하거나 PASS/완료를 위조하지 않았다. investigation 이후의 정식 전이는 모두 이 선행 차단 때문에 수행하지 않았다.</p>
+<h2 id="작업대장-번호-충돌">작업대장 번호 충돌</h2>
+<p>스크립트는 실제 JOB 디렉터리 스캔 기준으로 JOB-69를 배정했지만, 기존 <code>JOB-QUEUE.md</code>와 <code>JOB-INDEX.md</code>에는 다른 Windows launcher 작업의 JOB-69 행이 이미 존재했다. 기존 행이나 AI-DLC 원본을 덮지 않았으며 충돌을 <code>intake-investigation.md</code>와 감사 로그에 남겼다. 이 충돌은 작업대장 정리 후 gate 복구 시 운영 후속으로 처리해야 한다.</p>
+<h2 id="연결된-외부-결과">연결된 외부 결과</h2>
+<ul>
+<li>기준 제품 소스: <code>9de0f2c52f8294ba71f9072b719ae46e13ce9058</code></li>
+<li>Windows 빌드/CLI 검증 문서 커밋: <code>307885183b1ad09870450b30de7cac97da9f9f8b</code></li>
+<li>수정 커밋: <code>1e3c5317069bb1614e473f6690a35f574bafd710</code></li>
+<li>증거 문서/스크린샷/DDT 접수 커밋: <code>0ed48db2c85231b20fc9b4cba95ea6f9a37fe931</code></li>
+<li>보존 릴리즈: <a href="https://github.com/ddt-mindcraft/mindcraft/releases/tag/v0.1.0-windows-preview.20260907.1">https://github.com/ddt-mindcraft/mindcraft/releases/tag/v0.1.0-windows-preview.20260907.1</a></li>
+<li>수정 테스트 프리릴리즈: <a href="https://github.com/ddt-mindcraft/mindcraft/releases/tag/v0.1.0-windows-preview.20260907.2">https://github.com/ddt-mindcraft/mindcraft/releases/tag/v0.1.0-windows-preview.20260907.2</a></li>
+<li>보고서: <a href="https://github.com/ddt-mindcraft/mindcraft/blob/master/docs/windows-tui-validation-2026-09-07.md">https://github.com/ddt-mindcraft/mindcraft/blob/master/docs/windows-tui-validation-2026-09-07.md</a></li>
+<li>로컬 증거: <code>/opt/data/workspace/mindcraft/artifacts/windows-tui-20260907</code></li>
+</ul>
+<h2 id="상태-구분">상태 구분</h2>
+<ul>
+<li>완료된 외부 수정 3건: transcript 렌더 누적, setup 후 Model/초기 안내, quit 프로세스 종료.</li>
+<li>검증: 신규 회귀 0/3 → 3/3, <code>npm run build</code> 통과, ConPTY <code>--tui --mock</code>, 한국어 붙여넣기, task/tasks, 상태줄, 수정 후 quit exit 0.</li>
+<li>기존 실패: 전체 회귀 155건 중 141 통과, 기존 실패 14건 유지. 해결로 기록하지 않음.</li>
+<li>미검증: Windows Terminal 앱, IME, resize, LLM, 강제종료 process tree, 승인·취소·LLM Run 전체 흐름.</li>
+<li>구현 담당: Windows 검증 작업의 Codex/Astra. DDT 구현으로 기록하지 않음.</li>
+<li>정식 릴리즈 승인: 아님.</li>
+<li>AI-DLC 단계/승인 변경: 없음.</li>
+</ul>
+<h2 id="조회-확인-근거">조회 확인 근거</h2>
+<p>재조회 결과는 다음과 같다.</p>
+<ol>
+<li>JOB 폴더가 실제 존재한다.</li>
+<li><code>.workflow-state</code>를 다시 읽어 <code>JOB-69</code>, <code>running</code>, <code>request/in_progress</code>, 후속 단계 pending을 확인했다.</li>
+<li><code>.workflow-audit.log</code>, <code>artifacts-manifest.json</code>, <code>phase-record.md</code>가 실제 존재한다.</li>
+<li>원격 산출물 디렉터리의 기존 파일은 덮어쓰지 않고 경로로 연결했다.</li>
+<li>gate 실행은 위 차단 문구로 재현됐다.</li>
+</ol>
+<p>이 문서는 보조 요약이며, 실제 workflow 등록은 JOB 폴더와 <code>.workflow-state</code>/감사 기록에 있다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#실제-사용한-시스템">실제 사용한 시스템</a></li><li><a href="#등록-결과">등록 결과</a></li><li><a href="#gate-차단">Gate 차단</a></li><li><a href="#작업대장-번호-충돌">작업대장 번호 충돌</a></li><li><a href="#연결된-외부-결과">연결된 외부 결과</a></li><li><a href="#상태-구분">상태 구분</a></li><li><a href="#조회-확인-근거">조회 확인 근거</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

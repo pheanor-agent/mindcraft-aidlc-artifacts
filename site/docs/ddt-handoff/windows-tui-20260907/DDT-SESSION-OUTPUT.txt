@@ -1,0 +1,80 @@
+RECEIPT {"artifactRoot": "/opt/data/workspace/mindcraft/artifacts/windows-tui-20260907", "verified": [{"path": "tui-fixed.png", "sha256": "14e040b9af77d5eceb3f6d22349a8a2e9c5167837483c6cb2b5997d04efc2363"}, {"path": "pty-before.jsonl", "sha256": "1fe34fba7d0d721bd7da263ec54578f3cedeeb80c976331358014c59c9ff327e"}, {"path": "tui-fix.patch", "sha256": "87be479728ee228cc1739eedd578a5ca73172174af0fd9674d7d68583b9be566"}, {"path": "tui-before.png", "sha256": "ffc05ef4754c4f793661508158996c496cf2ced76d1167ddbe4899cef19add53"}, {"path": "full-regression.log", "sha256": "e27bfd3257273bc7029f9b362cba8280c8ccad366ef121be6cd5e089aaba68e5"}, {"path": "tests-before.log", "sha256": "d6c02d04f99b4ee38ae30a82a8580350a7ea77f08fe86e55198b06d52c668a58"}, {"path": "pty-after.jsonl", "sha256": "b2fe491faf8ecba5300e6070215176f2edd54f55455109491e97e11302551731"}, {"path": "tui-initial.png", "sha256": "a2a133d42ec93fe266648148661b34afcd0aee175dbb525577c0a8d7c756e0c2"}, {"path": "tests-after.log", "sha256": "e77f451c4faa518074d357406e6f1e5025d27163d2f59f8853dfe52d44737657"}, {"path": "WORK-RESULT.md", "sha256": "6f17ca4cb6d57e8c1a1bac56300e442cd81005011762dbac955a1af9812d60bd"}], "sourceCommit": "1e3c5317069bb1614e473f6690a35f574bafd710"}
+DDT_REVIEW_BEGIN
+
+┌─ Reasoning ──────────────────────────────────────────────────────────────────┐
+**Preparing to write DDT-REVIEW.md file****Preparing to write DDT-REVIEW.md file**
+  ┊ review diff
+a/artifacts/windows-tui-20260907/DDT-REVIEW.md → b/artifacts/windows-tui-20260907/DDT-REVIEW.md
+@@ -0,0 +1,54 @@
++# DDT 문서 기반 접수 검토 — Windows TUI
++
++- 검토일: 2026-09-07
++- 접수 대상: Windows TUI 검증·수정 이력 및 첨부 산출물
++- 원본 기준 커밋: `1e3c5317069bb1614e473f6690a35f574bafd710`
++- 검토 성격: 제공된 보고서, 수신 목록, 파일 해시를 기준으로 한 문서 접수 검토
++
++## 접수한 수정 3건
++
++1. **출력 누적 레이아웃 수정**
++   - 이미 패딩·개행된 렌더링 결과를 재사용하지 않고 원문 줄 배열을 보존한 뒤 현재 폭에서 한 번만 렌더링하도록 변경.
++2. **초기 설정 안내 갱신 수정**
++   - 고정된 생성자 안내 문자열 대신 출력 시점의 preflight 상태를 반영해 모델 수와 설정 안내를 재구성.
++3. **`quit` 종료 수정**
++   - 우선 처리 분기에서도 `stop()` 및 종료 콜백이 실행되도록 하여 `quit` 후 TUI와 프로세스가 종료되게 변경.
++
++대상 제품 파일은 보고서상 `src/tui-runner.mjs`이며, 신규 회귀 테스트는 `test/tui-native-regressions.test.mjs`로 접수했다.
++
++## 증거 범위
++
++수신된 산출물과 SHA-256 목록은 다음 증거 범위를 구성한다.
++
++- 수정 전·후 화면 캡처: `tui-initial.png`, `tui-before.png`, `tui-fixed.png`
++- 수정 전·후 PTY 기록: `pty-before.jsonl`, `pty-after.jsonl`
++- 변경 내용: `tui-fix.patch`
++- 시험 로그: `tests-before.log`, `tests-after.log`, `full-regression.log`
++- 작업 요약: `WORK-RESULT.md`
++
++보고서에 따르면 실제 ConPTY에서 native `MindCraft.exe --tui --mock --workspace <전용경로>`를 실행하여 Pi TUI의 ANSI 화면, 입력창, 상태줄, mock setup/doctor/task/tasks/quit 흐름을 확인한 이력이 제출되었다. 이는 제출자가 제공한 실행 기록과 파일 증거에 대한 접수 사항이며, DDT가 직접 Windows를 실행했거나 독립적으로 재현했다는 의미가 아니다.
++
++문서상 결과로는 신규 회귀 3건이 수정 전 0/3에서 수정 후 3/3 통과했고, `npm run build`가 통과했으며, 전체 회귀는 Node 22.19.0 기준 155건 중 141건 통과로 기록되어 있다. 한글 제목 입력은 붙여넣기·Enter 기준이며 IME 조합 입력 검증은 아니다.
++
++## 기존 실패 및 미검증 영역
++
++- 전체 회귀의 기존 실패 14건은 유지된 것으로 접수하며, 이번 수정으로 해결되었다고 판단하지 않는다. 보고서상 workspace 경계 필터 문제 등이 포함되나, 개별 실패 원인은 본 접수에서 재판정하지 않는다.
++- 다음 항목은 검증 범위 밖이다.
++  - 승인·취소·LLM Run 전체 흐름
++  - terminal resize
++  - 강제 종료 및 process tree 정리
++  - Native Windows Terminal 앱 자체
++  - IME 조합 입력
++  - 브라우저 Ctrl+C 입력 경로
++- 화면 캡처의 주변 브라우저 제목과 검증 안내는 호스트 정보이며 제품 TUI 내용과 구분한다.
++
++## 후속 작업
++
++1. 독립 실행 환경에서 동일 커밋·동일 산출물 해시를 대조하고 Windows ConPTY 재현을 수행한다.
++2. 기존 14건 실패를 별도 목록으로 분류해 회귀 기준과 수정 범위를 결정한다.
++3. Native Windows Terminal, IME, resize, 강제 종료 process tree, 승인·취소·LLM Run 시나리오를 별도 검증한다.
++4. 독립 실행 검증 결과와 전체 회귀 결과를 합친 뒤 릴리즈 후보에 대한 별도 승인 기록을 작성한다.
++
++## 승인 상태
++
++본 문서는 DDT의 **문서 기반 산출물 접수 및 범위 기록**이다. 제출된 실행·로그·해시를 근거로 한 접수이지, DDT의 독립 실행 검증이 아니다. 따라서 정식 릴리즈 승인, 배포 승인, 기존 14건 실패의 해결 선언으로 해석하지 않는다.
+문서 기반 접수 검토를 작성해 다음 경로에 저장했습니다.
+
+`/opt/data/workspace/mindcraft/artifacts/windows-tui-20260907/DDT-REVIEW.md`
+
+내용에는 다음을 구분해 기록했습니다.
+
+- 접수한 수정 3건
+- 제출된 증거와 해시 범위
+- 기존 14건 실패 및 미검증 영역
+- 후속 독립 실행 검증 작업
+- DDT 접수 검토와 정식 릴리즈 승인 간의 구분
+
+DDT가 Windows를 직접 실행했거나 독립 검증을 완료했다고 주장하지 않았습니다.
+
+session_id: 20260907_134644_c61424
+
+DDT_REVIEW_END
+DDT_REVIEW_EXIT 0

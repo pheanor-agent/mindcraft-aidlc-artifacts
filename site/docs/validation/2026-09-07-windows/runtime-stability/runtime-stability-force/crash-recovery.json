@@ -1,0 +1,38 @@
+{
+  "name": "crash-recovery",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788791235365,
+      "output": "MindCraft TUI (Pi runtime, mode=mock) — commands: setup <provider> <model> [purpose] | doctor | task <title> | tasks | use <task-id> | model | mode default|token-doctor|mock | run <prompt> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel <run-id> | knowledge | promote <id> | reject-knowledge <id> | quit\n"
+    },
+    {
+      "at": 1788791235365,
+      "output": "model: mock/deterministic  built-in  key: none\n"
+    },
+    {
+      "at": 1788791235366,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791235406,
+      "input": "tasks"
+    },
+    {
+      "at": 1788791235408,
+      "output": "> tasks\n"
+    },
+    {
+      "at": 1788791235408,
+      "output": "6b71304d-ad10-4bda-b1aa-3ca0a2d4af5d survive crash active\nmindcraft> "
+    },
+    {
+      "at": 1788791235639,
+      "input": "quit"
+    },
+    {
+      "at": 1788791235640,
+      "output": "> quit\n"
+    }
+  ]
+}

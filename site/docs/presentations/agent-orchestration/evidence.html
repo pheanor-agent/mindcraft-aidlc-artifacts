@@ -1,0 +1,94 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>슬라이드별 주장과 근거 · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="evidence.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="슬라이드별-주장과-근거">슬라이드별 주장과 근거</h1>
+<p>2026-09-07 조사 기준. <a href="research-dossier.html">조사 보고서</a>는 조사 범위, 작성자 확인, 출처의 성격과 한계를 설명한다. <a href="source-manifest.json">source-manifest.json</a>은 사용한 원본의 SHA-256 식별자다. 해시는 원문 동일성을 확인하는 값이며 내용이 옳다는 증명은 아니다.</p>
+<p><a id="s1"></a></p>
+<h2 id="01-공용-에이전트에서-오케스트레이션까지">01. 공용 에이전트에서 오케스트레이션까지</h2>
+<p>DDT에 실제로 두 차례 질의해 사전 개발 세션과 작업 이력을 조사했다. 행사 전 제품 이력과 본 행사 AI-DLC 이력을 분리했다. 두 흐름의 연결은 제품 지식·결정 근거 인계이며, 동일한 하나의 코드베이스에서 전체 개발이 자동 완료됐다는 주장이 아니다.</p>
+<p><a id="s2"></a></p>
+<h2 id="02-mindcraft-제품-소개">02. MindCraft 제품 소개</h2>
+<p><a href="../../../README.html">제품 README</a>, <a href="../../../DESIGN.html">DESIGN</a>, <a href="../../SSOT.html">SSOT</a>, <a href="../../demo-plan/README.html">데모 단계 기록</a>을 대조했다. <code>task</code>, <code>run</code>, <code>approve</code>, <code>history</code>, <code>knowledge</code> 명령과 작업 기록·지식 재사용은 제품 기준선의 설명이다. 공용 DDT는 이 제품 개발에 사용한 별도 에이전트다.</p>
+<p><a id="s3"></a></p>
+<h2 id="03-서로-다른-팀원의-실제-요청">03. 서로 다른 팀원의 실제 요청</h2>
+<p>DDT의 2차 조사에서 원본 <code>user_id</code>를 내부 대조했다.</p>
+<ul>
+<li>A: <code>20260820_103041_01713bf4</code>, JOB-1 제품 구상.</li>
+<li>B: <code>20260826_111934_4b067d35</code>, JOB-38/40 협업·Knowledge 방향 보강.</li>
+<li>A: JOB-53 목적 기반 모델 선택으로 변경.</li>
+</ul>
+<p>화면의 요청은 <strong>원문 요약</strong>이다. <a href="../../legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/request.html">JOB-38 요청</a>에 협업·LLM Wiki 요구와 당시 문서 반영 범위가 보존돼 있다. <a href="../../../COMMIT-HISTORY.html">COMMIT-HISTORY</a>에 JOB-53 변경 파일과 이전 자료의 legacy 보존이 기록돼 있다. A→B가 같은 스레드에서 직접 인계했다거나, 팀원 모두를 전수 확인했다는 주장은 아니다.</p>
+<p><a id="s4"></a></p>
+<h2 id="04-ddt의-스레드별-맥락과-작업-기록">04. DDT의 스레드별 맥락과 작업 기록</h2>
+<p>DDT가 읽은 <code>config.yaml</code>의 <code>discord.auto_thread: true</code>, <code>sessions/sessions.json</code>의 thread/session 키, <code>state.db</code>의 서로 다른 세션을 근거로 했다. Knowledge 정책은 <code>auto_promote=false</code>, <code>scope=chat_local</code>; 조회 코드에는 promoted 상태 필터가 있다. 정확한 locator와 제한은 <a href="research-dossier.html">조사 보고서 2절</a>에 정리했다.</p>
+<p>현재 설정이 과거 모든 시점에 동일했다고 입증한 것은 아니다. 관찰된 과거 세션 기록과 현재 설정을 대조했다. author별 완전 격리, 맥락 오염 0건을 주장하지 않는다. MindCraft 제품의 workspace lock을 DDT 대화 격리 근거로 사용하지 않는다.</p>
+<p><a id="s5"></a></p>
+<h2 id="05-컨셉에서-mvp까지">05. 컨셉에서 MVP까지</h2>
+<table>
+<thead>
+<tr>
+<th>인터랙션</th>
+<th>실제 근거</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8/20–26 컨셉·협업</td>
+<td>DDT JOB-1 및 JOB-38, 관련 세션</td>
+</tr>
+<tr>
+<td>9/3 TUI·라우팅</td>
+<td><code>1f2eb36</code>, <code>a8f2f77</code>, <code>d66af14</code></td>
+</tr>
+<tr>
+<td>9/5 실행 흐름</td>
+<td><code>416c7e6</code>, <code>1e102cb</code>, <code>ac0f0cd</code></td>
+</tr>
+<tr>
+<td>9/6 지식·복구</td>
+<td><code>1feef1e</code>, <code>559da01</code>, <code>e47f6d6</code></td>
+</tr>
+</tbody></table>
+<p>커밋은 이 저장소의 Git 이력에서 조회할 수 있다. <a href="../../demo-plan/phase-04-knowledge-reuse.html">Phase 4</a>, <a href="../../demo-plan/README.html">Phase 5 정본</a>에 목표와 수행 기록이 남아 있다. 계획 문서만으로 구현을 인정하지 않고 실제 커밋을 함께 대조했다. 제품의 지식 재사용 구현은 DDT 대화 공유 메커니즘과 구분한다.</p>
+<p><a id="s6"></a></p>
+<h2 id="06-기존-제품-지식을-새-개발-환경으로-인계">06. 기존 제품 지식을 새 개발 환경으로 인계</h2>
+<p>Astra 작업 <code>Control WSL ClaudeCode workflow</code>의 <code>01a07a51-4ba9-7650-82a4-94c0f10c040e</code> 턴에 실제 DDT plan review, 근거 문서 10개 수신·해시 대조, Claude 실행과 스토리 생성이 기록돼 있다. 로컬 원본 <code>ddt-story-plan-review.txt</code>, <code>interaction-001-claude-result.json</code> 산출물과 관련 세션을 대조했다.</p>
+<p>초기 WSL 접근은 실패했고 이후 Windows Claude CLI로 전환했다. 작업 제목을 실제 실행 환경으로 오해하지 않는다. AI-DLC는 외부 개발 절차이며 <a href="../../mindcraft-ai-dlc-knowledge-audit.html">제품·프로세스 경계</a>와 구분된다.</p>
+<p><a id="s7"></a></p>
+<h2 id="07-실제-작성검토수정-오케스트레이션">07. 실제 작성·검토·수정 오케스트레이션</h2>
+<p>실행 경로는 Windows Claude CLI, Tailscale SSH를 통한 원격 DDT 호출, 파일·manifest 인계였다. UI 도식은 이 기록을 설명하는 로컬 인터랙션이며 실제 에이전트를 호출하지 않는다.</p>
+<p>검토 요청에는 산출물·원본 요구사항·이전 지적·수정 대응·승인 범위를 담았다. DDT가 <code>REQUEST_CHANGES</code>를 반환하면 Claude가 수정하고 DDT가 재검토했다. Astra는 원문·범위·동일성을 확인하고 위임 범위에서 다음 단계로 이어갔다. 관련 원본: <code>ddt-stories-review.txt</code>, <code>ddt-stories-rereview.txt</code>, <code>ddt-workflow-review.txt</code>, <code>ddt-workflow-rereview.txt</code>, <code>ddt-workflow-final-review.txt</code>.</p>
+<p><a id="s8"></a></p>
+<h2 id="08-user-stories의-11개-지적">08. User Stories의 11개 지적</h2>
+<p>스토리 27개(P0 24/P1 보류 3), 페르소나 2개. DDT 최초 검토는 차단 B1<del>B6와 비차단 N1</del>N5를 남겼다. Claude 수정 대응표와 DDT 재검토를 대조했다.</p>
+<p>재검토 결론의 짧은 발췌:</p>
+<blockquote>
+<p>이전 REQUEST_CHANGES의 B1<del>B6, N1</del>N5는 stories와 승인 Requirements 본문을 직접 대조한 결과 모두 acceptance 수준에서 해소됨</p>
+</blockquote>
+<p>복구 항목은 intact store, interrupted write, corruption fallback, redacted audit/error, original Run immutability의 독립 시나리오로 보완됐다. <strong>이는 수용 기준의 검토 승인</strong>이며 11개 제품 버그 수정이나 실행 테스트 11개 통과를 의미하지 않는다. 원본: <code>ddt-stories-rereview.txt</code>, <code>inception/user-stories/review-response.md</code>.</p>
+<p><a id="s9"></a></p>
+<h2 id="09-astra의-독립-확인">09. Astra의 독립 확인</h2>
+<p><code>inception/application-design/plan-approval.md</code>, 2026-09-07T11:19:34.258Z:</p>
+<blockquote>
+<p>DDT가 재검토에서 N 항목 번호를 처음과 다르게 요약한 부분은 최초 지적과 대응표의 내용으로 대조했다.</p>
+</blockquote>
+<p>같은 기록은 수정본 21개 파일의 로컬 해시가 제출 manifest와 일치했음을 명시한다. 원격 수신 바이트 검증은 Python RECEIPT이고, DDT의 본문 검토와 별개다. 승인 대상은 계획 rev.2와 Q1~Q8 답변이다. 아직 작성하지 않은 설계 산출물·Construction·제품 코드/테스트·live provider는 승인하지 않았다.</p>
+<p>Workflow Planning rev.1–3에서도 P1 보류 기능과 P0 context 경계를 구분한 수정 기록이 있다. 이 사례는 부가 근거이며 본편을 이 한 사례만으로 구성하지 않았다.</p>
+<p><a id="s10"></a></p>
+<h2 id="10-컴퓨터-사용과-tui-수정">10. 컴퓨터 사용과 TUI 수정</h2>
+<p>Astra 작업 <code>Mindcraft Windows 빌드 테스트</code>, 턴 <code>01a07c10-1929-7ab0-8908-8d2f83e24643</code>의 CUA 입력·클릭·키·캡처 호출을 확인했다. <code>setup mock deterministic</code>, <code>doctor</code>, 한글 <code>task</code>, <code>tasks</code>, <code>quit</code> 조작이 기록됐다.</p>
+<ul>
+<li><a href="assets/windows-tui-before.png">실제 수정 전 캡처</a></li>
+<li><a href="assets/windows-tui-fixed.png">실제 수정 후 캡처</a></li>
+<li>제품 수정 커밋: <code>1e3c5317069bb1614e473f6690a35f574bafd710</code></li>
+<li>DDT 접수: <code>docs/ddt-handoff/windows-tui-20260907/DDT-REVIEW.md</code> (Windows 작업 브랜치 및 DDT 원격 자료에서 직접 확인)</li>
+</ul>
+<p>DDT 접수 문서는 출력 누적·설정 안내·quit 종료 수정과 관련 patch, PTY 로그를 명시한다. 신규 회귀 3/3, 해당 전체 회귀 141/155·기존 실패 14건. 기존 MVP의 Windows 검증이며 AI-DLC 신규 구현과 분리한다. DDT가 Windows에서 독립 재실행한 것은 아니다. 화면은 실제 Windows ConPTY에 연결된 브라우저 터미널이며 네이티브 Windows Terminal이나 한글 IME 검증을 대신하지 않는다.</p>
+<p><a id="s11"></a></p>
+<h2 id="11-자동-기록과-도달점">11. 자동 기록과 도달점</h2>
+<p>직접 읽은 실행 파일은 <code>tools/Invoke-AiDlc.ps1</code>, <code>claude-hook.mjs</code>, <code>checkpoint.mjs</code>, <code>review.mjs</code>다. Claude 실행 전후와 도구 이벤트에 Git checkpoint와 검토 HTML을 연결했다. 실패 표시와 동시 Git 변경 방지 코드가 있다. 래퍼 외부의 모든 저장 이벤트를 포괄하는 기능은 아니다.</p>
+<p>조사 시점 <code>aidlc-state.md</code>는 Application Design Part 1 계획·답변 승인, Part 2 문서 작성 미시작(Claude/Bedrock 인증 403)을 명시한다. 새 제품 전체 구현 완료를 주장하지 않는다. 별도 Windows 후속 안정성 자료에는 F1~F4 미해결 결함과 JOB-69 정식 gate 전이 미완료도 남아 있다.</p>
+<p><a id="s12"></a></p>
+<h2 id="12-두-실험의-의미">12. 두 실험의 의미</h2>
+<p>관찰한 요청과 결과를 바탕으로 한 발표자의 해석이다. 공용 에이전트의 팀 활용, 축적된 제품 지식의 재사용, 다른 에이전트 사이의 판단·작업 연결, 실제 화면 검증을 함께 시도했다. 새로운 활용 방식이라는 의미이며 보편적 최초나 벤치마크 우위를 주장하지 않는다.</p>
+<p><a id="s13"></a></p>
+<h2 id="부록">부록</h2>
+<p><a href="research-dossier.html">조사 보고서</a>와 <a href="source-manifest.json">원본 식별 목록</a>에 원천·관찰 범위·확인 한계를 보존했다. 사용자 ID와 전체 대화·접속·인증 정보는 싣지 않았다.</p>
+<p><a href="index.html">슬라이드</a> · <a href="speaker-script.html">발표 대본</a> · <a href="../README.html">발표 자료 목록</a></p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#01-공용-에이전트에서-오케스트레이션까지">01. 공용 에이전트에서 오케스트레이션까지</a></li><li><a href="#02-mindcraft-제품-소개">02. MindCraft 제품 소개</a></li><li><a href="#03-서로-다른-팀원의-실제-요청">03. 서로 다른 팀원의 실제 요청</a></li><li><a href="#04-ddt의-스레드별-맥락과-작업-기록">04. DDT의 스레드별 맥락과 작업 기록</a></li><li><a href="#05-컨셉에서-mvp까지">05. 컨셉에서 MVP까지</a></li><li><a href="#06-기존-제품-지식을-새-개발-환경으로-인계">06. 기존 제품 지식을 새 개발 환경으로 인계</a></li><li><a href="#07-실제-작성검토수정-오케스트레이션">07. 실제 작성·검토·수정 오케스트레이션</a></li><li><a href="#08-user-stories의-11개-지적">08. User Stories의 11개 지적</a></li><li><a href="#09-astra의-독립-확인">09. Astra의 독립 확인</a></li><li><a href="#10-컴퓨터-사용과-tui-수정">10. 컴퓨터 사용과 TUI 수정</a></li><li><a href="#11-자동-기록과-도달점">11. 자동 기록과 도달점</a></li><li><a href="#12-두-실험의-의미">12. 두 실험의 의미</a></li><li><a href="#부록">부록</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

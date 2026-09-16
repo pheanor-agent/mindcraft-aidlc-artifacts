@@ -1,0 +1,286 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft 개발 협업 조사 보고서 · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="research-dossier.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-개발-협업-조사-보고서">MindCraft 개발 협업 조사 보고서</h1>
+<p>자료 기준일: 2026-09-07. 발표를 위해 DDT에 두 차례 읽기 전용 조사를 요청하고, 응답을 로컬 Git·AI-DLC 산출물·Astra 작업 기록과 대조했다. 날짜는 각 원문과 Git에 기록된 날짜를 따르며, 명시한 승인 시각에는 UTC와 한국 시각을 함께 적었다. 이 문서는 제품 요구사항이나 현재 개발 상태를 갱신하지 않는다.</p>
+<p>DDT 조사 호출 세션: <code>20260907_143253_bd52ac</code>(광범위 이력), <code>20260907_143851_3d4daf</code>(작성자·맥락 분리와 실제 요청 추가 대조). CLI가 반환한 세션 식별자를 사용했다.</p>
+<h2 id="무엇을-확인했는가">무엇을 확인했는가</h2>
+<p>행사 전에는 공용 Discord DDT 에이전트를 통해 여러 팀원이 같은 제품의 개발에 기여했다. DDT가 원본 author ID를 내부 대조한 결과, 초기 제품을 요청한 참여자 A와 협업·Knowledge 방향을 보강한 참여자 B는 서로 다른 사람이었다. 대화는 Discord 스레드별 세션으로 나뉘었고, JOB·문서·Git 이력이 후속 작업의 기준으로 남았다.</p>
+<p>본 행사에는 Astra가 기존 제품 지식을 가진 DDT와 Windows의 Claude Code를 연결했다. 실제 기록에서 계획·스토리 작성, 검토 요청, 수정, 재검토, 위임 승인, 변경 기록과 HTML 보고서 생성이 확인된다. 별도 Windows MVP 검증에서는 실제 ConPTY TUI를 브라우저에서 조작하고 문제를 수정했다.</p>
+<p>이 자료의 핵심은 <strong>공용 에이전트와 팀의 작업을 이어간 경험이, 다른 에이전트를 조율할 수 있는 제품 지식으로 연결됐다는 것</strong>이다. 모델 순위나 시간 절감률 대신, 실제 행동과 산출물로 그 확장을 보여준다.</p>
+<h2 id="조사-범위와-출처의-성격">조사 범위와 출처의 성격</h2>
+<table>
+<thead>
+<tr>
+<th>원천</th>
+<th>확인 범위</th>
+<th>검증 방식</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DDT 1차 조사</td>
+<td>8/20–9/7 세션, JOB 목록, Git, 관련 설계와 실행 자료</td>
+<td>실제 Hermes 호출, 파일 읽기·session search·읽기 전용 terminal</td>
+</tr>
+<tr>
+<td>DDT 2차 조사</td>
+<td>8/20–9/6 인간 작성자·thread/session 구조·과거 요청의 후속 반영</td>
+<td>원본 author ID 내부 대조, SQLite schema/세션 조회, 설정·스크립트 읽기</td>
+</tr>
+<tr>
+<td>제품 Git</td>
+<td>현재 발표 기준선에서 조회 가능한 8/24 이후 커밋</td>
+<td>로컬 <code>git log</code>, 관련 문서·소스 파일과 대조</td>
+</tr>
+<tr>
+<td>AI-DLC 워크스페이스</td>
+<td>실제 검토 원문, 수정 대응표, 승인 파일, 현재 상태, 실행 래퍼</td>
+<td>직접 파일 읽기, SHA-256 식별</td>
+</tr>
+<tr>
+<td>Astra 작업 이력</td>
+<td><code>Control WSL ClaudeCode workflow</code> 전체 페이지, <code>mindcraft ai-dlc 개발 계속</code>, <code>Mindcraft Windows 빌드 테스트</code>의 조사 시점 이력</td>
+<td>사용자 요청·실제 도구 호출·결과 대조</td>
+</tr>
+<tr>
+<td>Windows 결과</td>
+<td>수정 전후 실제 TUI 캡처, 회귀 결과, DDT 접수 문서</td>
+<td>로컬 원본 및 DDT 조사 결과 대조</td>
+</tr>
+</tbody></table>
+<p>DDT 1차 보고 기준 JOB 디렉터리는 70개, 이름에 MindCraft·AI-DLC·DDT가 포함된 후보는 32개였다. 이는 <strong>검색 후보 수</strong>이며 모두 정독하거나 모두 완료했다는 수치가 아니다. 주요 정독 JOB은 1, 38, 40, 51, 53, 57, 58, 59, 60, 61, 62, 65, 66, 67, 68, 69다. Git의 49건이라는 집계는 <code>--all</code>과 조사 기간을 적용한 DDT 저장소 기준으로, 사람별 기여량이나 생산성 지표로 사용하지 않았다.</p>
+<p>원격 원문은 DDT가 읽고 보고한 근거다. 이 발표 작성자가 원격 DB의 모든 행을 다시 열람한 것은 아니다. 로컬에서 직접 대조한 자료와 구분한다. 전체 원시 대화, 사용자 ID, 접속 정보, 인증 설정은 저장소에 싣지 않았다. 재확인용 파일 식별자는 <a href="source-manifest.json">source-manifest.json</a>에 기록했다. 원시 출력에 포함된 내부 추론 텍스트는 인용하거나 발표 근거로 사용하지 않았다.</p>
+<h2 id="1-팀의-실제-요청이-제품에-남은-과정">1. 팀의 실제 요청이 제품에 남은 과정</h2>
+<p>아래 A/B/C는 실명이 아닌 익명 표기다. 별명 차이를 다른 사람으로 세지 않고 DDT가 원본 <code>user_id</code> 동일성을 확인했다. 이 확인은 관찰된 세션의 작성자를 구분하며 팀 전체의 인원수를 증명하지 않는다.</p>
+<table>
+<thead>
+<tr>
+<th>날짜</th>
+<th>요청·참여자</th>
+<th>DDT가 남긴 결과</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8/20</td>
+<td>A: “작업 워크플로우와 지식 시스템을 내장한 tui 기반 프로그램”</td>
+<td>Pi/OpenCode 검토, loop·Knowledge·checkpoint 설계</td>
+<td>session <code>20260820_103041_01713bf4</code>, JOB-1</td>
+</tr>
+<tr>
+<td>8/26–27</td>
+<td>B: “현재 프로젝트 진행 상황, 구조, 동작 설명해줘”; 협업과 지식 활용 보강</td>
+<td>JOB-38 팀 협업·LLM Wiki, JOB-40 개입·Routing 방향</td>
+<td>session <code>20260826_111934_4b067d35</code>, <a href="../../legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/request.html">JOB-38 요청</a></td>
+</tr>
+<tr>
+<td>8/31</td>
+<td>C: 최종 제품 개념 질문</td>
+<td>같은 제품을 별도 thread/session에서 조회한 기록</td>
+<td>session <code>20260831_144551_9f01550c</code>; 특정 구현 기여까지 연결하지 않음</td>
+</tr>
+<tr>
+<td>8/31</td>
+<td>A: 컨셉 충돌·설치 부담·Windows 실행환경 조사 요청</td>
+<td>JOB-51에서 OS·TTY·권한·외부 CLI 경계 검토</td>
+<td>session <code>20260831_212533_881a8ea3</code>, JOB-51</td>
+</tr>
+<tr>
+<td>9/3</td>
+<td>A: “기존에 opencode, claudecode 에이전트를 활용해서 라우팅 하던 방식을 폐기”</td>
+<td>JOB-53, 등록 모델과 목적 기반 선택 정책</td>
+<td><a href="../../../COMMIT-HISTORY.html">COMMIT-HISTORY</a>, <code>d66af14</code></td>
+</tr>
+<tr>
+<td>9/3</td>
+<td>A: HTML-first에서 Pi terminal TUI-first로 전환 요청</td>
+<td>JOB-57, Pi AgentSession/pi-tui 재사용</td>
+<td><code>1f2eb36</code>, <code>a8f2f77</code></td>
+</tr>
+</tbody></table>
+<p>8/20 최초 설계가 이후 작업의 배경으로 이어졌고, JOB-38/40/51의 제안은 JOB-53 시점에 legacy로 보존됐다. 그 결과, 새 결정을 반영하면서 이전 제안을 현재 기능으로 혼동하지 않게 했다. B의 요구가 현재 특정 코드 줄을 직접 만들었다고 단정하지 않는다. 확인된 것은 <strong>다른 참여자가 같은 프로젝트의 방향을 보강했고, 그 결과가 후속 설계의 참고 이력으로 남았다는 것</strong>이다.</p>
+<p>초기 제품 가설에는 팀 협업·LLM Wiki·외부 coding agent 라우팅이 포함됐다. 최종 로컬 MVP에 팀 계정·공유 backend나 외부 CLI adapter가 모두 구현됐다는 뜻은 아니다. 당시 가설과 현재 범위는 <a href="../../SSOT.html">SSOT</a>와 <a href="../../../ROUTING.html">ROUTING</a>을 기준으로 구분한다.</p>
+<h2 id="2-공용-ddt의-맥락-분리와-공유">2. 공용 DDT의 맥락 분리와 공유</h2>
+<p>DDT 2차 조사는 첫 답변의 모호한 부분을 다음처럼 정정했다.</p>
+<table>
+<thead>
+<tr>
+<th>계층</th>
+<th>실제 관찰</th>
+<th>근거 위치</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>공용 접점</td>
+<td>같은 Discord gateway/profile와 허용 채널</td>
+<td>DDT <code>config.yaml</code> 15–26행</td>
+</tr>
+<tr>
+<td>대화 경계</td>
+<td><code>auto_thread: true</code>, thread별 session ID</td>
+<td><code>config.yaml</code> 16–19행; <code>sessions/sessions.json</code> 3–43행</td>
+</tr>
+<tr>
+<td>라우팅 키</td>
+<td><code>agent:main:discord:thread:&lt;thread_id&gt;:&lt;thread_id&gt;</code> 형태</td>
+<td>세션 인덱스와 <code>state.db</code> sessions/gateway_routing</td>
+</tr>
+<tr>
+<td>작성자 추적</td>
+<td><code>user_id</code>, <code>origin_json</code> 보존</td>
+<td><code>state.db</code> sessions</td>
+</tr>
+<tr>
+<td>작업 연결</td>
+<td>공통 JOB 경로, 요청·설계·검토·검증·산출물</td>
+<td>JOB별 문서와 audit</td>
+</tr>
+<tr>
+<td>Knowledge 정책</td>
+<td><code>auto_promote: false</code>, <code>scope: chat_local</code></td>
+<td><code>config.yaml</code> 60–62행</td>
+</tr>
+<tr>
+<td>Knowledge 조회 코드</td>
+<td>promoted/chat_local/미대체 자료만 조회, source_ref에 JOB·파일·해시</td>
+<td><code>core/scripts/knowledge/knowledge_runtime.py</code> 55–67행</td>
+</tr>
+<tr>
+<td>그룹 JOB 경로</td>
+<td>participant 입력 → resolver → group_tag로 경로 선택</td>
+<td><code>scripts/create-job.sh</code> 183–224, 258–267행</td>
+</tr>
+</tbody></table>
+<p>주된 대화 분리 단위는 <strong>author ID가 아니라 스레드/세션</strong>이다. <code>history_backfill</code>도 켜져 있어 관련 채널 이력을 가져올 수 있다. 따라서 사용자별 완전한 접근 격리라는 표현은 맞지 않는다. 또한 조사 시점 설정이 과거 모든 시점에 동일했다는 보장은 없으며, 과거 세션 기록과 현재 설정을 함께 대조한 결과다.</p>
+<p><code>create-job.sh</code>의 resolver 호출과 반환값 사용은 확인됐지만 resolver 내부 구현은 접근 가능한 tree에서 찾지 못했다. Knowledge 정책을 모든 runtime 경로가 일관되게 적용하는지까지 입증하지 않았다.</p>
+<p><strong>분리해야 하는 다른 기능:</strong> MindCraft 제품의 <code>workspace-lock.mjs</code>는 로컬 journal writer 충돌 방지다. DDT Discord 대화 격리의 증거가 아니다. 제품의 Knowledge 재사용 기능도 DDT 공통 Knowledge와 별도다. 첫 DDT 응답의 이 혼동을 추가 질의로 바로잡았다. 제품 구현 결함을 “DDT 사용자간 컨텍스트 오염”의 반증으로 사용하지 않는다. 오염 0건이라는 전수 통계도 확보하지 않았다.</p>
+<h2 id="3-행사-전-mvp의-구현-경로">3. 행사 전 MVP의 구현 경로</h2>
+<table>
+<thead>
+<tr>
+<th>시기</th>
+<th>구상에서 실제로 추가된 것</th>
+<th>직접 확인 가능한 커밋</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8/30</td>
+<td>작업 저장·목록 선택·실행 목록과 재개</td>
+<td><code>e479181</code>, <code>5dae633</code>, <code>c58bd93</code></td>
+</tr>
+<tr>
+<td>9/3</td>
+<td>목적 기반 모델 선택, Pi TUI runner</td>
+<td><code>d66af14</code>, <code>a8f2f77</code></td>
+</tr>
+<tr>
+<td>9/5</td>
+<td>deterministic fixture, preflight·설정, TUI 명령 workflow</td>
+<td><code>416c7e6</code>, <code>1e102cb</code>, <code>ac0f0cd</code></td>
+</tr>
+<tr>
+<td>9/6</td>
+<td>승인과 도구 안전성, 실행 제어 응답성</td>
+<td><code>328e1aa</code>, <code>50a6722</code>, <code>768dc4d</code></td>
+</tr>
+<tr>
+<td>9/6</td>
+<td>Knowledge 재사용과 상태·복구</td>
+<td><code>1feef1e</code>, <code>559da01</code></td>
+</tr>
+<tr>
+<td>9/6</td>
+<td>journal 직렬화, 실행 직전 승인 재검증</td>
+<td><code>3ca6626</code>, <code>0694fc2</code></td>
+</tr>
+<tr>
+<td>9/6</td>
+<td>첫 실행 안내·한국어 UI·session/readiness 경계</td>
+<td><code>4be9b9f</code>, <code>e47f6d6</code>, <code>e5caff2</code></td>
+</tr>
+</tbody></table>
+<p><a href="../../demo-plan/README.html">데모 개발 단계 기록</a>은 phase별 검증 범위를 남긴다. 여기서 MVP는 구현된 로컬 제품 기준선이며, Windows의 모든 배포 시나리오나 live provider 검증이 끝났다는 의미가 아니다. 현재 모델 선택은 Episode 시작 시 한 번 수행하며, token 기반 동적 전환은 완료 기능으로 소개하지 않는다.</p>
+<h2 id="4-본-행사-제품-지식을-두-에이전트-사이에-연결">4. 본 행사: 제품 지식을 두 에이전트 사이에 연결</h2>
+<p>로컬 작업 이력의 초기 제목은 WSL이지만, 실제 연결 후 <strong>Windows Claude Code CLI</strong>로 전환했다. 발표에서 WSL의 Claude를 GUI로 조작했다고 표현하지 않는다.</p>
+<table>
+<thead>
+<tr>
+<th>역할</th>
+<th>실제 행동</th>
+<th>확인 결과</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DDT</td>
+<td>기존 제품 파일을 지정·제공하고 산출물을 요구사항과 대조</td>
+<td>최초 story plan 검토 APPROVE; 근거 문서 10개 인계 및 로컬 해시 대조 기록</td>
+</tr>
+<tr>
+<td>Claude</td>
+<td>계획 승인 후 스토리 27개·페르소나 2개 작성</td>
+<td>P0 24개, P1 보류 3개 유지</td>
+</tr>
+<tr>
+<td>DDT</td>
+<td>스토리의 차단 6개/비차단 5개 지적</td>
+<td>복구·진단 유효기간·모드 격리·resume·context·검토 근거 보강</td>
+</tr>
+<tr>
+<td>Astra</td>
+<td>지적과 근거를 전달하고 수정 결과 확인</td>
+<td>Claude 대응표 작성, 원본 요구사항 유지 확인</td>
+</tr>
+<tr>
+<td>DDT</td>
+<td>수정본 재검토</td>
+<td>11개 지적이 acceptance 수준에서 해소, APPROVE</td>
+</tr>
+<tr>
+<td>Claude/DDT/Astra</td>
+<td>Workflow Planning rev.1–3 수정·재검토</td>
+<td>보류 기능과 필수 context 경계를 구분, rev.3 승인</td>
+</tr>
+<tr>
+<td>Astra</td>
+<td>Application Design 계획 원문·답변·지적·대응표 대조</td>
+<td>번호가 바뀐 지적을 내용으로 대조, 제출 파일 21개 로컬 해시 확인</td>
+</tr>
+</tbody></table>
+<p>Application Design 승인 시각은 <strong>2026-09-07T11:19:34.258Z (한국 시각 20:19)</strong>. 승인 대상은 계획 rev.2와 Q1~Q8 답변이다. 설계 문서 5개 작성이 다음 작업이며, 조사 시점 상태 파일은 개발용 Claude/Bedrock 인증 403 때문에 미시작이라고 기록한다. 새 AI-DLC workspace에서 제품 전체 구현·테스트가 완료됐다고 말하지 않는다.</p>
+<p>자동 기록은 <code>Invoke-AiDlc.ps1</code>, <code>claude-hook.mjs</code>, <code>checkpoint.mjs</code>, <code>review.mjs</code>에 연결됐다. 실행 전후 checkpoint와 도구 이벤트 훅, Git 변경 기록, 검토 HTML 생성 코드와 실행 기록을 확인했다. 일반 편집기 저장이나 래퍼 밖 실행까지 자동 기록한다는 뜻은 아니다. AI-DLC 하네스 본체와 분리한 외부 실행 방식이다.</p>
+<h2 id="5-컴퓨터-사용-실제-화면에서-문제를-찾은-사례">5. 컴퓨터 사용: 실제 화면에서 문제를 찾은 사례</h2>
+<p><code>Mindcraft Windows 빌드 테스트</code> 작업의 실제 CUA 호출에는 브라우저 탭 열기, TUI 입력창 클릭, <code>setup mock deterministic</code> 붙여넣기, Return, <code>doctor</code>, 한글 작업 생성, BackSpace 편집, <code>quit</code>, 재시작, 화면 캡처가 남아 있다. 화면은 브라우저 xterm.js를 통해 <strong>실제 Windows ConPTY의 MindCraft.exe Pi TUI</strong>와 연결됐다.</p>
+<table>
+<thead>
+<tr>
+<th>발견</th>
+<th>수정</th>
+<th>결과의 범위</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>패딩·개행이 누적되는 출력</td>
+<td>원문 줄을 현재 폭에서 한 번만 렌더링</td>
+<td>신규 회귀 중 1건</td>
+</tr>
+<tr>
+<td>setup 이후 모델 수·초기 안내 잔존</td>
+<td>출력 시 현재 preflight 반영</td>
+<td>신규 회귀 중 1건</td>
+</tr>
+<tr>
+<td>quit 이후 프로세스 잔존</td>
+<td>우선 처리 경로에서도 stop/종료 콜백 호출</td>
+<td>신규 회귀 중 1건</td>
+</tr>
+</tbody></table>
+<p>수정 기준 커밋 <code>1e3c5317069bb1614e473f6690a35f574bafd710</code>. 신규 회귀 3/3, 해당 전체 회귀는 Node 22.19.0 기준 141/155로 기존 실패 14건이 남았다. 원본 <a href="assets/windows-tui-before.png">수정 전</a> / <a href="assets/windows-tui-fixed.png">수정 후</a> 캡처를 포함했다. 슬라이드는 빈 하단을 제외한 상단 실행 영역을 CSS로 표시하며 원본 파일을 변형하지 않았다.</p>
+<p>이 작업은 <strong>기존 MVP의 Windows 확장·검증</strong>이며 AI-DLC 신규 개발의 Construction 완료로 합산하지 않는다. DDT는 결과를 접수·문서 검토했으며 Windows를 독립 재실행하지 않았다. 네이티브 Windows Terminal, 한국어 IME, clean VM, live provider 검증은 이 캡처가 증명하지 않는다.</p>
+<p>후속 조사에서 Windows runtime의 모델 불일치, 실행 중 approvals 조회 정체, bundled Node 하위 명령 탐색 실패, 실패한 명령의 완료 상태 표기(F1~F4)가 보고됐다. 출시 완전 통과로 표시하지 않았다. JOB-69는 번호 충돌과 canonical gate 부재가 기록돼 있으며, 외부 결과 접수와 정식 workflow 완료를 구분한다.</p>
+<h2 id="6-발표에서-강조할-새로운-시도">6. 발표에서 강조할 새로운 시도</h2>
+<ol>
+<li><strong>공용 에이전트를 팀의 개발 접점으로 사용:</strong> 서로 다른 사람이 같은 제품의 요구를 보강하고, 별도 세션과 공통 작업 기록으로 누적했다.</li>
+<li><strong>축적한 제품 지식을 다른 개발 에이전트의 검토 기준으로 사용:</strong> DDT가 Claude 산출물을 실제 요구사항과 대조해 수정시켰다.</li>
+<li><strong>Astra가 에이전트 사이의 판단 차이와 다음 행동까지 관리:</strong> 원문 대조·파일 인계·수정·위임 승인·기록을 연결했다.</li>
+<li><strong>컴퓨터 사용을 실제 검증에 연결:</strong> 화면 조작으로 재현한 문제를 수정하고 실행 근거를 다시 DDT에 인계했다.</li>
+</ol>
+<p>“세계 최초”, “성능 우위 입증”, “시간 X% 절감”, “맥락 오염 0건”, “모든 개발·배포 완전 자동화”는 주장하지 않는다. 이는 의미를 축소하기 위한 제한이 아니라, 실제 시도의 어느 부분이 확인됐는지 청중이 정확하게 이해하도록 하는 기준이다.</p>
+<p><a href="index.html">본편 슬라이드</a> · <a href="evidence.html">주장별 근거</a> · <a href="speaker-script.html">발표 대본</a></p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#무엇을-확인했는가">무엇을 확인했는가</a></li><li><a href="#조사-범위와-출처의-성격">조사 범위와 출처의 성격</a></li><li><a href="#1-팀의-실제-요청이-제품에-남은-과정">1. 팀의 실제 요청이 제품에 남은 과정</a></li><li><a href="#2-공용-ddt의-맥락-분리와-공유">2. 공용 DDT의 맥락 분리와 공유</a></li><li><a href="#3-행사-전-mvp의-구현-경로">3. 행사 전 MVP의 구현 경로</a></li><li><a href="#4-본-행사-제품-지식을-두-에이전트-사이에-연결">4. 본 행사: 제품 지식을 두 에이전트 사이에 연결</a></li><li><a href="#5-컴퓨터-사용-실제-화면에서-문제를-찾은-사례">5. 컴퓨터 사용: 실제 화면에서 문제를 찾은 사례</a></li><li><a href="#6-발표에서-강조할-새로운-시도">6. 발표에서 강조할 새로운 시도</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

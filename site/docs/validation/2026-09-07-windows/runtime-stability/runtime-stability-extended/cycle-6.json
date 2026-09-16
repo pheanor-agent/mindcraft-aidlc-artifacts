@@ -1,0 +1,42 @@
+{
+  "name": "cycle-6",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788791095446,
+      "output": "MindCraft TUI (Pi runtime, mode=mock) — commands: setup <provider> <model> [purpose] | doctor | task <title> | tasks | use <task-id> | model | mode default|token-doctor|mock | run <prompt> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel <run-id> | knowledge | promote <id> | reject-knowledge <id> | quit\n"
+    },
+    {
+      "at": 1788791095447,
+      "output": "model: mock/deterministic  built-in  key: none\n"
+    },
+    {
+      "at": 1788791095448,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791095502,
+      "input": "task cycle-6"
+    },
+    {
+      "at": 1788791095505,
+      "output": "> task cycle-6\n"
+    },
+    {
+      "at": 1788791095506,
+      "output": "task=85ec2786-a9b0-4e67-8666-bbdf88e0a337 purpose=general\n"
+    },
+    {
+      "at": 1788791095507,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791095734,
+      "input": "quit"
+    },
+    {
+      "at": 1788791095734,
+      "output": "> quit\n"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft Windows 실행 파일·신규 사용자 경험 설계 검토 및 승인요청 · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="windows-executable-review-approval-request.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-windows-실행-파일신규-사용자-경험-설계-검토-및-승인요청">MindCraft Windows 실행 파일·신규 사용자 경험 설계 검토 및 승인요청</h1>
+<ul>
+<li>검토 대상: <code>windows-executable-comprehensive-design.md</code></li>
+<li>원문 보관 위치: <code>/opt/data/cache/documents/doc_b458fe1df08d_windows-executable-comprehensive-design.md</code></li>
+<li>원문 SHA-256: <code>727f864f37ce2389456089ff9857ff9a9bd59265504d6143417f3d02d931f833</code></li>
+<li>현재 제품 저장소: <code>/opt/data/workspace/mindcraft</code></li>
+<li>검토 상태: <strong>이전 기록 — 기본 작업 워크플로우 문서로 대체됨</strong></li>
+<li>구현 상태: <strong>미적용</strong></li>
+<li>프로세스 위치: <strong>AI-DLC 방식 적용 기록 아님; 본문은 참고 기록으로 보존</strong></li>
+</ul>
+<blockquote>
+<p>이 문서는 설계를 제품에 적용하기 전에 수행한 검토 결과와 다음 단계 승인을 요청하기 위한 기록이다. 승인 전에는 소스 수정, patch 적용, native helper/installer 구현, credential 변경, live provider 호출, 외부 push·배포를 수행하지 않는다.</p>
+</blockquote>
+<h2 id="1-수행한-절차">1. 수행한 절차</h2>
+<ol>
+<li>첨부 문서 전체를 검토하고 목표·범위·수락 기준·아키텍처·보안 경계·테스트 매트릭스·구현 순서를 확인했다.</li>
+<li>현재 AI-DLC Inception 요구사항·제약 및 기존 MindCraft SSOT와 대조했다.</li>
+<li>현재 저장소의 package, CLI, preflight, config 저장 경로를 확인했다.</li>
+<li>현재 저장소에서 재현 가능한 기준선 명령을 실행했다.</li>
+<li>구현 갭, 승인 전 결정사항, Windows 미검증 항목을 분리해 기록했다.</li>
+<li>소스 적용 없이 본 승인요청 문서와 작업 항목만 등록한다.</li>
+</ol>
+<h2 id="2-현재-기준선-실행-결과">2. 현재 기준선 실행 결과</h2>
+<p>실행 위치: <code>/opt/data/workspace/mindcraft</code></p>
+<table>
+<thead>
+<tr>
+<th>명령</th>
+<th>결과</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>npm run build</code></td>
+<td><strong>PASS</strong></td>
+<td>현재 지정 파일 syntax check 통과</td>
+</tr>
+<tr>
+<td><code>npm test</code></td>
+<td><strong>PASS — 130/130</strong></td>
+<td>현재 Linux/Node 환경의 회귀 기준선</td>
+</tr>
+<tr>
+<td><code>npm run release:check</code></td>
+<td><strong>PASS</strong></td>
+<td>npm package dry-run, 24 files / 35.4 kB package</td>
+</tr>
+<tr>
+<td>첨부 원문 SHA-256</td>
+<td><code>727f864f...d931f833</code></td>
+<td>검토 입력 identity</td>
+</tr>
+<tr>
+<td>기준 ZIP SHA-256</td>
+<td><code>d4b8aa8f...9d0c27</code></td>
+<td><code>mindcraft-code-current.zip</code> identity</td>
+</tr>
+</tbody></table>
+<p>위 결과는 Windows native 실행, 설치 성공, 서명, 실제 provider 호출, Credential Manager, 한글 IME, clean VM 성공을 의미하지 않는다.</p>
+<h2 id="3-설계와-현재-상태의-정합성">3. 설계와 현재 상태의 정합성</h2>
+<h3 id="유지-가능한-방향">유지 가능한 방향</h3>
+<ul>
+<li>기존 Task → Episode → Run, approval barrier, Knowledge candidate/promote, fail-closed, 자동 fallback 금지 정책과 정합하다.</li>
+<li>설치 위치와 사용자 작업 폴더를 분리하고, 실행 파일 위치를 workspace로 암묵 선택하지 않는 방향이 현재 workspace/context 경계와 정합하다.</li>
+<li>mock/live 및 local/live readiness를 분리하고, Run 시작 시 model/mode snapshot을 고정하는 방향이 기존 결정과 정합하다.</li>
+<li>순차 세션·단일 writer·복구 시 자동 재실행 금지·승인 전 side effect 금지 원칙을 유지한다.</li>
+<li>AI-DLC 문서/감사 상태와 MindCraft runtime 상태를 분리한다.</li>
+</ul>
+<h3 id="현재-코드와의-주요-갭">현재 코드와의 주요 갭</h3>
+<ol>
+<li><code>src/cli.mjs</code>는 기본 readline CLI이고 <code>MINDCRAFT_TUI=1</code>일 때만 TUI다. 설계의 “기본 실행에서 TUI 진입”은 미구현이다.</li>
+<li>현재 설정 경로는 상대 <code>.mindcraft</code>와 <code>process.cwd()</code> 중심이며, launcher/bootstrap/workspace picker/user-data 분리가 없다.</li>
+<li>현재 config schema는 v1 모델 registry다. 설계가 제안한 v2 migration, effective config 단일 경로, Windows credential reference는 미구현이다.</li>
+<li><code>src/preflight.mjs</code>는 <code>airouter</code>/<code>mock</code> 기준의 현재 진단이며, 설계가 요구하는 provider adapter 소유 readiness·credential broker·연결 테스트 계약은 확장 필요하다.</li>
+<li>현재 package에는 Windows native launcher, 동봉 Node runtime, installer, manifest/SBOM/license/signing pipeline이 없다.</li>
+<li>현재 명령 fixture와 child process 처리는 Windows 절대 runtime·process tree/Job Object 검증 전이다.</li>
+<li>현재 TUI는 설계가 요구하는 onboarding wizard, 원본 event transcript, 승인 panel, IME/resize 및 종료 coordinator 전체를 충족한다고 볼 수 없다.</li>
+</ol>
+<h2 id="4-반드시-분리할-결정과-검증">4. 반드시 분리할 결정과 검증</h2>
+<ul>
+<li><strong>WIN-00 기준선:</strong> Windows 11 x64 일반 계정, Node/npm/Git/WSL 미설치 clean VM의 baseline을 별도로 수립한다.</li>
+<li><strong>WIN-01 배포 spike:</strong> C# self-contained/Win32 launcher, 동봉 Node, 원형 ESM/Pi 리소스 로딩, 콘솔 소유권을 실제 artifact로 비교한다.</li>
+<li><strong>인증:</strong> Windows Credential Manager 방식과 session-only fallback을 검증하되 평문 파일 fallback은 허용하지 않는다.</li>
+<li><strong>경로·프로세스:</strong> 한글/공백 경로, root containment, junction/reparse/UNC/ADS 정책, process tree 취소를 Windows API 기준으로 검증한다.</li>
+<li><strong>UX:</strong> Windows Terminal과 Console Host에서 onboarding, IME, 붙여넣기, resize, Ctrl-C/EOF/창 닫기를 수동·자동 증거로 남긴다.</li>
+<li><strong>모델:</strong> 모델 0/1/2개와 purpose 정책, mock/live 분리, provider preflight와 실제 호출 설정의 동일성을 회귀 테스트로 고정한다.</li>
+</ul>
+<h2 id="5-ai-dlc-작업화-제안">5. AI-DLC 작업화 제안</h2>
+<p>단일 construction unit 내부의 Windows 배포 vertical slice로 다음 순서를 제안한다.</p>
+<pre><code class="language-text">WIN-00 기준선·환경 분류
+→ WIN-01 runtime 동봉·launcher spike
+→ WIN-02 bootstrap/workspace/기본 TUI
+→ WIN-03 effective config/provider 진단
+→ WIN-04 credential/onboarding
+→ WIN-05 home/approval/Knowledge UX
+→ WIN-06 path/command/shutdown/lock
+→ WIN-07 installer/update/remove/signing
+→ WIN-08 clean VM·live·사용자 검증
+→ WIN-09 릴리스 판정
+</code></pre>
+<p>각 작업은 변경 파일, 재현 명령, 수동 절차, 산출물 hash, rollback, 미검증 제한을 기록한다. WIN-01 결과가 native dependency·콘솔·리소스 로딩에서 실패하면 배포 기술을 재선정한다.</p>
+<h2 id="6-이번-승인-요청-범위">6. 이번 승인 요청 범위</h2>
+<p>다음을 승인해 주십시오.</p>
+<ol>
+<li>첨부 설계를 <strong>Windows 배포 및 신규 사용자 경험의 AI-DLC Inception 입력/검토 기준선</strong>으로 채택</li>
+<li>단일 Node package와 단일 construction unit 안에서 위 WIN-00~WIN-09 순서로 requirements/user stories/acceptance/design/verification 계획을 구체화</li>
+<li>기존 Task/Episode/Run, approval, Knowledge, routing, recovery 정책을 유지한 채 Windows adapter·launcher·installer 경계를 설계</li>
+<li>Windows native 증거가 확보되기 전에는 “Windows 지원 완료”, “개발 도구 불필요”, “서명으로 경고 제거”를 제품 주장으로 사용하지 않음</li>
+<li>구현 전 resume/provider preflight/mock-live/workspace context 등 기존 미결정 계약을 Inception에서 확정</li>
+</ol>
+<p>승인에 포함하지 않는 사항:</p>
+<ul>
+<li>현재 저장소에 첨부 설계의 patch·reference 코드를 자동 적용</li>
+<li>즉시 Windows installer/launcher/native credential helper 구현</li>
+<li>실제 유료 provider 호출 또는 credential 수집·변경</li>
+<li>GitHub push, 공개 배포, 서명 완료 판정</li>
+<li>Windows clean VM, IME, live provider 검증 완료 판정</li>
+<li>단일 portable <code>.exe</code>를 1차 출시 필수 조건으로 확정</li>
+</ul>
+<h2 id="7-승인-선택지">7. 승인 선택지</h2>
+<h3 id="approve-amp-continue">Approve &amp; Continue</h3>
+<p>다음 문서화 단계만 진행한다.</p>
+<ul>
+<li>WIN 작업의 user stories와 acceptance criteria</li>
+<li>Windows platform/NFR 및 adapter 계약</li>
+<li>launcher/installer/credential spike 계획</li>
+<li>clean VM 및 release evidence schema</li>
+<li>이후 Construction 진입을 위한 별도 승인요청</li>
+</ul>
+<h3 id="request-changes">Request Changes</h3>
+<p>다음 중 변경할 범위를 지정한다: portable 단일 exe 필수 여부, 지원 Windows 버전/architecture, Credential Manager 정책, Windows Terminal/Console Host 범위, live provider 필수 여부, installer/signing 배포정책, workspace context 범위.</p>
+<h3 id="hold">Hold</h3>
+<p>배포 형태·지원 플랫폼·인증·live 검증 범위가 확정될 때까지 현재 Inception 승인 게이트에 보류한다.</p>
+<h2 id="8-권고-결론">8. 권고 결론</h2>
+<p><strong>권고: 조건부 Approve &amp; Continue</strong></p>
+<p>조건:</p>
+<ol>
+<li>첨부 문서는 구현 완료 보고서가 아닌 설계 입력으로 취급한다.</li>
+<li>현재 실행 결과는 Linux 기준선으로만 기록하고 Windows/live 증거와 섞지 않는다.</li>
+<li>WIN-00과 WIN-01에서 실제 환경·배포 기술을 검증한 뒤 일정과 구현 범위를 확정한다.</li>
+<li>승인 전 소스 수정·native 구현·credential/live 호출·외부 배포를 하지 않는다.</li>
+<li>모든 acceptance criterion은 명령 또는 수동 절차와 release artifact hash로 추적한다.</li>
+</ol>
+<p>현재 상태: <strong>기본 작업 워크플로우 문서로 대체됨</strong></p>
+<h2 id="9-정정-기록">9. 정정 기록</h2>
+<ul>
+<li>이 문서는 AI-DLC를 기본 작업 방식으로 적용한 이전 기록이다.</li>
+<li>사용자 정정에 따라 Windows 작업은 DDT 기본 작업 워크플로우로 진행한다.</li>
+<li>현재 기준 문서는 <code>docs/windows-executable-design-review-approval.md</code>이다.</li>
+<li>AI-DLC 관련 내용은 참고 자료로만 취급하며 MindCraft 작업 상태나 승인 체계에 관여시키지 않는다.</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-수행한-절차">1. 수행한 절차</a></li><li><a href="#2-현재-기준선-실행-결과">2. 현재 기준선 실행 결과</a></li><li><a href="#3-설계와-현재-상태의-정합성">3. 설계와 현재 상태의 정합성</a></li><li><a href="#유지-가능한-방향">유지 가능한 방향</a></li><li><a href="#현재-코드와의-주요-갭">현재 코드와의 주요 갭</a></li><li><a href="#4-반드시-분리할-결정과-검증">4. 반드시 분리할 결정과 검증</a></li><li><a href="#5-ai-dlc-작업화-제안">5. AI-DLC 작업화 제안</a></li><li><a href="#6-이번-승인-요청-범위">6. 이번 승인 요청 범위</a></li><li><a href="#7-승인-선택지">7. 승인 선택지</a></li><li><a href="#approve-amp-continue">Approve &amp;amp; Continue</a></li><li><a href="#request-changes">Request Changes</a></li><li><a href="#hold">Hold</a></li><li><a href="#8-권고-결론">8. 권고 결론</a></li><li><a href="#9-정정-기록">9. 정정 기록</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

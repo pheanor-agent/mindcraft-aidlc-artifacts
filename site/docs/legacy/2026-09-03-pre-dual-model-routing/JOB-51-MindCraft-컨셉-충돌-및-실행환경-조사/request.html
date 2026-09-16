@@ -1,0 +1,44 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JOB-51: MindCraft 컨셉 충돌 및 실행환경 조사 · MindCraft</title><link rel="stylesheet" href="../../../../assets/pages.css"></head><body><header><a class="brand" href="../../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../../index.html">← 전체 문서</a><a href="request.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><p class="historical">과거 설계 이력입니다. 현재 제품 기준은 SSOT를 확인하세요.</p><main><article><h1 id="job-51-mindcraft-컨셉-충돌-및-실행환경-조사">JOB-51: MindCraft 컨셉 충돌 및 실행환경 조사</h1>
+<h2 id="목적">목적</h2>
+<p>설치 장벽을 낮추는 Windows-first 제품 경험과 외부 CLI를 통한 Opus/local Model routing 요구의 충돌을 식별하고 지원 가능한 실행환경·adapter 경계를 정의한다.</p>
+<h2 id="반영-내용">반영 내용</h2>
+<ul>
+<li>HACKATHON.md에 두 컨셉의 충돌, 제안 방향, 검증 가정을 기록</li>
+<li>README.md에 Windows-first onboarding 및 Linux/WSL2-capable execution 원칙 기록</li>
+<li>ENVIRONMENT.md에 OS/CLI 지원 matrix와 preflight 검증 범위 기록</li>
+<li>현재 구현은 Airouter provider만 연결되어 있고 OpenCode/Claude Code adapter는 미구현임을 확인. Airouter/Codex는 제품 기본이 아닌 개발·테스트용으로 분류</li>
+<li>공식 자료 대조 결과 OpenCode와 Claude Code에 대해 Linux/WSL2 필수라고 확정하지 않고, Windows native를 adapter별 조건부 검증 대상으로 조정</li>
+<li>CLI 외에 Vendor HTTP API, OpenAI-compatible endpoint, local server, OpenCode server/API, MCP 경로를 라우팅 후보로 추가</li>
+</ul>
+<h2 id="1차-조사-결과">1차 조사 결과</h2>
+<ul>
+<li>OpenCode 공식 README: Windows 설치 방식과 Windows desktop artifact가 확인됨</li>
+<li>Claude Code 공식 문서: Windows, Linux, WSL2 경로가 함께 안내됨</li>
+<li>Microsoft WSL 문서: WSL2는 Windows의 Linux 실행 경로이며 MindCraft의 공통 필수 조건으로 볼 근거는 부족함</li>
+<li>미확정: subprocess/TTY, permission approval, stream/exit, Windows project path, local GPU/backend, usage/cost 수집</li>
+<li>사용자 등록 provider API/local endpoint는 역할별로 추가한다. 고성능·고비용과 저성능·저비용 Model을 역할별로 혼용할 수 있어야 한다.</li>
+<li>1차 권장: <code>ModelProviderAdapter</code>와 <code>CodingHarnessAdapter</code>를 분리하되, MVP의 기본 harness 계약은 OpenCode/Claude Code를 대상으로 설계한다.</li>
+<li>CLI 외 기본 harness 연결 후보: OpenCode headless HTTP/OpenAPI server, OpenCode ACP, Claude Agent SDK. Desktop/browser/IDE 연동은 직접 자동화가 아니라 별도 client integration으로 취급한다.</li>
+</ul>
+<h2 id="조사검증-범위">조사·검증 범위</h2>
+<ul>
+<li>공식 문서 기준 OS/설치/headless/권한/출력/비용·usage 계약 확인</li>
+<li>Linux native, WSL2, Windows native의 process/TTY/파일경로/credential/GPU 차이 실험</li>
+<li>OpenCode·Claude Code adapter 공통 interface 설계</li>
+<li>local Model의 하드웨어·용량·성능·privacy·fallback 조건</li>
+<li>routing policy, approval, audit, cancellation, timeout, secret redaction</li>
+</ul>
+<h2 id="제외">제외</h2>
+<ul>
+<li>승인 전 외부 CLI 자동 설치 또는 credential 수집</li>
+<li>Windows 또는 WSL2 전면 지원 홍보</li>
+<li>실제 유료 Model 호출을 통한 비용 발생</li>
+</ul>
+<h2 id="완료-조건">완료 조건</h2>
+<ul>
+<li>CLI별 probe 결과와 지원 matrix 문서화</li>
+<li>최소 한 개 Linux/WSL2 조합에서 deterministic mock adapter contract 검증</li>
+<li>Windows-first UX와 backend 지원 범위가 README에 반영</li>
+<li>다음 구현 작업의 승인 범위와 미해결 위험 정리</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#목적">목적</a></li><li><a href="#반영-내용">반영 내용</a></li><li><a href="#1차-조사-결과">1차 조사 결과</a></li><li><a href="#조사검증-범위">조사·검증 범위</a></li><li><a href="#제외">제외</a></li><li><a href="#완료-조건">완료 조건</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../../assets/pages.js"></script></body></html>

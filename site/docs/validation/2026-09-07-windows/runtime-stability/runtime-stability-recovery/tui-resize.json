@@ -1,0 +1,170 @@
+{
+  "name": "tui-resize",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788791173274,
+      "output": "\u001b[?9001h\u001b[?1004h"
+    },
+    {
+      "at": 1788791177127,
+      "output": "\u001b[?2004h"
+    },
+    {
+      "at": 1788791177127,
+      "output": "\u001b[?25l\u001b[2J\u001b[m\u001b[H\u001b]0;C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\dist\\windows-package\\MindCraft.exe\u0007\u001b[?25h"
+    },
+    {
+      "at": 1788791177131,
+      "output": "\u001b[>7u\u001b[?u"
+    },
+    {
+      "at": 1788791177135,
+      "output": "\u001b[>4;2m"
+    },
+    {
+      "at": 1788791177135,
+      "output": "\u001b[?25l"
+    },
+    {
+      "at": 1788791177145,
+      "output": "\u001b[?2026h\u001b[?2026l"
+    },
+    {
+      "at": 1788791177151,
+      "output": "\u001b[K\r\n MindCraft | Task: - | Episode: - | Run: idle\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)\u001b[K\r\n 환경 점검: 작업공간=정상 | Model=0 | 저장소=정상\u001b[K\r\n 첫 실행 설정이 필요합니다.\u001b[K\r\n 오프라인 리허설은 `setup mock deterministic`, 실제 provider는 `setup airouter <model>`을 입력하세요.\u001b[K\r\n 명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | approvals | approve <id> | reject <id>  \r\n | status | history | runs | resume <run-id> | cancel <run-id> | knowledge [검색어] | promote <id> | quit\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                                                                     \u001b[12;238H"
+    },
+    {
+      "at": 1788791178171,
+      "input": "setup mock deterministic"
+    },
+    {
+      "at": 1788791178206,
+      "output": "\u001b[?2026h\u001b[?2026l"
+    },
+    {
+      "at": 1788791178218,
+      "output": "\u001b[2;1H MindCraft | 작업: - | 단계: - | 실행: 대기 중\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)\u001b[K\r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상\u001b[K\r\n 명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | approvals | approve <id> | reject <id>  \r\n | status | history | runs | resume <run-id> | cancel <run-id> | knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic                                                       \u001b[10;176H"
+    },
+    {
+      "at": 1788791179010,
+      "output": "\u001b[8;15;50t\u001b[H\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)      \r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상 \r\n 명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | approvals | approve <id> | reject <id>\u001b[K\r\n | status | history | runs | resume <run-id> | cancel <run-id> | knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic                                   \r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                               \r\n\u001b[K\u001b[50C"
+    },
+    {
+      "at": 1788791179026,
+      "output": "\u001b[?2026h\u001b[2J\u001b[3J\u001b[H\u001b[K\r\n MindCraft | 작업: - | 단계: - | 실행: 대기 중    \r\n\u001b[K\r\n\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)      \r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상 \r\n 명령: setup <provider> <model> [purpose] |       \r\n doctor | task <제목> | run <요청> | approvals |  \r\n approve <id> | reject <id> | status | history |  \r\n runs | resume <run-id> | cancel <run-id> |       \r\n knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock     \r\n model=deterministic\u001b[K\r\n\u001b[K\u001b[50C\u001b[?2026l"
+    },
+    {
+      "at": 1788791179040,
+      "output": "\r\n> \u001b[7m \u001b[27m                                               \u001b[15;98H"
+    },
+    {
+      "at": 1788791179273,
+      "input": "tasks"
+    },
+    {
+      "at": 1788791179305,
+      "output": "\u001b[?2026h\u001b[14;1H > tasks\u001b[K\r\n No tasks found\u001b[K\u001b[35C\r\n\u001b[50C\u001b[?2026l\r\n> \u001b[7m \u001b[27m                                               \u001b[15;98H"
+    },
+    {
+      "at": 1788791179509,
+      "output": "\u001b[H\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)\u001b[K\r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상\u001b[K\r\n 명령: setup <provider> <model> [purpose] |\u001b[K\r\n doctor | task <제목> | run <요청> | approvals |\u001b[K\r\n approve <id> | reject <id> | status | history |\u001b[K\r\n runs | resume <run-id> | cancel <run-id> |\u001b[K\r\n knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock\u001b[K\r\n model=deterministic\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\u001b[180C"
+    },
+    {
+      "at": 1788791179525,
+      "output": "\u001b[?2026h\u001b[2J\u001b[3J\u001b[?2026l"
+    },
+    {
+      "at": 1788791179526,
+      "output": "\u001b[H\u001b[K\r\n MindCraft | 작업: - | 단계: - | 실행: 대기 중\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)\u001b[K\r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상\u001b[K\r\n 명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel\u001b[K\r\n <run-id> | knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                                                                                                                                 \r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\u001b[180C"
+    },
+    {
+      "at": 1788791179771,
+      "input": "tasks"
+    },
+    {
+      "at": 1788791179806,
+      "output": "\u001b[?2026h\u001b[?2026l"
+    },
+    {
+      "at": 1788791179806,
+      "output": "\u001b[13;1H > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                                                                                                                                 \u001b[16;358H"
+    },
+    {
+      "at": 1788791180003,
+      "output": "\u001b[H\u001b[K\r\n MindCraft | 작업: - | 단계: - | 실행: 대기 중\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)\u001b[K\r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상\u001b[K\r\n 명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel\u001b[K\r\n <run-id> | knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                             \r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\u001b[80C"
+    },
+    {
+      "at": 1788791180019,
+      "output": "\u001b[?2026h\u001b[2J\u001b[3J\u001b[?2026l"
+    },
+    {
+      "at": 1788791180033,
+      "output": "\u001b[H\u001b[K\r\n MindCraft | 작업: - | 단계: - | 실행: 대기 중\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)\u001b[K\r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상\u001b[K\r\n 명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | \r\n approvals | approve <id> | reject <id> | status | history | runs | resume      \r\n <run-id> | cancel <run-id> | knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                             \r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\u001b[80C"
+    },
+    {
+      "at": 1788791180265,
+      "input": "tasks"
+    },
+    {
+      "at": 1788791180292,
+      "output": "\u001b[?2026h\u001b[?2026l"
+    },
+    {
+      "at": 1788791180292,
+      "output": "\u001b[16;1H > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                             \u001b[19;158H"
+    },
+    {
+      "at": 1788791180492,
+      "output": "\u001b[H\u001b[K\r\n MindCraft | 작업: - | 단계: - | 실행: 대기 중\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)\u001b[K\r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상\u001b[K\r\n 명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> |\u001b[K\r\n approvals | approve <id> | reject <id> | status | history | runs | resume\u001b[K\r\n <run-id> | cancel <run-id> | knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\u001b[120C"
+    },
+    {
+      "at": 1788791180493,
+      "output": "\u001b[?2026h\u001b[2J\u001b[3J\u001b[?2026l"
+    },
+    {
+      "at": 1788791180507,
+      "output": "\u001b[H\u001b[K\r\n MindCraft | 작업: - | 단계: - | 실행: 대기 중\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n MindCraft | 개인 AI 작업 도우미 (mode=mock)\u001b[K\r\n 환경 점검: 작업공간=정상 | Model=1 | 저장소=정상\u001b[K\r\n 명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | approvals | approve <id> | reject <id>  \r\n | status | history | runs | resume <run-id> | cancel <run-id> | knowledge [검색어] | promote <id> | quit\u001b[K\r\n > setup mock deterministic\u001b[K\r\n 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                                                                     \r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\u001b[120C"
+    },
+    {
+      "at": 1788791180755,
+      "input": "tasks"
+    },
+    {
+      "at": 1788791180788,
+      "output": "\u001b[?2026h\u001b[?2026l"
+    },
+    {
+      "at": 1788791180788,
+      "output": "\u001b[17;1H > tasks\u001b[K\r\n No tasks found\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                                                                     \u001b[20;238H"
+    },
+    {
+      "at": 1788791181015,
+      "input": "quit"
+    },
+    {
+      "at": 1788791181075,
+      "output": "\u001b[?2026h\u001b[?2026l"
+    },
+    {
+      "at": 1788791181075,
+      "output": "\u001b[19;1H > quit\u001b[K\r\n\u001b[K\r\n> \u001b[7m \u001b[27m                                                                                                                     \u001b[21;238H"
+    },
+    {
+      "at": 1788791181089,
+      "output": "\u001b[?2004l"
+    },
+    {
+      "at": 1788791181089,
+      "output": "\u001b[<u"
+    },
+    {
+      "at": 1788791181089,
+      "output": "\u001b[>4;0m"
+    },
+    {
+      "at": 1788791181098,
+      "output": "\u001b[21;3H \u001b[23;1H\u001b[?25h"
+    }
+  ]
+}

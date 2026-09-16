@@ -1,0 +1,16 @@
+{
+  "time": "2026-09-07T14:27:16.386Z",
+  "exe": "C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\dist\\windows-package\\MindCraft.exe",
+  "results": [
+    {
+      "name": "force kill command",
+      "pass": true,
+      "detail": "{\"status\":0,\"stdout\":\"SUCCESS: The process with PID 2280 (child process of PID 28128) has been terminated.\\r\\nSUCCESS: The process with PID 19800 (child process of PID 28128) has been terminated.\\r\\nSUCCESS: The process with PID 28128 (child process of PID 23660) has been terminated.\\r\\n\",\"stderr\":\"\"}"
+    },
+    {
+      "name": "stale lock recovery preserves task",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

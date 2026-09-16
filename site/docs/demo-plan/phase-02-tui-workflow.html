@@ -1,0 +1,65 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phase 2 — TUI Command Workflow · MindCraft</title><link rel="stylesheet" href="../../assets/pages.css"></head><body><header><a class="brand" href="../../index.html">MindCraft <span>문서</span></a><nav><a href="../../index.html">← 전체 문서</a><a href="phase-02-tui-workflow.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="phase-2--tui-command-workflow">Phase 2 — TUI Command Workflow</h1>
+<h2 id="목표">목표</h2>
+<p>Task 생성부터 Run 결과 확인까지를 Windows Terminal TUI 안에서 완료한다.</p>
+<h2 id="작업">작업</h2>
+<ol>
+<li>CLI와 TUI가 같은 application command를 사용하도록 정리한다.</li>
+<li>TUI에 <code>tasks</code>, <code>use</code>, <code>runs</code>, <code>resume</code>, <code>cancel</code>, <code>doctor</code>를 연결한다.</li>
+<li>Knowledge 관련 command의 TUI 진입점을 준비한다.</li>
+<li>비동기 입력을 command queue로 직렬화한다.</li>
+<li>Run 중 입력을 안전하게 처리하고 중복 실행을 막는다.</li>
+<li>streaming event, tool decision, pending approval 상태를 화면에 표시한다.</li>
+<li>현재 Task, Episode, Run을 화면 상단에 표시한다.</li>
+<li>Ctrl-C와 <code>cancel</code>의 상태 저장을 통합한다.</li>
+</ol>
+<h2 id="수정-후보">수정 후보</h2>
+<ul>
+<li><code>src/tui-runner.mjs</code></li>
+<li><code>src/tui-adapter.mjs</code></li>
+<li><code>src/cli.mjs</code></li>
+<li><code>src/mindcraft-app.mjs</code></li>
+<li><code>test/tui-workflow.test.mjs</code></li>
+<li><code>test/cli-command-queue.test.mjs</code></li>
+</ul>
+<h2 id="완료-조건">완료 조건</h2>
+<p>TUI에서 다음 흐름이 동작한다.</p>
+<pre><code class="language-text">doctor
+→ task release-check
+→ run 릴리스 준비 상태를 점검해줘
+→ status
+→ runs
+→ quit
+</code></pre>
+<ul>
+<li>명령 입력 순서가 뒤섞이지 않는다.</li>
+<li>실행 중 상태가 표시된다.</li>
+<li>오류는 화면에 표시되고 process가 비정상 종료되지 않는다.</li>
+<li>cancel 이후 Run이 aborted로 저장된다.</li>
+</ul>
+<h2 id="검증">검증</h2>
+<pre><code class="language-sh">npm run build
+npm test
+</code></pre>
+<h2 id="작업-시작-프롬프트">작업 시작 프롬프트</h2>
+<pre><code class="language-text">MindCraft 저장소에서 Phase 2인 TUI command workflow를 구현해줘.
+
+목표:
+- Windows Terminal TUI에서 doctor, task, tasks, use, run, status, runs, resume, cancel을 사용할 수 있게 한다.
+- CLI와 TUI가 동일한 application API를 사용하게 한다.
+- readline/TUI의 비동기 입력이 겹치지 않도록 command queue를 도입한다.
+- Run 중 streaming event와 현재 상태를 표시한다.
+
+제약:
+- business rule을 UI 코드에 복사하지 않는다.
+- 기존 persistence, recovery, model routing 정책을 유지한다.
+- side effect tool은 다음 Phase에서 구현하므로 이번 Phase에서는 command routing과 표시 중심으로 작업한다.
+
+완료 조건:
+- TUI command flow 테스트 추가
+- 빠른 연속 입력 순서 보장 테스트
+- cancel 상태 저장 테스트
+- npm run build와 npm test 통과
+
+실제 변경 파일과 테스트 출력 요약을 남겨줘.
+</code></pre>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#목표">목표</a></li><li><a href="#작업">작업</a></li><li><a href="#수정-후보">수정 후보</a></li><li><a href="#완료-조건">완료 조건</a></li><li><a href="#검증">검증</a></li><li><a href="#작업-시작-프롬프트">작업 시작 프롬프트</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../assets/pages.js"></script></body></html>

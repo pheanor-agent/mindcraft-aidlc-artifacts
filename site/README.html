@@ -1,0 +1,257 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft · MindCraft</title><link rel="stylesheet" href="assets/pages.css"></head><body><header><a class="brand" href="index.html">MindCraft <span>문서</span></a><nav><a href="index.html">← 전체 문서</a><a href="README.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft">MindCraft</h1>
+<h2 id="문서와-발표-자료">문서와 발표 자료</h2>
+<ul>
+<li><a href="docs/README.html">전체 문서 목록</a></li>
+<li><a href="docs/presentations/README.html">해커톤 HTML 발표: DDT 개발 협업과 Astra의 AI-DLC 오케스트레이션</a></li>
+</ul>
+<p>발표 자료는 MindCraft를 개발하는 외부 협업 프로세스를 설명하며 제품 런타임 SSOT를 대체하지 않습니다.</p>
+<blockquote>
+<p><strong>제품 문서 기준:</strong> <a href="ROUTING.html"><code>ROUTING.md</code></a>에서 현재 Model 정책을 확인합니다. 과거 컨셉과 검토 이력은 <a href="docs/legacy/2026-09-03-pre-dual-model-routing/README.html"><code>docs/legacy/2026-09-03-pre-dual-model-routing/</code></a>에 보존합니다.</p>
+</blockquote>
+<blockquote>
+<p>이 저장소의 제품 문서는 현재 구현과 승인된 제품 범위만 다룹니다. 개발 프로세스와 시뮬레이션 자료는 제품 SSOT가 아닙니다.</p>
+</blockquote>
+<p>MindCraft는 반복 가능한 Task/Episode 작업 루프, 영속 상태, 제한된 Knowledge context, 안전한 custom tool을 제공하는 <strong>Pi 기반 terminal TUI workflow package</strong>입니다.</p>
+<blockquote>
+<p>MindCraft 0.1.0은 Node.js package/CLI와 Windows x64 bundled-runtime package를 제공하며, Pi의 AgentSession과 <code>pi-tui</code>를 활용합니다.</p>
+</blockquote>
+<h2 id="windows-배포">Windows 배포</h2>
+<blockquote>
+<p><strong>TUI 후속 검증:</strong> 실제 Windows ConPTY에서 Pi TUI를 실행해 출력 누적·설정 안내·quit 종료 문제를 수정했습니다. 수정 후 회귀는 <strong>141/155 통과, 기존 14개 실패 유지</strong>입니다. <a href="docs/windows-tui-validation-2026-09-07.html">실제 TUI 스크린샷·수정 전후·DDT 산출물</a>을 확인하세요. Native Windows Terminal 및 IME 검증과는 구분합니다.</p>
+</blockquote>
+<blockquote>
+<p><strong>2026-09-07 Windows 실기기 검증:</strong> portable 실행파일의 기본 스모크와 27,602개 파일 무결성 검사는 통과했습니다. 동봉 Node.js 22.19.0의 회귀 테스트는 <strong>138/152 통과, 14개 실패</strong>로 기록되어 있으며, 해당 결과는 당시 검증 시점의 evidence입니다. <a href="docs/windows-validation-2026-09-07.html">테스트 이력·실패 원인·재현 방법</a>을 확인하세요. 해당 프리릴리즈에는 NSIS installer가 포함되지 않았습니다.</p>
+</blockquote>
+<p>Windows x64 배포 구조는 PATH의 Node.js를 사용하지 않습니다. native <code>MindCraft.exe</code>가 설치 위치의 <code>current/runtime/node.exe</code>와 <code>current/app/src/cli.mjs</code>를 구조화된 인자로 실행하고, Win32 Job Object로 child process tree를 관리합니다.</p>
+<p>빌드 가능한 artifact와 실제 공개 release에 포함된 artifact는 구분합니다. 실제 release 구성은 release manifest와 해당 validation evidence를 기준으로 확인합니다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th align="right">Portable ZIP</th>
+<th align="right">NSIS installer</th>
+<th>기준</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows build output</td>
+<td align="right">생성 가능</td>
+<td align="right">생성 가능</td>
+<td>build/installer evidence</td>
+</tr>
+<tr>
+<td>2026-09-07 검증 prerelease</td>
+<td align="right">포함</td>
+<td align="right">미포함</td>
+<td><code>docs/windows-validation-2026-09-07.md</code></td>
+</tr>
+<tr>
+<td>공개 release</td>
+<td align="right">release manifest 기준</td>
+<td align="right">release manifest 기준</td>
+<td>release evidence</td>
+</tr>
+</tbody></table>
+<p>installer는 기본적으로 <code>%LOCALAPPDATA%\Programs\MindCraft</code>에 설치합니다. 제거 시 <code>%LOCALAPPDATA%\MindCraft</code>의 사용자 설정과 사용자가 선택한 workspace는 삭제하지 않습니다. Credential Manager 연동은 <code>wincred-helper.exe</code>를 사용하며 credential 값은 command-line argument나 config 파일에 기록하지 않습니다.</p>
+<p>release package에는 Node.js 22.19.0 Windows x64 runtime, CycloneDX SBOM, 파일별 SHA-256 manifest가 포함됩니다. 현재 Linux cross-build에서 PE x64 형식, manifest 무결성, 전체 회귀를 검증했습니다. code signing과 clean Windows VM의 설치·한글 IME·Credential Manager 실동작은 Windows native release gate로 별도 수행해야 합니다.</p>
+<h2 id="사전-요구사항">사전 요구사항</h2>
+<h3 id="windows-bundled-package-사용자">Windows bundled package 사용자</h3>
+<ul>
+<li>외부 Node.js/npm 불필요</li>
+<li>Windows Terminal 또는 호환 terminal</li>
+<li>선택한 provider의 credential/endpoint</li>
+</ul>
+<h3 id="source-checkoutnpm-개발자">source checkout/npm 개발자</h3>
+<ul>
+<li>Node.js <code>&gt;=22.19.0</code></li>
+<li>npm</li>
+<li>Git</li>
+<li>Bash 또는 POSIX shell (<code>install.sh</code> 사용 시)</li>
+<li>등록된 provider/model</li>
+</ul>
+<p>MindCraft는 Pi를 뼈대로 사용하며, 사용자가 지정한 Model을 모든 작업에 사용하거나 용도별로 하나씩 사용합니다. 모델 0개 또는 동일 용도 복수 모델은 설정 오류로 처리합니다.</p>
+<p>Knowledge는 작업 산출물의 raw data와 metadata를 포함한 artifact로 관리합니다. 관련 자료가 부족하면 Knowledge와 허용된 실행 폴더까지 <strong>검색 후보 범위</strong>를 넓힐 수 있지만, 실제 prompt에는 relevance/scope/redaction/dedup/budget을 통과한 자료만 선택해 넣습니다. 실행 폴더 외부 파일과 shell command는 사용자 승인이 필요합니다.</p>
+<p>MindCraft의 제품 방향은 <strong>Pi 기반 terminal TUI, 개인용 session workflow</strong>입니다. Pi AgentSession의 streaming/event/session 기능과 <code>pi-tui</code> interface를 우선 재사용합니다. Windows Terminal을 1차 검증 대상으로 하며, Linux/WSL/macOS는 제품 우선 범위가 아니라 compatibility 검토 대상으로 둡니다.</p>
+<p>등록된 Model이 없으면 실행을 차단합니다. 하나만 지정하면 모든 용도에 사용하고, 두 개를 지정하면 서로 다른 용도에 하나씩 매핑합니다. 동일 용도에 2개 이상은 허용하지 않으며 자동으로 다른 Model로 fallback하지 않습니다. 실행 전 선택 Model과 용도를 표시합니다.</p>
+<h2 id="checkout-또는-package-directory에서-설치">checkout 또는 package directory에서 설치</h2>
+<p><code>package.json</code>이 있는 directory에서 실행합니다.</p>
+<pre><code class="language-sh">./install.sh
+</code></pre>
+<p>설치 script는 Node.js/npm을 확인하고 package를 global로 설치한 뒤 <code>mindcraft</code> 명령을 등록합니다. 다른 package source directory를 지정할 수도 있습니다.</p>
+<pre><code class="language-sh">./install.sh /path/to/mindcraft
+</code></pre>
+<p>설치 script를 사용하지 않을 때의 동일한 설치 방법은 다음과 같습니다.</p>
+<pre><code class="language-sh">npm install
+npm install --global .
+</code></pre>
+<h2 id="실행">실행</h2>
+<pre><code class="language-sh">mindcraft
+</code></pre>
+<p>첫 실행에서 Model이 아직 없으면 프로그램은 종료하지 않고 TUI에서 setup을 안내합니다. 오프라인 리허설은 <code>setup mock deterministic</code>, 실제 provider는 <code>setup airouter &lt;model&gt;</code>로 등록한 뒤 <code>doctor</code>로 확인합니다. setup은 credential 자체를 저장하지 않으며, 기존 approval/workflow/Knowledge 경계를 그대로 사용합니다.</p>
+<p>현재 전역 launch 옵션은 command 앞에 배치합니다. <code>config add-model</code>의 <code>--id</code>, <code>--provider</code>, <code>--model</code>이나 <code>init --force</code> 같은 하위 명령 옵션은 command 뒤에 배치하며 전역 parser가 해석하지 않습니다. <code>--help</code>와 <code>--version</code>은 설정·workspace를 변경하지 않고 즉시 종료합니다.</p>
+<p>현재 CLI 명령은 다음과 같습니다.</p>
+<pre><code class="language-text">setup &lt;provider&gt; &lt;model&gt; [purpose]  첫 실행 Model 설정
+doctor             실행 전 환경·Model·storage 진단
+model              현재 선택된 provider/model 표시
+task &lt;title&gt;       활성 Task 생성
+tasks              저장된 Task 목록
+use &lt;task-id&gt;      현재 Task 선택
+run &lt;prompt&gt;       Episode 생성 및 실행
+status             현재 Task와 Run 표시
+runs               선택 Task의 Run 목록
+resume &lt;run-id&gt;    recoverable Run 재개
+cancel &lt;run-id&gt;    실행 중 Run 중단 및 aborted 저장
+knowledge [query] Knowledge 목록·검색 (captured/promoted/rejected, source/Run/길이)
+knowledge-detail &lt;id&gt; Knowledge 상세와 provenance
+promote &lt;id&gt;       Knowledge candidate 승격
+reject-knowledge &lt;id&gt; Knowledge candidate 거부
+preview &lt;prompt&gt;   다음 Run context와 manifest/제외 사유 미리보기
+mode &lt;name&gt;        실행 모드 조회/변경
+quit               종료
+</code></pre>
+<p>예시:</p>
+<pre><code class="language-text">task release workflow 검토
+use &lt;task-id&gt;
+run 현재 release 준비 상태를 확인해줘
+status
+runs
+quit
+</code></pre>
+<p>CLI와 Windows Terminal TUI는 동일한 application command dispatcher와
+<code>CommandQueue</code>를 사용합니다. 따라서 빠른 연속 입력도 순서대로 처리되며,
+실행 중에는 streaming event가 표시됩니다. 상단 상태 표시에는 현재
+Task/Episode/Run이 노출되고, <code>cancel</code> 또는 Ctrl-C는 Run을 <code>aborted</code>로
+영속화합니다.</p>
+<h2 id="model-선택">Model 선택</h2>
+<p>MindCraft는 환경변수로 기본 Airouter Model, OpenAI 호환 endpoint, Ollama·LM Studio·vLLM·llama.cpp 같은 로컬 LLM, 또는 Pi에 등록된 provider를 선택할 수 있습니다. 환경변수는 credential 값을 설정 파일에 저장하지 않고 실행 시에만 전달합니다.</p>
+<table>
+<thead>
+<tr>
+<th>변수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>MINDCRAFT_PROVIDER</code></td>
+<td><code>airouter</code>, <code>openai-compatible</code>, <code>ollama</code>, <code>lmstudio</code>, <code>vllm</code>, <code>llamacpp</code>, 또는 Pi provider ID</td>
+</tr>
+<tr>
+<td><code>MINDCRAFT_MODEL</code></td>
+<td>Model ID. Airouter를 제외한 provider에서 필요</td>
+</tr>
+<tr>
+<td><code>MINDCRAFT_OPENAI_BASE_URL</code></td>
+<td>OpenAI 호환 endpoint 주소. 지정하면 provider 기본값은 <code>openai-compatible</code></td>
+</tr>
+<tr>
+<td><code>MINDCRAFT_OPENAI_MODEL</code></td>
+<td>OpenAI 호환 endpoint의 Model ID</td>
+</tr>
+<tr>
+<td><code>MINDCRAFT_LOCAL_BASE_URL</code></td>
+<td>로컬 preset 주소 override</td>
+</tr>
+<tr>
+<td><code>MINDCRAFT_OPENAI_API_KEY</code> / <code>OPENAI_API_KEY</code></td>
+<td>OpenAI 호환 endpoint credential</td>
+</tr>
+<tr>
+<td><code>OLLAMA_API_KEY</code> / <code>LMSTUDIO_API_KEY</code> / <code>VLLM_API_KEY</code> / <code>LLAMACPP_API_KEY</code></td>
+<td>해당 로컬 provider credential. 없으면 keyless local로 연결</td>
+</tr>
+<tr>
+<td><code>MINDCRAFT_OPENAI_CONTEXT_WINDOW</code></td>
+<td>context window, 기본 <code>131072</code></td>
+</tr>
+<tr>
+<td><code>MINDCRAFT_OPENAI_MAX_TOKENS</code></td>
+<td>max tokens, 기본 <code>16384</code></td>
+</tr>
+<tr>
+<td><code>MINDCRAFT_OPENAI_REASONING</code></td>
+<td><code>1</code> 또는 <code>true</code>면 reasoning 활성화</td>
+</tr>
+</tbody></table>
+<p>로컬 preset 기본 주소는 Ollama <code>http://localhost:11434/v1</code>, LM Studio <code>http://localhost:1234/v1</code>, vLLM <code>http://localhost:8000/v1</code>, llama.cpp <code>http://localhost:8080/v1</code>입니다.</p>
+<pre><code class="language-sh">MINDCRAFT_PROVIDER=ollama MINDCRAFT_MODEL=qwen2.5:7b mindcraft
+MINDCRAFT_PROVIDER=openai-compatible MINDCRAFT_OPENAI_BASE_URL=https://api.example.com/v1 MINDCRAFT_OPENAI_MODEL=my-model mindcraft
+MINDCRAFT_PROVIDER=my-proxy MINDCRAFT_MODEL=my-model mindcraft
+</code></pre>
+<p><code>~/.pi/agent/models.json</code>에 등록된 provider도 <code>MINDCRAFT_PROVIDER=&lt;id&gt;</code>로 선택할 수 있습니다. 시작 배너 또는 <code>model</code> 명령으로 현재 선택을 확인할 수 있습니다.</p>
+<h2 id="workflow-context-handoff">Workflow context handoff</h2>
+<p>MindCraft는 작업 단계와 subagent 사이에 원본 근거가 연결된 bounded context contract를 제공합니다. 현재 <code>src/context-handoff.mjs</code>의 envelope/validator는 독립 API로 구현·검증되어 있으며, 모든 실제 runtime phase/subagent 전이에 자동 연결된 상태는 아닙니다. 요약만 전달하지 않고 source artifact의 경로와 SHA-256, handoff 상태, 제약·미해결 문제·검증 결과, 포함·제외된 claim과 제외 사유를 ContextManifest에 기록합니다.</p>
+<pre><code class="language-text">phase handoff
+ -&gt; source digest/stale 검증
+ -&gt; scope/redaction/conflict 검사
+ -&gt; budget projection
+ -&gt; ContextManifest
+ -&gt; main agent 또는 subagent
+</code></pre>
+<p>원본 artifact는 보존되며 요약은 원본의 대체물이 아닙니다. 일부 완료 또는 차단된 subagent 결과는 자동으로 완료/승인 상태가 되지 않습니다. context budget을 넘는 내용은 조용히 버리지 않고 omission 사유를 남깁니다. 구현 contract와 validator는 <code>src/context-handoff.mjs</code>에 있으며, 제품 SSOT와 기존 Run/Knowledge 경계를 유지합니다.</p>
+<h2 id="실행-구조">실행 구조</h2>
+<pre><code class="language-text">Task
+  -&gt; Episode
+      -&gt; ExecutionRun
+          -&gt; Pi AgentSession
+              -&gt; Airouter model
+</code></pre>
+<p>Episode가 실행되기 전에 승인된 Knowledge를 제한된 context slice로 구성합니다. Pi session은 MindCraft custom tool boundary를 사용하며, 허용 범위를 벗어난 요청은 fail-closed로 차단됩니다. 실행 결과는 저장되고 redacted Knowledge candidate가 생성될 수 있습니다.</p>
+<p>일반적인 실행 순서는 다음과 같습니다.</p>
+<pre><code class="language-text">Task 생성
+-&gt; Episode 생성
+-&gt; Task/Episode/Run 저장
+-&gt; 승인된 Knowledge 구성
+-&gt; Pi AgentSession에 prompt 전달
+-&gt; idle 대기
+-&gt; 완료 상태 저장
+-&gt; Knowledge candidate capture
+</code></pre>
+<h2 id="state와-knowledge">State와 Knowledge</h2>
+<p>project directory에서 CLI를 시작하면 다음 경로를 사용합니다.</p>
+<pre><code class="language-text">.mindcraft/state.jsonl
+.mindcraft/knowledge.jsonl
+</code></pre>
+<p>State는 append-only 및 checksum-backed 방식으로 저장됩니다. 재시작하면 Task, Episode, Run을 replay합니다. Session마다 별도 <code>sessionId</code>와 시작·종료 journal record를 남기며, 여러 번의 순차 실행에서 이전 상태를 이어갈 수 있습니다. journal 손상이 감지되면 새 쓰기는 차단되고 시작 화면에 손상 위치와 <code>mindcraft repair</code> 안내가 표시됩니다. 명시적 repair는 원본 backup과 audit 기록을 보존한 뒤에만 쓰기를 재개합니다. 동일 workspace의 process-level writer는 lock으로 하나만 허용하고, stale lock은 소유 process가 종료된 경우에만 복구합니다. 중단된 Run은 recoverable로 분류될 수 있으며, 기존 Run을 덮어쓰지 않고 연결된 새 Run으로 resume합니다.</p>
+<p><code>doctor</code>는 local readiness와 live provider readiness를 분리합니다. local/mock 진단은 가능해도 provider가 준비되지 않은 live Run은 fail-closed합니다. Mock과 live mode는 첫 Run 이후 자동 전환하지 않으며, mode 변경은 별도 process/workspace에서 수행합니다.</p>
+<p>Knowledge capture에는 provenance가 기록되며 민감정보처럼 보이는 값은 redaction됩니다. capture된 candidate는 자동으로 승인 context에 들어가지 않습니다.</p>
+<h2 id="safety-boundary">Safety boundary</h2>
+<ul>
+<li>Pi custom tool만 등록합니다.</li>
+<li>Tool 실행 전에 GrantedScope를 검사합니다.</li>
+<li>오류 출력에서는 token/key/secret 형태의 값을 redaction합니다.</li>
+<li>파일·명령·네트워크처럼 위험한 동작은 사용자 승인 후 실행합니다.</li>
+</ul>
+<h2 id="개발-및-검증">개발 및 검증</h2>
+<pre><code class="language-sh">npm install
+npm run build
+npm test
+npm run test:live
+npm run release:check
+npm audit --audit-level=high
+</code></pre>
+<p><code>npm test</code>는 네트워크와 API key가 필요 없는 기본 테스트만 실행합니다. 실제 Airouter 호출은 별도 명령으로 실행합니다.</p>
+<pre><code class="language-sh">npm run test:live
+</code></pre>
+<p><code>AIROUTER_API_KEY</code>가 없으면 live 테스트는 실행되지 않고 명확한 사유와 함께 skip됩니다.</p>
+<h3 id="오프라인-mock-리허설">오프라인 mock 리허설</h3>
+<p>credential 없이 실제 application·approval·tool·Knowledge 흐름을 재현하려면
+사용자가 명시적으로 <code>MINDCRAFT_MODE=mock</code>을 선택하고 mock Model을 등록합니다.
+mock은 network를 호출하지 않으며 live provider로 자동 전환하지 않습니다.</p>
+<pre><code class="language-sh">mindcraft init
+mindcraft config add-model --id release-mock --provider mock --model deterministic
+MINDCRAFT_MODE=mock mindcraft
+</code></pre>
+<p>demo workspace에서 mock이 요청하는 고정 검사는 다음과 같습니다.</p>
+<p>Run it from a fresh copy of <code>examples/release-demo</code> (the fixture contains the
+<code>test/release-check.test.mjs</code> file):</p>
+<pre><code class="language-sh">node --test test/release-check.test.mjs
+</code></pre>
+<p>write 승인 후 command 요청은 별도로 거부해야 하며, <code>release-report.md</code>는 승인
+이후에만 생성됩니다. <code>mock</code>은 Windows Terminal의 native 검증이나 실제
+provider 호출의 증거가 아닙니다.</p>
+<h2 id="release-정보">Release 정보</h2>
+<pre><code class="language-text">name: mindcraft
+version: 0.1.0
+node: &gt;=22.19.0
+</code></pre>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#문서와-발표-자료">문서와 발표 자료</a></li><li><a href="#windows-배포">Windows 배포</a></li><li><a href="#사전-요구사항">사전 요구사항</a></li><li><a href="#windows-bundled-package-사용자">Windows bundled package 사용자</a></li><li><a href="#source-checkoutnpm-개발자">source checkout/npm 개발자</a></li><li><a href="#checkout-또는-package-directory에서-설치">checkout 또는 package directory에서 설치</a></li><li><a href="#실행">실행</a></li><li><a href="#model-선택">Model 선택</a></li><li><a href="#workflow-context-handoff">Workflow context handoff</a></li><li><a href="#실행-구조">실행 구조</a></li><li><a href="#state와-knowledge">State와 Knowledge</a></li><li><a href="#safety-boundary">Safety boundary</a></li><li><a href="#개발-및-검증">개발 및 검증</a></li><li><a href="#오프라인-mock-리허설">오프라인 mock 리허설</a></li><li><a href="#release-정보">Release 정보</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="assets/pages.js"></script></body></html>

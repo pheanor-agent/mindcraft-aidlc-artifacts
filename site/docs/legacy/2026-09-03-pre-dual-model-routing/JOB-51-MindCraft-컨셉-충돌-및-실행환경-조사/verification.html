@@ -1,0 +1,46 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JOB-51 검증 계획 · MindCraft</title><link rel="stylesheet" href="../../../../assets/pages.css"></head><body><header><a class="brand" href="../../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../../index.html">← 전체 문서</a><a href="verification.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><p class="historical">과거 설계 이력입니다. 현재 제품 기준은 SSOT를 확인하세요.</p><main><article><h1 id="job-51-검증-계획">JOB-51 검증 계획</h1>
+<h2 id="설계-산출물-확인">설계 산출물 확인</h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> manifest 존재</li>
+<li><input checked="" disabled="" type="checkbox"> request 존재</li>
+<li><input checked="" disabled="" type="checkbox"> design 존재</li>
+<li><input checked="" disabled="" type="checkbox"> review 존재</li>
+<li><input checked="" disabled="" type="checkbox"> execution-review 존재</li>
+<li><input checked="" disabled="" type="checkbox"> workflow state 존재</li>
+<li><input checked="" disabled="" type="checkbox"> HACKATHON.md에 컨셉 충돌과 조사 결과 반영</li>
+<li><input checked="" disabled="" type="checkbox"> README.md에 Windows-first 방향 반영</li>
+<li><input checked="" disabled="" type="checkbox"> ENVIRONMENT.md에 OS/CLI matrix 반영</li>
+</ul>
+<h2 id="실행-전-acceptance">실행 전 acceptance</h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> MVP 범위가 OpenCode/Claude Code 기본 harness preflight와 사용자 등록 provider schema로 제한됨</li>
+<li><input checked="" disabled="" type="checkbox"> 공통 backend registry, role profile, provider registration, deterministic mock 구현</li>
+<li><input checked="" disabled="" type="checkbox"> OpenCode/Claude Code CLI preflight가 executable을 자동 설치하지 않고 감지 결과만 반환</li>
+<li><input checked="" disabled="" type="checkbox"> Windows runner용 build/test/release-check workflow 작성</li>
+<li><input disabled="" type="checkbox"> Windows runner에서 build/test/release-check 통과 (workflow 작성 완료, 원격 실행 대기)</li>
+<li><input checked="" disabled="" type="checkbox"> 각 CLI preflight가 installed/unavailable을 정확히 표시하는 단위 테스트 통과</li>
+<li><input checked="" disabled="" type="checkbox"> mock adapter가 승인 전 실행을 차단하는 단위 테스트 통과</li>
+<li><input disabled="" type="checkbox"> 승인 전에는 subprocess가 실행되지 않음</li>
+<li><input disabled="" type="checkbox"> timeout/cancel이 process tree를 정리함</li>
+<li><input disabled="" type="checkbox"> cwd escape와 environment 전달이 차단됨</li>
+<li><input disabled="" type="checkbox"> stdout/stderr와 Run 결과에 secret이 없음</li>
+<li><input disabled="" type="checkbox"> 지원 조합별 Supported/Conditional/Unavailable 판정이 재현됨</li>
+</ul>
+<h2 id="오버엔지니어링ssot-acceptance">오버엔지니어링·SSOT acceptance</h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> CLI/server/MCP를 이번 구현 범위에서 분리함</li>
+<li><input checked="" disabled="" type="checkbox"> optional capability와 필수 capability를 구분함</li>
+<li><input checked="" disabled="" type="checkbox"> 현재 구현과 설계 후보의 상태 표기를 정의함</li>
+<li><input checked="" disabled="" type="checkbox"> 문서 충돌 시 <code>src/</code> 및 JOB-51 acceptance를 우선하는 계층을 정의함</li>
+<li><input checked="" disabled="" type="checkbox"> README의 현재 지원 문구가 실제 구현 상태와 일치하는지 최종 read-back</li>
+<li><input checked="" disabled="" type="checkbox"> Airouter/Codex가 제품 기본 provider가 아닌 개발·테스트 fixture로 구분됨</li>
+<li><input checked="" disabled="" type="checkbox"> OpenCode/Claude Code가 제품 기본 harness 요구사항으로 구분됨</li>
+<li><input checked="" disabled="" type="checkbox"> CLI 외 HTTP API/local server/SDK/GUI/MCP의 역할과 우선순위를 구분함</li>
+<li><input checked="" disabled="" type="checkbox"> Model API, coding harness, tool/context 계층을 분리함</li>
+</ul>
+<h2 id="현재-판정">현재 판정</h2>
+<p>설계·문서화 단계: PASS
+로컬 구현·검증 단계: PASS (87 tests)
+Windows runner 단계: 원격 실행 대기
+실제 OpenCode/Claude Code 실행 adapter: 후속 범위</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#설계-산출물-확인">설계 산출물 확인</a></li><li><a href="#실행-전-acceptance">실행 전 acceptance</a></li><li><a href="#오버엔지니어링ssot-acceptance">오버엔지니어링·SSOT acceptance</a></li><li><a href="#현재-판정">현재 판정</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../../assets/pages.js"></script></body></html>

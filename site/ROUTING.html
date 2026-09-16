@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft 현재 Model Configuration 정책 · MindCraft</title><link rel="stylesheet" href="assets/pages.css"></head><body><header><a class="brand" href="index.html">MindCraft <span>문서</span></a><nav><a href="index.html">← 전체 문서</a><a href="ROUTING.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-현재-model-configuration-정책">MindCraft 현재 Model Configuration 정책</h1>
+<blockquote>
+<p>사용자 결정 반영 baseline. MindCraft는 사용자가 지정한 Model을 사용하며, 자동으로 임의 Model을 선택하거나 추가하지 않는다. 이전 OpenCode/Claude Code 중심 자료는 <code>docs/legacy/</code>에 보존한다.</p>
+</blockquote>
+<h2 id="목표">목표</h2>
+<p>MindCraft는 Pi를 뼈대로 사용하고, 사용자가 지정한 Model로 코드·문서 분석, 정리, 목적별 문서 생성·가공 workflow를 실행한다.</p>
+<h2 id="현재-구현-상태">현재 구현 상태</h2>
+<p>현재 routing은 <strong>Episode 시작 시 한 번</strong> 실행된다.</p>
+<pre><code class="language-text">Episode 시작
+→ purpose 확인
+→ Model 선택
+→ 전체 Episode 실행
+</code></pre>
+<p>현재 구현은 <code>purpose-based selection</code>이며, 실행 중 token/context/검증 결과에 따른 <code>token-aware dynamic switching</code>은 구현되어 있지 않다. 한 Episode 실행 중 Model을 자동으로 변경하거나 임의로 fallback하지 않는다.</p>
+<h2 id="설정-규칙">설정 규칙</h2>
+<table>
+<thead>
+<tr>
+<th>설정</th>
+<th>정책</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Model 0개</td>
+<td>설정 오류, 실행 차단</td>
+</tr>
+<tr>
+<td>Model 1개</td>
+<td>모든 용도에 해당 Model 사용</td>
+</tr>
+<tr>
+<td>Model 2개</td>
+<td>서로 다른 용도에 하나씩 매핑</td>
+</tr>
+<tr>
+<td>동일 용도 Model 2개 이상</td>
+<td>설정 오류</td>
+</tr>
+<tr>
+<td>자동 Model 추가/임의 선택</td>
+<td>금지</td>
+</tr>
+<tr>
+<td>지정 Model unavailable</td>
+<td>자동 대체 없이 오류·중단·사용자 조치 안내</td>
+</tr>
+</tbody></table>
+<p>용도는 사용자가 명시한다. 예를 들어 분석용과 문서 가공용으로 각각 하나씩 지정할 수 있다. 제품이 작업 난이도를 근거로 Model을 임의로 바꾸지 않는다.</p>
+<h2 id="설정-예시">설정 예시</h2>
+<pre><code class="language-json">{
+  &quot;models&quot;: [
+    {
+      &quot;id&quot;: &quot;user-analysis-model&quot;,
+      &quot;purpose&quot;: &quot;analysis&quot;,
+      &quot;provider&quot;: &quot;user-configured-provider&quot;,
+      &quot;enabled&quot;: true
+    },
+    {
+      &quot;id&quot;: &quot;user-document-model&quot;,
+      &quot;purpose&quot;: &quot;document_transformation&quot;,
+      &quot;provider&quot;: &quot;user-configured-provider&quot;,
+      &quot;enabled&quot;: true
+    }
+  ]
+}
+</code></pre>
+<h2 id="실행승인-경계">실행·승인 경계</h2>
+<ol>
+<li>사용자가 지정한 Model 수와 purpose mapping을 검증한다.</li>
+<li>실행 전 선택 Model, purpose, provider availability, 예상 비용 또는 <code>unknown</code>을 표시한다.</li>
+<li>Model 0개 또는 동일 purpose 복수 모델이면 실행하지 않는다.</li>
+<li>지정 Model이 unavailable이어도 다른 Model로 자동 fallback하지 않는다.</li>
+<li>선택 결과와 실패 이유를 session/run history에 저장한다.</li>
+</ol>
+<h2 id="후속-token-switching-방향">후속 Token Switching 방향</h2>
+<p>Token switching은 현재 기능이 아니라 후속 확장안이다. 후보 판단 신호는 다음을 함께 고려한다.</p>
+<ul>
+<li>context 크기와 truncation 여부</li>
+<li>prompt 복잡도</li>
+<li>작업 목적</li>
+<li>위험도</li>
+<li>token budget</li>
+<li>검증 결과, retry 증가, tool 호출량</li>
+</ul>
+<p>초기 구현은 자동 전환이 아니라 <strong>승인 기반 전환 제안</strong>으로 한다. 예를 들어 context budget 초과, 검증 실패, retry 증가, 보안 관련 작업이 감지되면 상위 tier 전환을 제안하고 사용자 승인 후에만 전환한다.</p>
+<pre><code class="language-js">{
+  fromModel,
+  toModel,
+  reason,
+  trigger,
+  approved
+}
+</code></pre>
+<p>후속 telemetry는 provider가 실제 값을 제공하는 경우 <code>actual</code>로 저장하고, 그렇지 않으면 <code>estimate</code>로 명확히 구분한다. 후보 항목은 <code>actualInputTokens</code>, <code>actualOutputTokens</code>, <code>latency</code>, <code>retryCount</code>, <code>toolCallCount</code>, <code>verificationResult</code>, <code>estimatedCost</code>, <code>actualCost</code>, <code>contextTruncated</code>, <code>switchEvents</code>다.</p>
+<h2 id="pi-경계">Pi 경계</h2>
+<ul>
+<li>MindCraft: Model configuration, purpose mapping, session/workflow, approval, Knowledge, recovery 소유</li>
+<li>Pi: agent inner loop, provider/model invocation, 기존 agent interface 소유</li>
+<li>Pi API는 adapter 뒤에 두고 MindCraft 정책이 Pi 내부 동작에 누출되지 않게 한다.</li>
+</ul>
+<h2 id="비범위">비범위</h2>
+<ul>
+<li>외부 coding-agent/CLI 필수 설치</li>
+<li>자동 난이도 기반 routing</li>
+<li>ensemble 또는 용도별 2개 초과 Model</li>
+<li>무승인 유료 호출</li>
+<li>AI에 의한 사용자 승인 대체</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#목표">목표</a></li><li><a href="#현재-구현-상태">현재 구현 상태</a></li><li><a href="#설정-규칙">설정 규칙</a></li><li><a href="#설정-예시">설정 예시</a></li><li><a href="#실행승인-경계">실행·승인 경계</a></li><li><a href="#후속-token-switching-방향">후속 Token Switching 방향</a></li><li><a href="#pi-경계">Pi 경계</a></li><li><a href="#비범위">비범위</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="assets/pages.js"></script></body></html>

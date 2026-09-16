@@ -1,0 +1,89 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft 해커톤 발표 · MindCraft</title><link rel="stylesheet" href="../../assets/pages.css"></head><body><header><a class="brand" href="../../index.html">MindCraft <span>문서</span></a><nav><a href="../../index.html">← 전체 문서</a><a href="README.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-해커톤-발표">MindCraft 해커톤 발표</h1>
+<h2 id="팀이-함께-쓰는-ai-팀을-연결하는-ai">팀이 함께 쓰는 AI, 팀을 연결하는 AI</h2>
+<p><a href="agent-orchestration/index.html">HTML 슬라이드</a> · <a href="agent-orchestration/speaker-script.html">7분 발표 대본</a> · <a href="agent-orchestration/research-dossier.html">광범위 이력 조사 보고서</a> · <a href="agent-orchestration/evidence.html">슬라이드별 근거</a></p>
+<p>공용 DDT를 통한 컨셉·MVP 공동개발과, 본 행사에서 Astra가 Claude Code·DDT를 연결한 경험을 실제 이력으로 소개한다. DDT에 두 차례 직접 질의해 세션·작업대장·작성자·운영 구조를 조사하고, 로컬 Git·AI-DLC 원문·Astra 도구 호출·Windows 실행 결과와 대조했다.</p>
+<p>본편 12장, 7분(420초), 질의응답용 부록 1장이다. 청중은 AI 활용에 익숙하지만 DDT와 이 프로젝트의 구조는 처음 접한다고 가정했다.</p>
+<table>
+<thead>
+<tr>
+<th>순서</th>
+<th>흐름</th>
+<th>시간</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–2</td>
+<td>두 실험과 만들던 제품 소개</td>
+<td>50초</td>
+</tr>
+<tr>
+<td>3–5</td>
+<td>팀원 요청, 스레드별 맥락과 공통 기록, 컨셉에서 MVP까지</td>
+<td>115초</td>
+</tr>
+<tr>
+<td>6–7</td>
+<td>축적한 지식을 두 에이전트 사이에 연결</td>
+<td>65초</td>
+</tr>
+<tr>
+<td>8–10</td>
+<td>11개 지적의 수정, Astra 독립 확인, 실제 TUI 조작</td>
+<td>130초</td>
+</tr>
+<tr>
+<td>11–12</td>
+<td>자동화 범위와 두 실험의 의미</td>
+<td>60초</td>
+</tr>
+</tbody></table>
+<p>네이비·코발트·흰색, 동일한 16:9 비율과 Noto Sans KR 서체를 사용한다. 한글 제목은 600 굵기와 기본 자간을 유지하고 <code>transform: scale()</code>을 쓰지 않는다. 폰트·이미지·스크립트를 모두 포함해 오프라인으로 열 수 있다.</p>
+<h3 id="열기와-조작">열기와 조작</h3>
+<p>GitHub 파일 보기에서는 HTML이 실행되지 않는다. 저장소를 내려받아 <code>agent-orchestration/index.html</code>을 브라우저로 열거나, 저장소 루트에서 <code>python -m http.server 8765 --bind 127.0.0.1</code>로 미리 볼 수 있다.</p>
+<table>
+<thead>
+<tr>
+<th>기능</th>
+<th>조작</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>이전·다음</td>
+<td>방향키, PageUp/PageDown, Space, 하단 버튼</td>
+</tr>
+<tr>
+<td>처음·부록</td>
+<td>Home / End</td>
+</tr>
+<tr>
+<td>발표 노트</td>
+<td>N 또는 상단 버튼</td>
+</tr>
+<tr>
+<td>목차</td>
+<td>O 또는 상단 버튼</td>
+</tr>
+<tr>
+<td>전체 화면</td>
+<td>F 또는 상단 버튼</td>
+</tr>
+<tr>
+<td>직접 이동</td>
+<td><code>#slide-1</code> ~ <code>#slide-13</code></td>
+</tr>
+<tr>
+<td>모바일 이동</td>
+<td>좌우 스와이프 또는 버튼</td>
+</tr>
+</tbody></table>
+<p>5장의 연대기, 7장의 오케스트레이션, 10장의 실제 수정 전후 화면에 인터랙션이 있다. 설명용 로컬 전환이며 외부 에이전트·서비스를 호출하지 않는다. 인터랙션 버튼에 포커스가 있을 때는 하단 이동 버튼을 사용한다. 정적 인쇄 시 모든 상태의 상세 근거는 대본과 근거 문서를 함께 본다.</p>
+<h3 id="근거와-관찰-범위">근거와 관찰 범위</h3>
+<p>행사 전 제품 MVP와 행사 당일 AI-DLC 신규 개발은 별도 이력이다. 계획 승인·구현·실행 검증을 구분한다. 공용 DDT의 대화 분리는 스레드/세션을 기준으로 설명하고, 모든 사용자의 맥락 오염이 0건이었다는 주장은 하지 않는다. 실제 Windows 캡처는 ConPTY의 Pi TUI이며 Windows Terminal·한글 IME 검증을 대신하지 않는다.</p>
+<ul>
+<li><a href="agent-orchestration/source-manifest.json">출처 파일 SHA-256</a></li>
+<li><a href="agent-orchestration/redesign-plan.html">구성·레이아웃 설계</a></li>
+<li><a href="agent-orchestration/design-review.html">초기 대표 디자인 시안</a> — 디자인 참고용, 최신 발표 내용은 본편 기준</li>
+<li><a href="agent-orchestration/assets/README.html">이미지 출처</a></li>
+</ul>
+<p><a href="../README.html">전체 문서 목록</a> · <a href="../../README.html">제품 README</a></p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#팀이-함께-쓰는-ai-팀을-연결하는-ai">팀이 함께 쓰는 AI, 팀을 연결하는 AI</a></li><li><a href="#열기와-조작">열기와 조작</a></li><li><a href="#근거와-관찰-범위">근거와 관찰 범위</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../assets/pages.js"></script></body></html>

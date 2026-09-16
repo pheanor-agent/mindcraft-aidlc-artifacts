@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: offline CLI setup, approval and persisted command result (0)
+ok 1 - offline CLI setup, approval and persisted command result (0)
+  ---
+  duration_ms: 10978.0398
+  type: 'test'
+  ...
+# Subtest: offline CLI setup, approval and persisted command result (7)
+ok 2 - offline CLI setup, approval and persisted command result (7)
+  ---
+  duration_ms: 8043.0878
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19967.9113

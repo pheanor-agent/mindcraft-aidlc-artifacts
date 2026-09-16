@@ -1,0 +1,10 @@
+job_id: "JOB-38"
+created_at: "2026-08-28T17:57:04+09:00"
+type: "기획"
+profile: "standard"
+scope:
+  type: group
+  group_tag: ""
+  resolution_basis: "user_requested"
+  group_config_version: 1
+parent: JOB-1

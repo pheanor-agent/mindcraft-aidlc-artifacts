@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindCraft 발표 재설계 — 이야기와 디자인 검토</title>
+<style>
+  @font-face {
+    font-family: "MindCraft Noto";
+    src: url("assets/fonts/NotoSansKR.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  :root {
+    --navy: #14213d;
+    --blue: #3d63f4;
+    --paper: #f7f9fd;
+    --tint: #e8eeff;
+    --muted: #64718b;
+    --line: #d5deed;
+    font-family: "MindCraft Noto", "Noto Sans KR", sans-serif;
+    font-synthesis: none;
+    color: var(--navy);
+    background: #e5eaf2;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  button { font: inherit; cursor: pointer; }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+  [hidden] { display: none !important; }
+  h1, h2, h3, p { margin: 0; }
+  a { color: inherit; text-underline-offset: 4px; }
+  .review-shell { max-width: 1400px; padding: 30px 32px 60px; margin: auto; }
+  .review-header { display: flex; justify-content: space-between; align-items: start; gap: 24px; margin-bottom: 24px; }
+  .review-header h1 { font-size: 23px; letter-spacing: -.05em; margin: 8px 0; }
+  .review-header p { font-size: 13px; line-height: 1.7; color: var(--muted); }
+  .review-header a { font-size: 13px; white-space: nowrap; margin-top: 18px; }
+  .review-kicker { font-size: 11px; letter-spacing: .12em; font-weight: 700; color: var(--blue); }
+  .scene-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .scene-tabs button { border: 0; padding: 11px 17px; font-size: 13px; border-radius: 5px; background: transparent; color: var(--muted); }
+  .scene-tabs button[aria-selected="true"] { color: white; background: var(--navy); }
+  .viewport { container-type: inline-size; width: 100%; aspect-ratio: 16/9; position: relative; overflow: hidden; box-shadow: 0 15px 45px #14213d16; background: var(--paper); }
+  .canvas { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
+  .scene { width: 100cqw; height: 56.25cqw; position: absolute; inset: 0; background: var(--paper); overflow: hidden; }
+  .scene .brand { position: absolute; top: 3.59375cqw; left: 6.25cqw; display: flex; align-items: center; gap: 0.78125cqw; font-size: 1.32812cqw; font-weight: 700; letter-spacing: -.03em; }
+  .brand::before { content: ""; width: 0.9375cqw; height: 0.9375cqw; background: var(--blue); }
+  .scene .chapter { position: absolute; top: 3.82812cqw; right: 6.25cqw; font-size: 1.25cqw; color: var(--muted); }
+  .scene h2 { position: absolute; left: 6.25cqw; top: 9.29688cqw; font-size: 4.375cqw; line-height: 1.27; font-weight: 600; letter-spacing: 0; }
+  .scene em { color: var(--blue); font-style: normal; }
+  .scene .folio { position: absolute; left: 6.25cqw; right: 6.25cqw; bottom: 3.04688cqw; display: flex; justify-content: space-between; align-items: center; font-size: 1.25cqw; color: var(--muted); }
+  .scene .folio .track { width: 7.5cqw; height: 0.234375cqw; background: var(--line); }
+  .scene .folio .track span { display: block; height: 100%; background: var(--blue); }
+  .scene .folio>div { display: flex; gap: 1.71875cqw; align-items: center; }
+  .scene .subtext { font-size: 1.875cqw; line-height: 1.6; letter-spacing: -.04em; }
+  .scene .note { font-size: 1.5625cqw; line-height: 1.5; color: var(--muted); letter-spacing: -.03em; }
+  .cover { color: var(--paper); background: var(--navy); }
+  .cover .chapter, .cover .folio { color: #b8c5df; }
+  .cover .brand::before { background: #829bff; }
+  .cover h2 { top: 13.2031cqw; font-size: 5.78125cqw; line-height: 1.23; letter-spacing: 0; }
+  .cover em { color: #8ba3ff; }
+  .cover .cover-intro { position: absolute; left: 6.5625cqw; top: 32.6562cqw; font-size: 2.03125cqw; line-height: 1.65; letter-spacing: -.045em; color: #ced9ec; }
+  .cover-docs { position: absolute; left: 68.8281cqw; top: 12.8906cqw; width: 23.4375cqw; height: 31.25cqw; }
+  .cover-docs::before { content: ""; position: absolute; left: 2.8125cqw; top: 2.03125cqw; width: 0.15625cqw; height: 26.4062cqw; background: #4a5f84; }
+  .cover-doc { position: absolute; left: 0; width: 23.4375cqw; height: 8.67188cqw; display: flex; gap: 1.875cqw; align-items: center; border: 0.078125cqw solid #4a5f84; border-radius: 0.546875cqw; padding: 2.03125cqw 1.95312cqw; background: #1c2e50; }
+  .cover-doc:nth-child(1) { top: 0; }
+  .cover-doc:nth-child(2) { top: 10.8594cqw; }
+  .cover-doc:nth-child(3) { top: 21.7188cqw; background: var(--blue); border-color: var(--blue); }
+  .cover-doc .doc-num { font-size: 1.32812cqw; color: #bbcaff; }
+  .cover-doc strong { display: block; font-size: 2.10938cqw; margin-bottom: 0.46875cqw; letter-spacing: -.04em; }
+  .cover-doc small { display: block; font-size: 1.32812cqw; color: #c4d1ec; }
+  .cover-doc:nth-child(3) small { color: #e0e7ff; }
+  .problem-intro { position: absolute; left: 6.40625cqw; top: 22.8906cqw; font-size: 1.875cqw; color: var(--muted); letter-spacing: -.04em; }
+  .handoff-chain { position: absolute; left: 6.25cqw; top: 28.9844cqw; width: 87.5cqw; height: 12.2656cqw; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.125cqw; }
+  .handoff-chain::before { content: ""; position: absolute; left: 1.32812cqw; right: 6.40625cqw; top: 1.25cqw; height: 0.15625cqw; background: var(--line); }
+  .handoff { position: relative; }
+  .handoff .dot { width: 2.65625cqw; height: 2.65625cqw; border: 0.15625cqw solid var(--blue); background: var(--paper); position: relative; border-radius: 50%; display: grid; place-items: center; font-size: 1.17188cqw; color: var(--blue); }
+  .handoff strong { display: block; font-size: 2.1875cqw; margin-top: 1.95312cqw; letter-spacing: -.03em; }
+  .handoff p { font-size: 1.64062cqw; margin-top: 0.78125cqw; color: var(--muted); letter-spacing: -.04em; }
+  .problem .takeaway { position: absolute; left: 6.25cqw; top: 44.1406cqw; border-left: 0.3125cqw solid var(--blue); padding-left: 1.5625cqw; font-size: 1.95312cqw; font-weight: 700; letter-spacing: -.05em; }
+  .orchestrator { position: absolute; left: 6.25cqw; right: 6.25cqw; top: 23.75cqw; height: 4.6875cqw; background: var(--tint); display: flex; align-items: center; padding: 0 1.875cqw; gap: 1.71875cqw; border-left: 0.3125cqw solid var(--blue); }
+  .orchestrator strong { font-size: 2.10938cqw; color: var(--blue); }
+  .orchestrator span { font-size: 1.71875cqw; letter-spacing: -.04em; }
+  .actor-row { position: absolute; left: 6.25cqw; right: 6.25cqw; top: 32.6562cqw; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4.21875cqw; }
+  .actor { position: relative; border-top: 0.15625cqw solid var(--line); padding-top: 1.79688cqw; transition: border-color .25s; }
+  .actor strong { font-size: 2.26562cqw; letter-spacing: -.03em; display: block; }
+  .actor p { font-size: 1.71875cqw; color: var(--muted); line-height: 1.5; margin-top: 0.625cqw; letter-spacing: -.04em; }
+  .actor.active { border-color: var(--blue); }
+  .actor.active strong { color: var(--blue); }
+  .actor:not(:last-child)::after { content: "→"; position: absolute; right: -3.04688cqw; top: 2.1875cqw; font-size: 1.95312cqw; color: #8395b5; }
+  .work-document { position: absolute; left: 6.25cqw; top: 44.1406cqw; width: 26.3281cqw; height: 3.59375cqw; border: 0.078125cqw solid #b1c1fb; color: var(--blue); background: var(--tint); border-radius: 0.390625cqw; display: grid; place-items: center; font-size: 1.64062cqw; transition: left .3s; }
+  .case-intro { position: absolute; top: 22.6562cqw; left: 6.25cqw; font-size: 1.79688cqw; color: var(--muted); letter-spacing: -.04em; }
+  .case-columns { position: absolute; left: 6.25cqw; right: 6.25cqw; top: 27.3438cqw; display: grid; grid-template-columns: 1fr 1fr; gap: 3.125cqw; }
+  .case-item { padding: 2.03125cqw 2.1875cqw; border-top: 0.234375cqw solid var(--blue); background: var(--tint); min-height: 15.2344cqw; }
+  .case-item .timing { display: block; font-size: 1.5625cqw; color: var(--blue); margin-bottom: 1.17188cqw; font-weight: 700; }
+  .case-item strong { font-size: 2.42188cqw; display: block; letter-spacing: -.03em; }
+  .case-item p { font-size: 1.71875cqw; line-height: 1.5; margin-top: 0.9375cqw; color: var(--muted); letter-spacing: -.04em; }
+  .case-item.safety { background: #edf0f6; border-color: #92a0b8; }
+  .case-item.safety .timing { color: var(--muted); }
+  .case.after .case-item.safety { background: var(--navy); border-color: var(--blue); color: white; }
+  .case.after .case-item.safety .timing { color: #a8bcff; }
+  .case.after .case-item.safety p { color: #c7d3e9; }
+  .case-outcome { position: absolute; left: 6.25cqw; top: 45.2344cqw; font-size: 1.875cqw; font-weight: 700; color: var(--blue); letter-spacing: -.045em; }
+  .controls { min-height: 48px; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 12px 0; }
+  .controls p { font-size: 12px; color: var(--muted); }
+  .interaction { display: flex; gap: 8px; align-items: center; }
+  .interaction button { border: 1px solid #bdc9df; border-radius: 4px; padding: 8px 12px; font-size: 12px; background: var(--paper); color: var(--navy); }
+  .interaction button[aria-pressed="true"] { color: white; background: var(--blue); border-color: var(--blue); }
+  .scene-rationale { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 28px; margin-top: 16px; padding: 24px 0; border-top: 1px solid #c7d1e1; border-bottom: 1px solid #c7d1e1; }
+  .scene-rationale dt { font-size: 11px; color: var(--muted); margin-bottom: 9px; }
+  .scene-rationale dd { font-size: 14px; line-height: 1.8; margin: 0; word-break: keep-all; }
+  .rationale-middle dd { font-weight: 700; }
+  .board-title { margin: 40px 0 18px; font-size: 19px; letter-spacing: -.04em; }
+  .storyboard { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 28px; }
+  .storyboard li { border-top: 1px solid #bdc9dc; padding: 17px 0 22px; }
+  .storyboard small { font-size: 11px; color: var(--blue); }
+  .storyboard strong { display: block; font-size: 15px; margin: 8px 0; line-height: 1.6; letter-spacing: -.03em; }
+  .storyboard p { color: var(--muted); font-size: 12px; line-height: 1.7; word-break: keep-all; }
+  .design-rules { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 12px; color: var(--muted); padding: 18px 0; }
+  .design-rules span { display: flex; gap: 7px; align-items: center; }
+  .swatch { width: 13px; height: 13px; display: inline-block; border: 1px solid #64718b30; }
+  @media(max-width:800px) { .review-shell { padding: 20px 16px 40px; } .storyboard { grid-template-columns: repeat(2, 1fr); } .scene-rationale { grid-template-columns: 1fr; gap: 18px; } .review-header { display: block; } .review-header a { display: inline-block; margin-top: 10px; } .controls { align-items: start; flex-direction: column; gap: 8px; } }
+  @media(prefers-reduced-motion:reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="review-shell">
+  <p style="margin-bottom:20px;font-size:14px"><a href="index.html"><strong>실제 이력 조사로 새로 구성한 7분 본편 열기 ↗</strong></a> · 이 페이지는 초기 디자인 시안입니다.</p><header class="review-header"><div><span class="review-kicker">MINDCRAFT / PRESENTATION DESIGN REVIEW</span><h1>같은 이야기, 같은 디자인 언어</h1><p>AI 활용에 익숙한 청중 · 7분 · 본편 11장 + 부록<br>아래 네 장면은 구성과 시각 언어를 확인하기 위한 대표 시안입니다.</p></div><a href="redesign-plan.html">전체 구성 설계안 읽기 ↗</a></header>
+  <nav class="scene-tabs" role="tablist" aria-label="대표 장면"><button type="button" id="tab-0" role="tab" aria-controls="scene-0" aria-selected="true" data-scene="0">01 표지</button><button type="button" id="tab-1" role="tab" aria-controls="scene-1" aria-selected="false" data-scene="1">03 문제</button><button type="button" id="tab-2" role="tab" aria-controls="scene-2" aria-selected="false" data-scene="2">06 작동 방식</button><button type="button" id="tab-3" role="tab" aria-controls="scene-3" aria-selected="false" data-scene="3">08 실제 사례</button></nav>
+  <div class="viewport" id="viewport"><div class="canvas" id="canvas">
+    <section class="scene cover" id="scene-0" role="tabpanel" aria-labelledby="tab-0">
+      <div class="brand">MindCraft</div><div class="chapter">개발 협업의 기록</div>
+      <h2>AI와 함께 만드는<br><em>개발의 흐름</em></h2>
+      <p class="cover-intro">DDT와 협업하고<br>Astra로 다음 작업을 연결하다</p>
+      <div class="cover-docs" aria-label="요청, 검토, 다음 작업으로 이어지는 문서"><div class="cover-doc"><span class="doc-num">01</span><div><strong>요청</strong><small>무엇을 만들 것인가</small></div></div><div class="cover-doc"><span class="doc-num">02</span><div><strong>검토</strong><small>무엇을 고쳐야 하는가</small></div></div><div class="cover-doc"><span class="doc-num">03</span><div><strong>다음 작업</strong><small>어디까지 진행할 것인가</small></div></div></div>
+      <div class="folio"><span>DDT × Astra / AI-DLC</span><div><div class="track"><span style="width:9%"></span></div><span>01 / 11</span></div></div>
+    </section>
+    <section class="scene problem" id="scene-1" role="tabpanel" aria-labelledby="tab-1" hidden>
+      <div class="brand">MindCraft</div><div class="chapter">상황 / 인계의 문제</div>
+      <h2>결과 다음에는,<br><em>또 인계할 일이 남습니다</em></h2>
+      <p class="problem-intro">AI에게 일을 맡긴 뒤에도 사람이 연결하던 작업</p>
+      <div class="handoff-chain"><div class="handoff"><span class="dot">1</span><strong>요청 설명</strong><p>맥락을 정리하고</p></div><div class="handoff"><span class="dot">2</span><strong>결과 전달</strong><p>산출물을 옮기고</p></div><div class="handoff"><span class="dot">3</span><strong>검토 요청</strong><p>확인할 기준을 주고</p></div><div class="handoff"><span class="dot">4</span><strong>수정 전달</strong><p>보완할 일을 다시 설명</p></div></div>
+      <p class="takeaway">에이전트 사이의 인계도 개발 과정의 일부입니다.</p>
+      <div class="folio"><span>다음: 개발 맥락을 공유할 협업 파트너, DDT</span><div><div class="track"><span style="width:27%"></span></div><span>03 / 11</span></div></div>
+    </section>
+    <section class="scene operation" id="scene-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+      <div class="brand">MindCraft</div><div class="chapter">방식 / Astra의 조율</div>
+      <h2>Astra가 작성·검토·수정을<br><em>연결합니다</em></h2>
+      <div class="orchestrator"><strong>Astra</strong><span id="orchestrator-action">승인된 계획을 작성 에이전트에 전달</span></div>
+      <div class="actor-row"><div class="actor active" id="actor-0"><strong>작성 에이전트</strong><p>Claude가 문서를<br>작성하고 수정</p></div><div class="actor" id="actor-1"><strong>DDT</strong><p>기존 맥락과 요구사항으로<br>산출물을 검토</p></div><div class="actor" id="actor-2"><strong>다음 작업</strong><p>보완하거나<br>승인 범위 안에서 진행</p></div></div>
+      <div class="work-document" id="work-document">승인된 계획</div>
+      <div class="folio"><span>사람이 목표와 권한 범위를 정합니다.</span><div><div class="track"><span style="width:55%"></span></div><span>06 / 11</span></div></div>
+    </section>
+    <section class="scene case after" id="scene-3" role="tabpanel" aria-labelledby="tab-3" hidden>
+      <div class="brand">MindCraft</div><div class="chapter">사례 / 계획을 바로잡는 검토</div>
+      <h2>미룰 기능과 지킬 규칙을<br><em>나눴습니다</em></h2>
+      <p class="case-intro" id="case-intro">기능의 보류가 필수 안전 규칙의 보류로 이어지지 않도록</p>
+      <div class="case-columns"><div class="case-item"><span class="timing">나중에 구현</span><strong>자료 수집·승인 화면</strong><p>이번 MVP 범위에서는 보류</p></div><div class="case-item safety"><span class="timing" id="safety-timing">지금 적용</span><strong>민감한 파일 제외</strong><p id="safety-copy">현재 실행 경로에서 계속 지킬 규칙</p></div></div>
+      <p class="case-outcome" id="case-outcome">수정한 계획을 다시 검토하고, 해당 계획의 범위를 승인했습니다.</p>
+      <div class="folio"><span>실제 Workflow Planning 검토를 쉽게 풀어쓴 도식</span><div><div class="track"><span style="width:73%"></span></div><span>08 / 11</span></div></div>
+    </section>
+  </div></div>
+  <div class="controls"><p id="format-label">모든 장면 1280 × 720 / 16:9 · 같은 여백·서체·색상 체계</p><div class="interaction" id="operation-controls" hidden><button type="button" data-step="0" aria-pressed="true">1 작성 요청</button><button type="button" data-step="1" aria-pressed="false">2 검토 전달</button><button type="button" data-step="2" aria-pressed="false">3 대조·인계</button></div><div class="interaction" id="case-controls" hidden><button type="button" data-case="before" aria-pressed="false">수정 전</button><button type="button" data-case="after" aria-pressed="true">수정 후</button></div></div>
+  <dl class="scene-rationale"><div><dt>청중이 품는 질문</dt><dd id="audience-question">이 발표는 어떤 개발 경험을 다루는가?</dd></div><div class="rationale-middle"><dt>이 장에서 전달할 한 가지</dt><dd id="scene-message">에이전트의 결과가 다음 작업으로 이어지게 만든 협업 방식.</dd></div><div><dt>다음 장으로 이어지는 이유</dt><dd id="scene-bridge">먼저 어떤 제품을 만들고 있었는지 소개한다.</dd></div></dl>
+  <h2 class="board-title">7분 이야기의 순서</h2>
+  <ol class="storyboard">
+    <li><small>01 / 도입 · 20초</small><strong>AI와 함께 만드는 개발의 흐름</strong><p>발표의 주제를 한 문장으로 약속</p></li>
+    <li><small>02 / 상황 · 30초</small><strong>우리가 만들던 도구, MindCraft</strong><p>제품은 짧게, 이번 개발의 맥락은 구체적으로</p></li>
+    <li><small>03 / 문제 · 35초</small><strong>결과 다음에도 남는 인계 작업</strong><p>사람이 반복해 연결하던 일을 보여줌</p></li>
+    <li><small>04 / 협업 · 35초</small><strong>DDT와 개발 맥락을 공유</strong><p>DDT가 가진 역할을 필요한 순간에 소개</p></li>
+    <li><small>05 / 절차 · 40초</small><strong>AI-DLC로 단계와 기준을 정함</strong><p>개발 절차와 하네스를 역할로 설명</p></li>
+    <li><small>06 / 조율 · 45초</small><strong>Astra가 작성·검토·수정을 연결</strong><p>같은 문서가 이동하는 인터랙션</p></li>
+    <li><small>07 / 사례 · 35초</small><strong>나중에 할 기능까지 들어갈 위험</strong><p>실제 검토에서 발견한 문제를 제시</p></li>
+    <li><small>08 / 해결 · 50초</small><strong>미룰 기능과 지킬 규칙을 분리</strong><p>수정 전후와 그 이유를 한눈에 비교</p></li>
+    <li><small>09 / 인계 · 35초</small><strong>버전·수정·승인 범위를 확인</strong><p>다음 작업으로 넘어가는 조건</p></li>
+    <li><small>10 / 결과 · 40초</small><strong>검토 결과가 다음 입력으로 남음</strong><p>확인된 결과와 후속 측정을 구분</p></li>
+    <li><small>11 / 마무리 · 25초</small><strong>다음 작업까지 이어지는 AI 협업</strong><p>첫 장의 약속을 사례로 회수</p></li>
+    <li><small>부록 / 질문이 있을 때</small><strong>근거 문서와 용어 풀이</strong><p>원본 식별자·세부 승인 범위는 여기에서</p></li>
+  </ol>
+  <div class="design-rules"><span><i class="swatch" style="background:#14213d"></i>Navy / 제목·표지</span><span><i class="swatch" style="background:#3d63f4"></i>Cobalt / 강조·현재 단계</span><span><i class="swatch" style="background:#f7f9fd"></i>White / 본문</span><span><i class="swatch" style="background:#e8eeff"></i>Blue tint / 설명 영역</span><span>새 강조색 없음</span><span>한 서체, 동일한 16:9 캔버스</span></div>
+</main>
+<script>
+(() => {
+  const tabs = [...document.querySelectorAll('[data-scene]')];
+  const rationale = [
+    ['이 발표는 어떤 개발 경험을 다루는가?', '에이전트의 결과가 다음 작업으로 이어지게 만든 협업 방식.', '먼저 어떤 제품을 만들고 있었는지 소개한다.'],
+    ['AI에게 일을 맡긴 뒤에도 무엇이 남는가?', '맥락·산출물·검토·수정의 인계는 계속 연결해야 한다.', '개발 맥락을 함께 다룰 파트너로 DDT를 소개한다.'],
+    ['Astra는 이 구조에서 무엇을 하는가?', '문서 작성, DDT 검토, 수정과 다음 작업의 인계를 조율한다.', '실제 검토에서 어떤 문제가 발견됐는지 사례로 확인한다.'],
+    ['검토를 거쳐 무엇이 달라졌는가?', '나중에 할 기능을 보류하면서 지금 지킬 안전 경계는 유지했다.', '그 다음, 어떤 문서와 범위를 승인했는지 설명한다.']
+  ];
+  function selectScene(index) {
+    document.querySelectorAll('.scene').forEach((el, i) => { el.hidden = i !== index; });
+    tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
+    document.getElementById('operation-controls').hidden = index !== 2;
+    document.getElementById('case-controls').hidden = index !== 3;
+    ['audience-question', 'scene-message', 'scene-bridge'].forEach((id, i) => document.getElementById(id).textContent = rationale[index][i]);
+    history.replaceState(null, '', `#scene-${index + 1}`);
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => selectScene(i));
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      event.preventDefault();
+      const n = (i + (event.key === 'ArrowRight' ? 1 : 3)) % 4;
+      selectScene(n); tabs[n].focus();
+    });
+  });
+  const steps = [
+    ['승인된 계획을 작성 에이전트에 전달', '승인된 계획'],
+    ['작성한 문서를 DDT에 전달하고 검토 기준을 지정', '작성한 산출물'],
+    ['원문·검토·수정을 대조하고 다음 작업의 범위를 확인', '검토 근거 + 다음 작업']
+  ];
+  document.querySelectorAll('[data-step]').forEach(button => button.addEventListener('click', () => {
+    const n = Number(button.dataset.step);
+    document.querySelectorAll('[data-step]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    document.querySelectorAll('.actor').forEach((a, i) => a.classList.toggle('active', i === n));
+    document.getElementById('orchestrator-action').textContent = steps[n][0];
+    const doc = document.getElementById('work-document'); doc.textContent = steps[n][1]; doc.style.left = `${(80 + n * 391.5) / 12.8}cqw`;
+  }));
+  document.querySelectorAll('[data-case]').forEach(button => button.addEventListener('click', () => {
+    const after = button.dataset.case === 'after';
+    document.querySelectorAll('[data-case]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    document.getElementById('scene-3').classList.toggle('after', after);
+    document.getElementById('safety-timing').textContent = after ? '지금 적용' : '함께 빠질 위험';
+    document.getElementById('safety-copy').textContent = after ? '현재 실행 경로에서 계속 지킬 규칙' : '기능 보류와 경계 유지의 구분이 불명확';
+    document.getElementById('case-intro').textContent = after ? '기능의 보류가 필수 안전 규칙의 보류로 이어지지 않도록' : '자료 관련 기능을 보류하면서 안전 경계도 빠질 수 있었습니다.';
+    document.getElementById('case-outcome').textContent = after ? '수정한 계획을 다시 검토하고, 해당 계획의 범위를 승인했습니다.' : 'DDT 검토에서 두 범위를 명확히 나누도록 요청했습니다.';
+  }));
+  const initial = location.hash.match(/^#scene-([1-4])$/);
+  selectScene(initial ? Number(initial[1]) - 1 : 0);
+})();
+</script>
+</body>
+</html>

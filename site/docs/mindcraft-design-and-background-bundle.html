@@ -1,0 +1,508 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft 설계 및 배경 자료 통합본 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="mindcraft-design-and-background-bundle.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-설계-및-배경-자료-통합본">MindCraft 설계 및 배경 자료 통합본</h1>
+<blockquote>
+<p>문서 목적: MindCraft의 제품 배경, 핵심 요구사항, 현재 확정 설계, 실행 workflow, Knowledge, 안전성, 첫 실행 onboarding 및 후속 계획을 한 파일에서 검토할 수 있도록 통합한다.</p>
+<p>범위: 현재 팀에서 공유·검토된 제품 설계와 구현 기준</p>
+<p>보안: credential, token, 개인 정보, 내부 인증 경로 및 비공개 실행 정보는 포함하지 않는다.</p>
+</blockquote>
+<hr>
+<h2 id="1-한눈에-보는-결론">1. 한눈에 보는 결론</h2>
+<p>MindCraft는 별도의 agent 프로그램과 harness를 각각 설치·연결하기 어려운 사용자를 위한 <strong>Pi 기반 terminal TUI AI 작업 프로그램</strong>이다.</p>
+<p>사용자는 실행 파일 하나로 진입하고, MindCraft는 다음을 내부적으로 수행한다.</p>
+<pre><code class="language-text">mindcraft 실행
+→ 환경·Model preflight
+→ 첫 실행 setup 또는 기존 상태 복원
+→ Task 생성
+→ Episode 목표 정의
+→ 승인된 Knowledge와 workspace context 구성
+→ Pi AgentSession을 통한 실행
+→ 검증
+→ 결과·산출물·provenance 저장
+→ Knowledge candidate 생성
+→ 사용자 review/promote
+→ 다음 Episode/Run에서 재사용
+</code></pre>
+<p>MindCraft의 장기 작업 관리와 승인·검증·Knowledge·복구는 MindCraft가 소유한다. 한 번의 실제 agent loop와 provider/model 호출은 Pi가 소유한다.</p>
+<p>MindCraft는 중앙 LLM gateway, 팀 공유 SaaS, IDE 대체 제품, AI-DLC runtime engine이 아니다.</p>
+<hr>
+<h2 id="2-설계-배경">2. 설계 배경</h2>
+<h3 id="21-해결하려는-문제">2.1 해결하려는 문제</h3>
+<ul>
+<li>agent와 harness를 별도로 설치·연결하기 어렵다.</li>
+<li>개발 환경에 익숙하지 않은 사용자에게 초기 설정 장벽이 높다.</li>
+<li>코드·문서 분석과 결과 가공을 반복하기 어렵다.</li>
+<li>이전 작업 결과와 교훈이 다음 작업으로 안전하게 이어지지 않는다.</li>
+<li>파일·명령 실행 범위를 통제하기 어렵다.</li>
+<li>장시간 작업이 중단되었을 때 상태와 재개 지점을 잃기 쉽다.</li>
+</ul>
+<h3 id="22-주요-사용자와-환경">2.2 주요 사용자와 환경</h3>
+<ul>
+<li>개인 사용자</li>
+<li>Windows Terminal 사용자</li>
+<li>개발자 또는 문서 작업자</li>
+<li>별도 agent/harness 설치·연결을 최소화하려는 사용자</li>
+</ul>
+<p>1차 제품 interface 대상은 Windows Terminal 또는 호환 terminal이다. Linux/WSL/macOS는 compatibility 검토 대상이며, Windows native UX는 별도 환경에서 검증한다.</p>
+<h3 id="23-제품의-핵심-사용-사례">2.3 제품의 핵심 사용 사례</h3>
+<ul>
+<li>코드 분석 및 정리</li>
+<li>문서 분석·요약</li>
+<li>목적에 맞는 문서 생성·가공</li>
+<li>반복 작업 실행</li>
+<li>이전 산출물과 Knowledge 재사용</li>
+<li>승인 기반 파일·명령 작업</li>
+<li>중단된 작업의 안전한 resume</li>
+</ul>
+<hr>
+<h2 id="3-제품-경계">3. 제품 경계</h2>
+<h3 id="포함">포함</h3>
+<ul>
+<li>terminal TUI와 <code>MindCraftApp</code></li>
+<li>Task / Episode / ExecutionRun lifecycle</li>
+<li>Episode loop와 검증</li>
+<li>ContextAssembler</li>
+<li>Knowledge 저장·검색·provenance·candidate review</li>
+<li>Pi AgentSession integration</li>
+<li>실행 backend 경계</li>
+<li>ApprovalRequest와 GrantedScope</li>
+<li>checkpoint, pause, cancel, resume</li>
+<li>결과·산출물·실행 상태 표시</li>
+<li>첫 실행 onboarding</li>
+</ul>
+<h3 id="제외">제외</h3>
+<ul>
+<li>중앙 LLM proxy 또는 inbound API gateway</li>
+<li>Graph/DAG 기반 workflow engine</li>
+<li>분산 worker platform 또는 microservice 분리</li>
+<li>MVP의 자동 multi-backend routing/fallback</li>
+<li>생성 Knowledge의 자동 canonical 승격</li>
+<li>Pi agent loop 재구현</li>
+<li>GitHub private repository 생성·push·배포</li>
+<li>무승인 shell 실행</li>
+<li>팀 공유·중앙 동기화·다중 사용자 권한</li>
+</ul>
+<p>Git repository 운영과 agent bridge는 제품 runtime이 아니라 개발 환경 운영 수단이다.</p>
+<hr>
+<h2 id="4-핵심-설계-원칙">4. 핵심 설계 원칙</h2>
+<ol>
+<li><strong>Episode loop 우선</strong>: 복잡한 graph보다 실행 → 검증 → feedback → 다음 Episode 구조를 기본으로 한다.</li>
+<li><strong>Human approval</strong>: AI가 자기 작업을 승인하지 않는다.</li>
+<li><strong>검증 우선</strong>: 결과와 산출물을 검증하고 실패하면 feedback을 반영해 다음 loop로 재진입한다.</li>
+<li><strong>출처 보존</strong>: Knowledge와 외부 자료는 source/provenance를 보존한다.</li>
+<li><strong>책임 분리</strong>: Workflow, Context, Knowledge, Execution, TUI, persistence를 분리한다.</li>
+<li><strong>Pi 경계 유지</strong>: MindCraft workflow loop와 Pi 내부 agent loop를 중복 구현하지 않는다.</li>
+<li><strong>안전한 중단</strong>: timeout, provider 장애, 승인 대기, context 부족에서도 상태를 보존한다.</li>
+<li><strong>fail-closed</strong>: 승인·범위·경로 검증에 실패하면 side effect를 실행하지 않는다.</li>
+<li><strong>민감정보 보호</strong>: credential/token/개인정보를 로그·문서·Knowledge에 노출하지 않는다.</li>
+<li><strong>작게 시작</strong>: Pi 기반 Core Vertical Slice를 먼저 완성하고 외부 backend는 후속 adapter로 둔다.</li>
+</ol>
+<hr>
+<h2 id="5-현재-권장-아키텍처">5. 현재 권장 아키텍처</h2>
+<pre><code class="language-text">MindCraft
+│
+├─ TUI
+│   └─ 사용자 입력 / 상태 / 승인 / diff / context 확인
+│
+├─ App
+│   └─ MindCraftApp
+│       └─ 제품 use-case orchestration
+│
+├─ Workflow
+│   ├─ Task
+│   ├─ Episode
+│   ├─ ExecutionRun
+│   ├─ Checkpoint
+│   ├─ ApprovalRequest
+│   └─ VerificationReport
+│
+├─ Context
+│   └─ ContextAssembler
+│
+├─ Knowledge
+│   ├─ Vault / JSONL persistence
+│   ├─ Retrieval
+│   ├─ Index
+│   └─ Provenance
+│
+├─ Execution
+│   ├─ ExecutionBackend
+│   ├─ PiBackend
+│   ├─ OpenCodeBackend (후속)
+│   └─ ClaudeCodeBackend (후속)
+│
+└─ Infra
+    ├─ WorkflowRepository
+    ├─ ProcessRunner
+    ├─ SecretResolver
+    └─ Filesystem boundary
+</code></pre>
+<p>TUI는 core module을 직접 조율하지 않고 <code>MindCraftApp</code> facade를 통해 접근한다.</p>
+<h3 id="51-mindcraft와-pi의-책임">5.1 MindCraft와 Pi의 책임</h3>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>MindCraft</th>
+<th>Pi</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>장기 작업</td>
+<td>Task, Episode, Run</td>
+<td>해당 없음</td>
+</tr>
+<tr>
+<td>workflow</td>
+<td>목표, 승인, 검증, checkpoint, resume</td>
+<td>해당 없음</td>
+</tr>
+<tr>
+<td>Knowledge</td>
+<td>저장, 검색, lifecycle, provenance</td>
+<td>context 입력을 받음</td>
+</tr>
+<tr>
+<td>실행</td>
+<td>backend 선택과 실행 경계</td>
+<td>한 번의 agent/model-tool loop</td>
+</tr>
+<tr>
+<td>session</td>
+<td>MindCraft 실행 상태</td>
+<td>AgentSession 내부 상태</td>
+</tr>
+<tr>
+<td>안전성</td>
+<td>GrantedScope, approval, redaction</td>
+<td>Pi native tool/session 동작</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6-workflow-설계">6. Workflow 설계</h2>
+<h3 id="61-개념-loop">6.1 개념 loop</h3>
+<pre><code class="language-text">observe
+→ plan
+→ ask-if-needed
+→ act
+→ verify
+→ feedback
+→ gate
+→ repeat 또는 done
+</code></pre>
+<p>실제 상태 machine은 과도하게 세분화하지 않고 다음처럼 단순화한다.</p>
+<pre><code class="language-text">load
+→ define episode goal
+→ assemble context
+→ preflight / approval
+→ execute
+→ verify
+→ record outcome
+→ done / next / waiting / blocked
+</code></pre>
+<p><code>ask-if-needed</code>는 별도 실행 단계가 아니라 <code>waiting_for_user_input</code> 결과 상태로 기록한다.</p>
+<h3 id="62-상태-모델">6.2 상태 모델</h3>
+<pre><code class="language-text">Task:    active → completed | cancelled
+Episode: queued → running → completed | failed | aborted
+Run:     queued → running → completed | failed | aborted
+         running (restart) → recoverable → resumed
+</code></pre>
+<p>Resume은 기존 Run을 덮어쓰지 않는다. 기존 Run은 <code>resumed</code>로 기록하고 새 Episode/Run을 생성한다.</p>
+<h3 id="63-일반-실행-순서">6.3 일반 실행 순서</h3>
+<ol>
+<li>CLI/TUI가 App을 생성한다.</li>
+<li>preflight에서 Node, storage, Model, provider 상태를 확인한다.</li>
+<li>state journal과 Knowledge를 load한다.</li>
+<li>이전 <code>running</code> Run을 <code>recoverable</code>로 표시한다.</li>
+<li>Task를 생성하고 영속화한다.</li>
+<li>Episode 목표와 종료 조건을 만든다.</li>
+<li>승인된 Knowledge와 workspace 자료로 context를 구성한다.</li>
+<li>Model/purpose와 실행 범위를 확인한다.</li>
+<li>Pi AgentSession을 생성한다.</li>
+<li>prompt를 전달하고 event를 streaming 표시한다.</li>
+<li>결과를 검증한다.</li>
+<li>Run/Episode 결과와 산출물 metadata를 저장한다.</li>
+<li>redacted Knowledge candidate를 capture한다.</li>
+<li>사용자가 candidate를 promote/reject한다.</li>
+<li>다음 Run에서 promoted Knowledge를 bounded context로 재사용한다.</li>
+</ol>
+<hr>
+<h2 id="7-첫-실행-onboarding-설계">7. 첫 실행 onboarding 설계</h2>
+<h3 id="71-사용자-경험-목표">7.1 사용자 경험 목표</h3>
+<p>첫 사용자가 별도 설정 명령과 문서를 오가지 않고 실행 파일 하나로 TUI에 진입해 필수 설정을 완료해야 한다.</p>
+<p>Model이 없는 상태는 오류로 종료하는 대신 <strong>설정이 필요한 정상적인 첫 실행 상태</strong>로 취급한다.</p>
+<h3 id="72-첫-실행-흐름">7.2 첫 실행 흐름</h3>
+<pre><code class="language-text">mindcraft
+→ First run 안내
+→ setup mock deterministic       (오프라인 리허설)
+   또는 setup airouter &lt;model&gt;    (실제 provider)
+→ doctor
+→ task &lt;목표&gt;
+→ run &lt;요청&gt;
+→ approval / 검증 / 저장
+→ knowledge / promote
+→ 두 번째 run에서 context 재사용
+</code></pre>
+<p>TUI에 표시되는 주요 명령:</p>
+<pre><code class="language-text">setup &lt;provider&gt; &lt;model&gt; [purpose]
+doctor
+task &lt;title&gt;
+run &lt;prompt&gt;
+approvals
+approve &lt;id&gt;
+reject &lt;id&gt;
+status
+history
+runs
+resume &lt;run-id&gt;
+cancel &lt;run-id&gt;
+knowledge [query]
+promote &lt;id&gt;
+reject-knowledge &lt;id&gt;
+quit
+</code></pre>
+<h3 id="73-setup-정책">7.3 setup 정책</h3>
+<ul>
+<li>설정은 <code>.mindcraft/config.json</code>에 저장한다.</li>
+<li>credential 자체는 받거나 저장하지 않는다.</li>
+<li>provider와 model은 사용자가 명시한다.</li>
+<li>setup 완료 직후 같은 프로세스에서 preflight와 runtime을 갱신한다.</li>
+<li><code>mock deterministic</code>은 네트워크 없이 테스트·리허설만 수행한다.</li>
+<li>실제 provider 호출과 Windows Terminal 검증은 mock 결과로 대체하지 않는다.</li>
+<li>Model 0개는 실행을 차단한다.</li>
+<li>자동 Model 탐색·임의 fallback은 하지 않는다.</li>
+</ul>
+<hr>
+<h2 id="8-model-및-execution-backend-정책">8. Model 및 Execution Backend 정책</h2>
+<h3 id="81-현재-model-정책">8.1 현재 Model 정책</h3>
+<table>
+<thead>
+<tr>
+<th>설정</th>
+<th>정책</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Model 0개</td>
+<td>설정 오류, 실행 차단</td>
+</tr>
+<tr>
+<td>Model 1개</td>
+<td>모든 용도에 사용</td>
+</tr>
+<tr>
+<td>Model 2개</td>
+<td>서로 다른 purpose에 하나씩 매핑</td>
+</tr>
+<tr>
+<td>동일 purpose 2개 이상</td>
+<td>설정 오류</td>
+</tr>
+<tr>
+<td>지정 Model unavailable</td>
+<td>자동 대체 없이 오류·중단</td>
+</tr>
+<tr>
+<td>실행 중 자동 switching</td>
+<td>현재 미구현</td>
+</tr>
+</tbody></table>
+<p>Model selection은 Episode 시작 시 한 번 수행하며 실행 전 selected model, purpose, availability, cost estimate/unknown을 기록한다.</p>
+<h3 id="82-executionbackend-계약">8.2 ExecutionBackend 계약</h3>
+<pre><code class="language-ts">interface ExecutionBackend {
+  readonly id: BackendId;
+  probe(): Promise&lt;BackendInfo&gt;;
+  execute(
+    request: ExecutionRequest,
+    options: ExecutionOptions
+  ): Promise&lt;ExecutionResult&gt;;
+}
+</code></pre>
+<p>PiBackend는 MVP의 첫 backend다. OpenCode와 Claude Code는 각각 native permission과 agent loop를 가진 외부 backend로 취급하며, Pi 내부에 중첩해 재구현하지 않는다.</p>
+<h3 id="83-후속-token-switching">8.3 후속 Token Switching</h3>
+<p>Token-aware dynamic switching은 현재 기능이 아니다. 후속 검토 시 다음 신호를 사용한다.</p>
+<ul>
+<li>context 크기와 truncation</li>
+<li>prompt 복잡도</li>
+<li>작업 목적과 위험도</li>
+<li>token budget</li>
+<li>검증 실패와 retry</li>
+<li>tool 호출량</li>
+</ul>
+<p>초기 방식은 자동 전환이 아니라 사용자 승인 기반 제안이다. 실제 사용량과 추정값은 <code>actual</code>과 <code>estimate</code>를 명확히 구분한다.</p>
+<hr>
+<h2 id="9-context와-knowledge-설계">9. Context와 Knowledge 설계</h2>
+<h3 id="91-contextpackage">9.1 ContextPackage</h3>
+<pre><code class="language-text">ContextPackage
+├─ episode goal
+├─ relevant promoted Knowledge refs
+├─ required files/paths
+├─ previous feedback
+├─ constraints
+└─ approval scope
+</code></pre>
+<p>전체 vault를 무조건 prompt에 넣지 않고 실행 직전에 bounded slice를 생성한다.</p>
+<h3 id="92-knowledge-lifecycle">9.2 Knowledge lifecycle</h3>
+<pre><code class="language-text">capture candidate
+→ review
+→ promoted 또는 rejected
+→ 필요 시 archive/quarantine/conflict 처리
+</code></pre>
+<p>captured candidate는 자동으로 실행 context에 들어가지 않는다. <code>promoted</code> 상태인 Knowledge만 사용한다.</p>
+<h3 id="93-retrieval-fallback">9.3 Retrieval fallback</h3>
+<pre><code class="language-text">관련 promoted Knowledge
+→ 전체 promoted Knowledge
+→ 허용된 execution workspace 자료
+</code></pre>
+<p>workspace fallback에서도 다음을 제외한다.</p>
+<ul>
+<li><code>.mindcraft</code> 내부 제어 파일</li>
+<li>credential/secret 의심 파일</li>
+<li>binary</li>
+<li>vendor/generated 대형 자료</li>
+<li>execution root 외부 파일</li>
+</ul>
+<p>각 Run에는 item ID/revision 또는 file digest, 순서, 길이, 제외 사유를 manifest로 남긴다.</p>
+<h3 id="94-provenance">9.4 Provenance</h3>
+<p>Knowledge item은 최소한 다음 정보를 보존한다.</p>
+<ul>
+<li>Task/Episode/Run reference</li>
+<li>source와 source URI</li>
+<li>capturedAt</li>
+<li>raw data reference</li>
+<li>derived content metadata</li>
+<li>review state</li>
+<li>revision/confidence/score</li>
+</ul>
+<p>검색과 context 구성은 relevance/similarity를 우선하고, 결과가 부족하면 정의된 fallback으로 확장한다.</p>
+<hr>
+<h2 id="10-안전성승인복구">10. 안전성·승인·복구</h2>
+<h3 id="101-파일과-명령-정책">10.1 파일과 명령 정책</h3>
+<ul>
+<li>execution folder 내부 파일: 기본 scope</li>
+<li>execution folder 외부 파일: 사용자 승인 필요</li>
+<li>shell command: 사용자 승인 필요</li>
+<li>network 또는 비용 발생 동작: 사용자 승인 필요</li>
+<li>모든 decision과 결과: Run history/audit에 기록</li>
+</ul>
+<p>custom tool은 <code>GrantedScope</code>를 먼저 통과해야 하며, 경로 traversal과 symlink escape를 차단한다.</p>
+<h3 id="102-side-effect-barrier">10.2 Side-effect barrier</h3>
+<pre><code class="language-text">approval_pending
+→ approved
+→ execution_started
+→ executed | failed | unknown
+</code></pre>
+<p>결정 기록과 <code>execution_started</code> 기록이 각각 성공한 뒤에만 실제 side effect를 실행한다.</p>
+<p>effect 이후 결과 저장이 실패하거나 실행 여부가 확정되지 않으면 <code>unknown</code>으로 표시한다. <code>unknown</code> effect는 자동 재실행하지 않는다.</p>
+<h3 id="103-영속성">10.3 영속성</h3>
+<ul>
+<li>state와 Knowledge는 append-oriented JSONL로 저장한다.</li>
+<li>record checksum으로 손상 여부를 확인한다.</li>
+<li>손상된 tail 이후는 replay하지 않는다.</li>
+<li>repair 전 원본을 보존한다.</li>
+<li>저장 실패는 호출자에게 전파한다.</li>
+<li>단일 MindCraft 프로세스가 writer를 소유한다.</li>
+</ul>
+<p>경로:</p>
+<pre><code class="language-text">.mindcraft/config.json
+.mindcraft/state.jsonl
+.mindcraft/knowledge.jsonl
+</code></pre>
+<h3 id="104-복구">10.4 복구</h3>
+<ul>
+<li>preflight 실패: Run을 만들지 않고 조치 가능한 오류를 표시</li>
+<li>session 생성 실패: Run/Episode를 failed로 저장</li>
+<li>prompt/idle 실패: failed 또는 aborted로 저장</li>
+<li>process restart: running Run을 recoverable로 표시</li>
+<li>resume: 새 Run ID를 생성하고 <code>resumedFrom</code>을 기록</li>
+<li>강제 종료 후 effect 불확실: unknown 및 사용자 확인 필요</li>
+</ul>
+<hr>
+<h2 id="11-ai-dlc와-개발-프로세스의-관계">11. AI-DLC와 개발 프로세스의 관계</h2>
+<p>AI-DLC는 MindCraft runtime이 아니라 <strong>MindCraft를 개발·검증하는 governance workflow</strong>로 사용한다.</p>
+<pre><code class="language-text">INCEPTION
+→ 요구사항·배경·범위·설계·계획·승인
+
+CONSTRUCTION
+→ Unit별 상세설계·구현계획·코드·테스트·리뷰
+
+OPERATIONS
+→ 현재 pilot 범위 밖의 placeholder
+</code></pre>
+<p>각 단계의 결정, 요구사항, 계획, 리뷰, 상태, audit 기록은 Markdown 산출물로 보존한다. 단계 전환과 외부 side effect에는 human approval이 필요하다.</p>
+<p>현재 구현 우선순위:</p>
+<ol>
+<li>Pi 기반 Core Vertical Slice</li>
+<li>persistence와 recovery</li>
+<li>approval/safety boundary</li>
+<li>Knowledge lifecycle과 bounded context</li>
+<li>TUI onboarding 및 반복 실행 UX</li>
+<li>Windows Terminal native 검증</li>
+<li>후속 external backend adapter</li>
+</ol>
+<hr>
+<h2 id="12-현재-구현-및-검증-상태">12. 현재 구현 및 검증 상태</h2>
+<h3 id="구현된-기준선">구현된 기준선</h3>
+<ul>
+<li>Pi 기반 terminal TUI</li>
+<li>공통 command dispatcher와 CommandQueue</li>
+<li>Task/Episode/Run 영속 상태</li>
+<li>preflight와 Model routing</li>
+<li>approval-gated custom tools</li>
+<li>path/symlink safety</li>
+<li>Knowledge candidate capture/promote/reuse</li>
+<li>recovery/resume/cancel</li>
+<li>deterministic mock rehearsal</li>
+<li>첫 실행 <code>setup</code> onboarding vertical slice</li>
+</ul>
+<h3 id="이번-onboarding-변경의-산출물">이번 onboarding 변경의 산출물</h3>
+<ul>
+<li><code>src/cli.mjs</code></li>
+<li><code>src/command-queue.mjs</code></li>
+<li><code>src/tui-runner.mjs</code></li>
+<li><code>src/mindcraft-app.mjs</code></li>
+<li><code>test/first-run-onboarding.test.mjs</code></li>
+<li><code>docs/first-run-onboarding-design.md</code></li>
+<li><code>docs/first-run-onboarding-approval-request.md</code></li>
+</ul>
+<h3 id="로컬-검증">로컬 검증</h3>
+<pre><code class="language-text">npm run build          PASS
+npm test               PASS — 117/117
+npm run release:check  PASS
+npm audit --audit-level=high
+                       PASS — 0 vulnerabilities
+</code></pre>
+<p>임시 workspace에서 다음 흐름도 실행했다.</p>
+<pre><code class="language-text">setup mock deterministic → doctor → task → run → status → quit
+</code></pre>
+<h3 id="미검증-또는-후속-검증">미검증 또는 후속 검증</h3>
+<p>현재 실행 환경에 Windows/Windows Terminal/WSL native 환경이 없어 다음은 별도 검증이 필요하다.</p>
+<ul>
+<li>한글 입력</li>
+<li>색상·줄바꿈·resize</li>
+<li>Ctrl-C와 terminal 복원</li>
+<li>긴 streaming output</li>
+<li>Windows/WSL/Linux 경로 경계</li>
+<li>clean checkout 후 Windows 3회 반복 본편</li>
+</ul>
+<p>mock 결과는 위 native 검증의 증거로 간주하지 않는다.</p>
+<hr>
+<h2 id="13-승인-요청">13. 승인 요청</h2>
+<p>이번 통합 설계와 첫 실행 onboarding vertical slice에 대해 다음 중 하나를 선택한다.</p>
+<ul>
+<li><strong>Approve &amp; Continue</strong>: 현재 설계와 onboarding을 기준선으로 채택하고 Windows Terminal UX 및 반복 실행 검증을 진행</li>
+<li><strong>Request Changes</strong>: 수정할 정책·UX·범위를 명시</li>
+<li><strong>Hold</strong>: 추가 제품·Model 정책 결정 전 보류</li>
+</ul>
+<p>이번 승인 범위는 로컬 제품 코드·문서·테스트에 한정한다. GitHub push, 배포, credential 변경, 외부 환경 변경은 별도 승인이 필요하다.</p>
+<hr>
+<h2 id="14-참조한-공유-자료">14. 참조한 공유 자료</h2>
+<ul>
+<li>MindCraft 제품 brief 및 constraints</li>
+<li>현재 <code>DESIGN.md</code></li>
+<li>현재 Model 정책 <code>ROUTING.md</code></li>
+<li>MindCraft AI-DLC requirements</li>
+<li>MindCraft 전체 설계·배경 자료</li>
+<li>workflow/persistence/recovery/Knowledge review addenda</li>
+<li>Phase 0~6 demo plan 및 release rehearsal 기록</li>
+</ul>
+<p>이 파일은 위 자료의 공개 가능한 설계·배경·결정 내용을 검토용으로 통합한 문서이며, credential·개인정보·내부 인증 정보는 의도적으로 제외했다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-한눈에-보는-결론">1. 한눈에 보는 결론</a></li><li><a href="#2-설계-배경">2. 설계 배경</a></li><li><a href="#21-해결하려는-문제">2.1 해결하려는 문제</a></li><li><a href="#22-주요-사용자와-환경">2.2 주요 사용자와 환경</a></li><li><a href="#23-제품의-핵심-사용-사례">2.3 제품의 핵심 사용 사례</a></li><li><a href="#3-제품-경계">3. 제품 경계</a></li><li><a href="#포함">포함</a></li><li><a href="#제외">제외</a></li><li><a href="#4-핵심-설계-원칙">4. 핵심 설계 원칙</a></li><li><a href="#5-현재-권장-아키텍처">5. 현재 권장 아키텍처</a></li><li><a href="#51-mindcraft와-pi의-책임">5.1 MindCraft와 Pi의 책임</a></li><li><a href="#6-workflow-설계">6. Workflow 설계</a></li><li><a href="#61-개념-loop">6.1 개념 loop</a></li><li><a href="#62-상태-모델">6.2 상태 모델</a></li><li><a href="#63-일반-실행-순서">6.3 일반 실행 순서</a></li><li><a href="#7-첫-실행-onboarding-설계">7. 첫 실행 onboarding 설계</a></li><li><a href="#71-사용자-경험-목표">7.1 사용자 경험 목표</a></li><li><a href="#72-첫-실행-흐름">7.2 첫 실행 흐름</a></li><li><a href="#73-setup-정책">7.3 setup 정책</a></li><li><a href="#8-model-및-execution-backend-정책">8. Model 및 Execution Backend 정책</a></li><li><a href="#81-현재-model-정책">8.1 현재 Model 정책</a></li><li><a href="#82-executionbackend-계약">8.2 ExecutionBackend 계약</a></li><li><a href="#83-후속-token-switching">8.3 후속 Token Switching</a></li><li><a href="#9-context와-knowledge-설계">9. Context와 Knowledge 설계</a></li><li><a href="#91-contextpackage">9.1 ContextPackage</a></li><li><a href="#92-knowledge-lifecycle">9.2 Knowledge lifecycle</a></li><li><a href="#93-retrieval-fallback">9.3 Retrieval fallback</a></li><li><a href="#94-provenance">9.4 Provenance</a></li><li><a href="#10-안전성승인복구">10. 안전성·승인·복구</a></li><li><a href="#101-파일과-명령-정책">10.1 파일과 명령 정책</a></li><li><a href="#102-side-effect-barrier">10.2 Side-effect barrier</a></li><li><a href="#103-영속성">10.3 영속성</a></li><li><a href="#104-복구">10.4 복구</a></li><li><a href="#11-ai-dlc와-개발-프로세스의-관계">11. AI-DLC와 개발 프로세스의 관계</a></li><li><a href="#12-현재-구현-및-검증-상태">12. 현재 구현 및 검증 상태</a></li><li><a href="#구현된-기준선">구현된 기준선</a></li><li><a href="#이번-onboarding-변경의-산출물">이번 onboarding 변경의 산출물</a></li><li><a href="#로컬-검증">로컬 검증</a></li><li><a href="#미검증-또는-후속-검증">미검증 또는 후속 검증</a></li><li><a href="#13-승인-요청">13. 승인 요청</a></li><li><a href="#14-참조한-공유-자료">14. 참조한 공유 자료</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

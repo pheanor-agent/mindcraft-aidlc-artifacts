@@ -1,0 +1,1 @@
+{"name":"suite interruption","pass":false,"detail":"Error: tui-resize timeout /MindCraft/\n    at s.wait (file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/tui-validation/runtime-fixes-tui.mjs:21:124)\n    at async file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/tui-validation/runtime-fixes-tui.mjs:27:49"}

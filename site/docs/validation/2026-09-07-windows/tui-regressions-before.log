@@ -1,0 +1,82 @@
+✖ TUI transcript preserves previous line alignment after repeated output (15.3895ms)
+✖ TUI setup refreshes Model count and removes the obsolete first-run guidance (3.3685ms)
+✖ TUI quit stops the screen and triggers process-exit callback (5.804ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 701.5457
+
+✖ failing tests:
+
+test at test\tui-native-regressions.test.mjs:18:1
+✖ TUI transcript preserves previous line alignment after repeated output (15.3895ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + '       ALIGNMENT-SENTINEL                                                                                               '
+  - ' ALIGNMENT-SENTINEL                                                                                                     '
+
+      at TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/tui-native-regressions.test.mjs:23:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.start (node:internal/test_runner/test:1003:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '       ALIGNMENT-SENTINEL                                                                                               ',
+    expected: ' ALIGNMENT-SENTINEL                                                                                                     ',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\tui-native-regressions.test.mjs:26:1
+✖ TUI setup refreshes Model count and removes the obsolete first-run guidance (3.3685ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Model=1/. Input:
+
+  '                                                                                                                        \n' +
+    '                                                                                                                        \n' +
+    '                                                                                                                        \n' +
+    '   MindCraft | 개인 AI 작업 도우미 (mode=mock)                                                                          \n' +
+    '   환경 점검: 작업공간=정상 | Model=0 | 저장소=정상                                                                     \n' +
+    '   첫 실행 설정이 필요합니다.                                                                                           \n' +
+    '   오프라인 리허설은 `setup mock deterministic`, 실제 provider는 `setup airouter <model>`을 입력하세요.                 \n' +
+    '   명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | approvals | approve <id> | reject     \n' +
+    ' <id>                                                                                                                   \n' +
+    '   | status | history | runs | resume <run-id> | cancel <run-id> | knowledge [검색어] | promote <id> | quit             \n' +
+    '                                                                                                                        \n' +
+    '  > setup mock deterministic                                                                                            \n' +
+    '                                                                                                                        \n' +
+    ' 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic                                                       \n' +
+    '                                                                                                                        '
+
+      at TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/tui-native-regressions.test.mjs:30:10)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '                                                                                                                        \n                                                                                                                        \n                                                                                                                        \n   MindCraft | 개인 AI 작업 도우미 (mode=mock)                                                                          \n   환경 점검: 작업공간=정상 | Model=0 | 저장소=정상                                                                     \n   첫 실행 설정이 필요합니다.                                                                                           \n   오프라인 리허설은 `setup mock deterministic`, 실제 provider는 `setup airouter <model>`을 입력하세요.                 \n   명령: setup <provider> <model> [purpose] | doctor | task <제목> | run <요청> | approvals | approve <id> | reject     \n <id>                                                                                                                   \n   | status | history | runs | resume <run-id> | cancel <run-id> | knowledge [검색어] | promote <id> | quit             \n                                                                                                                        \n  > setup mock deterministic                                                                                            \n                                                                                                                        \n 첫 실행 설정이 완료되었습니다. provider=mock model=deterministic                                                       \n                                                                                                                        ',
+    expected: /Model=1/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test\tui-native-regressions.test.mjs:35:1
+✖ TUI quit stops the screen and triggers process-exit callback (5.804ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  false !== true
+
+      at TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/tui-native-regressions.test.mjs:40:10)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

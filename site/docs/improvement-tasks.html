@@ -1,0 +1,135 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft 개선 작업 현황 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="improvement-tasks.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-개선-작업-현황">MindCraft 개선 작업 현황</h1>
+<p>기준 인계: 2026-09-08 사용자 시나리오 검증 보고서
+최종 확인: 2026-09-08</p>
+<h2 id="전체-상태-요약">전체 상태 요약</h2>
+<table>
+<thead>
+<tr>
+<th>범위</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MC-01~MC-04</td>
+<td>구현·테스트·문서·독립 커밋 완료</td>
+</tr>
+<tr>
+<td>MC-05~MC-11</td>
+<td>구현·회귀 테스트·관련 문서·커밋 완료</td>
+</tr>
+<tr>
+<td>MC-12</td>
+<td>코드상 portability 수정 및 Linux 검증 완료; Windows Node 22/24·native 권한 검증 미실행</td>
+</tr>
+<tr>
+<td>MC-13</td>
+<td>안내 문구 및 TUI 상태 관련 개선 완료; 전체 UX 재설계 acceptance는 별도 후속 범위</td>
+</tr>
+</tbody></table>
+<h2 id="항목별-상태">항목별 상태</h2>
+<table>
+<thead>
+<tr>
+<th>작업</th>
+<th align="right">우선순위</th>
+<th>상태</th>
+<th>커밋/검증</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MC-01 손상 journal 복구·쓰기 차단</td>
+<td align="right">P1</td>
+<td>완료</td>
+<td><code>f8f944d</code>; journal repair 회귀 통과</td>
+</tr>
+<tr>
+<td>MC-02 실행 중 command 취소</td>
+<td align="right">P1</td>
+<td>완료</td>
+<td><code>427fc1c</code>; process-tree 취소 회귀 통과</td>
+</tr>
+<tr>
+<td>MC-03 Provider contract/preflight 정합성</td>
+<td align="right">P1</td>
+<td>완료</td>
+<td><code>783d2be</code>; provider/preflight 테스트 통과</td>
+</tr>
+<tr>
+<td>MC-04 Knowledge 경로 경계</td>
+<td align="right">P1</td>
+<td>완료</td>
+<td><code>fee2e85</code>; POSIX/Windows traversal 테스트 통과</td>
+</tr>
+<tr>
+<td>MC-05 CLI 하위 옵션·도움말</td>
+<td align="right">P2</td>
+<td>완료</td>
+<td><code>6c03de0</code>; CLI subprocess 및 parser 테스트 통과</td>
+</tr>
+<tr>
+<td>MC-06 workspace/doctor 일관성</td>
+<td align="right">P2</td>
+<td>완료</td>
+<td><code>ced1b38</code>; 다른 cwd의 <code>--workspace</code> doctor subprocess 통과</td>
+</tr>
+<tr>
+<td>MC-07 저장 mock 설정 재시작</td>
+<td align="right">P2</td>
+<td>완료</td>
+<td><code>31397f6</code>; 저장 registry 기반 mode 선택 반영</td>
+</tr>
+<tr>
+<td>MC-08 TUI 최종 Run 상태</td>
+<td align="right">P2</td>
+<td>완료</td>
+<td><code>31397f6</code>; TUI 상태 테스트 및 build 통과</td>
+</tr>
+<tr>
+<td>MC-09 TUI 읽기 명령 응답성</td>
+<td align="right">P2</td>
+<td>완료</td>
+<td><code>31397f6</code>; queue busy 중 approvals/status 회귀 통과</td>
+</tr>
+<tr>
+<td>MC-10 승인 정보 표시</td>
+<td align="right">P2</td>
+<td>완료</td>
+<td><code>31397f6</code>, <code>2c81df8</code>; 요약 호환성과 구조 metadata 검증</td>
+</tr>
+<tr>
+<td>MC-11 문서 증거 인덱스</td>
+<td align="right">P2</td>
+<td>완료</td>
+<td><code>f7e5fd7</code>; Pages build/check 통과</td>
+</tr>
+<tr>
+<td>MC-12 Windows 회귀 테스트 환경</td>
+<td align="right">P2</td>
+<td>부분 완료</td>
+<td><code>2c81df8</code>; <code>fileURLToPath</code> 수정 및 Linux 검증. Windows native 검증 필요</td>
+</tr>
+<tr>
+<td>MC-13 첫 실행·상태 UX</td>
+<td align="right">P3</td>
+<td>범위 내 완료</td>
+<td><code>2c81df8</code>, <code>31397f6</code>; commands 안내와 TUI 최종 상태 반영</td>
+</tr>
+</tbody></table>
+<h2 id="최종-검증">최종 검증</h2>
+<ul>
+<li><code>npm test</code>: 169 passed / 0 failed</li>
+<li><code>npm run build</code>: 통과</li>
+<li>Pages build/check: 통과, 101 HTML pages, local href/src 대상 확인</li>
+<li><code>git diff --check</code>: 통과</li>
+</ul>
+<h2 id="미검증-및-범위-제외">미검증 및 범위 제외</h2>
+<ul>
+<li>실제 외부 provider 호출·credential 검증</li>
+<li>Windows Node 22/24 실환경 및 Windows Terminal/ConPTY native 검증</li>
+<li>symlink/junction 권한 차이를 포함한 Windows 보안 검증</li>
+<li>native EXE/NSIS 빌드·업데이트·삭제·서명</li>
+<li>장시간 soak 및 정량 메모리 시험</li>
+</ul>
+<p>위 항목은 성공으로 표시하지 않으며 별도 환경에서 재검증해야 한다. 기존 미추적 사용자 파일은 커밋하지 않았다.</p>
+<p>각 작업은 코드 변경과 별도로 작업 workflow의 조사/설계/검증 문서에 결과를 남겼다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#전체-상태-요약">전체 상태 요약</a></li><li><a href="#항목별-상태">항목별 상태</a></li><li><a href="#최종-검증">최종 검증</a></li><li><a href="#미검증-및-범위-제외">미검증 및 범위 제외</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

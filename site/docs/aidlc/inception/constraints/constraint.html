@@ -1,0 +1,62 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft AI-DLC Inception — Initial Constraints · MindCraft</title><link rel="stylesheet" href="../../../../assets/pages.css"></head><body><header><a class="brand" href="../../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../../index.html">← 전체 문서</a><a href="constraint.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-ai-dlc-inception--initial-constraints">MindCraft AI-DLC Inception — Initial Constraints</h1>
+<ul>
+<li>Status: <strong>Draft — approval required</strong></li>
+<li>Scope: constraints for the MindCraft AI-DLC project definition</li>
+<li>Governing boundary: AI-DLC is an external development method; MindCraft is the product runtime</li>
+</ul>
+<h2 id="1-process-and-scope-constraints">1. Process and scope constraints</h2>
+<ol>
+<li>AI-DLC stage state, artifacts, approvals, and audit are development records, not runtime Task/Episode/Run state.</li>
+<li>Existing documents and reference kits are evidence/input only until explicitly accepted; they are not automatically copied into a new AI-DLC state.</li>
+<li>No Construction implementation, source patch, reference-code transplant, live provider call, external push, or deployment occurs before the relevant approval gate.</li>
+<li>MVP exclusions require an explicit decision and a recorded follow-up plan before implementation scope changes.</li>
+<li>Product SSOT and AI-DLC documents use separate namespaces and are not silently merged into runtime Knowledge.</li>
+</ol>
+<h2 id="2-runtime-and-architecture-constraints">2. Runtime and architecture constraints</h2>
+<ol>
+<li>MindCraft remains a Node.js package/CLI with terminal TUI and a shared application command dispatcher.</li>
+<li>Pi/AgentSession is an execution foundation; MindCraft must not reimplement Pi&#39;s agent loop.</li>
+<li>Task → Episode → Run is the product workflow model. AI-DLC phases must not be substituted for these runtime states.</li>
+<li>Model/provider selection is explicit and deterministic. Automatic fallback or provider switching is prohibited unless separately approved.</li>
+<li>Mock and live modes are explicit and isolated; a mode change cannot happen implicitly during a Run.</li>
+<li>State persistence, checkpointing, recovery, and writer-lock behavior must be testable offline.</li>
+<li>Backend/provider-specific APIs remain behind adapter boundaries.</li>
+</ol>
+<h2 id="3-safety-and-privacy-constraints">3. Safety and privacy constraints</h2>
+<ol>
+<li>Execution-root files are the default file scope. Absolute paths, <code>..</code>, symlink/junction/reparse escapes, and root-outside access fail closed.</li>
+<li>Root-outside file access, writes, deletes, shell commands, network calls, and other material side effects require an approval containing target, scope, impact, and risk.</li>
+<li><code>.mindcraft</code> control files and credential/secret-like files are excluded from ordinary agent context unless explicitly approved by a narrowly scoped policy.</li>
+<li>Secrets are never written to source, prompts, ordinary logs, audit output, Knowledge, artifacts, or approval messages; diagnostics must redact them.</li>
+<li>Group/Discord output must not disclose personal information or private credentials. Only project decisions and non-sensitive status may be reported.</li>
+<li>No self-approval: the agent cannot approve its own requested side effect.</li>
+</ol>
+<h2 id="4-platform-and-dependency-constraints">4. Platform and dependency constraints</h2>
+<ol>
+<li>Windows Terminal is the first product validation target; Linux/WSL/macOS are compatibility targets unless separately promoted.</li>
+<li>Node.js and npm versions must be pinned/documented for reproducible build and test execution.</li>
+<li>Pi baseline/version/commit and direct/transitive dependency licenses must be recorded before release.</li>
+<li>Terminal ownership must not be concurrently taken by Pi TUI and MindCraft TUI.</li>
+<li>Platform-specific filesystem, shell, process-signal, and path behavior must be hidden behind tested adapters.</li>
+</ol>
+<h2 id="5-verification-constraints">5. Verification constraints</h2>
+<ol>
+<li>Offline/mock tests must not be represented as evidence of live provider access, paid API behavior, or Windows-native behavior.</li>
+<li>A passing local <code>doctor</code> result must not be represented as a successful live-provider preflight.</li>
+<li>Every acceptance criterion must have a reproducible verification command or documented manual check.</li>
+<li>Recovery tests must preserve original Run history and prove that resume creates a traceable continuation.</li>
+<li>Release claims must distinguish executed evidence from planned or unexecuted checks.</li>
+</ol>
+<h2 id="6-open-constraints-requiring-inception-decisions">6. Open constraints requiring Inception decisions</h2>
+<ul>
+<li>Resume Episode/Run contract</li>
+<li>Live-provider readiness and credential preflight semantics</li>
+<li>Exact mock/live process and workspace boundary</li>
+<li>Explicit versus controlled automatic workspace context ingestion</li>
+<li>Quantitative responsiveness, recovery, and cost targets</li>
+<li>Security, property-based testing, and resiliency extension selection</li>
+<li>Final supported-platform and distribution matrix</li>
+</ul>
+<h2 id="7-approval-gate">7. Approval gate</h2>
+<p>These constraints authorize documentation and Inception analysis only. They do not authorize implementation, external side effects, credential changes, live provider usage, repository creation/push, or deployment. Construction begins only after the requirements, constraints, open decisions, and stage plan are approved.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-process-and-scope-constraints">1. Process and scope constraints</a></li><li><a href="#2-runtime-and-architecture-constraints">2. Runtime and architecture constraints</a></li><li><a href="#3-safety-and-privacy-constraints">3. Safety and privacy constraints</a></li><li><a href="#4-platform-and-dependency-constraints">4. Platform and dependency constraints</a></li><li><a href="#5-verification-constraints">5. Verification constraints</a></li><li><a href="#6-open-constraints-requiring-inception-decisions">6. Open constraints requiring Inception decisions</a></li><li><a href="#7-approval-gate">7. Approval gate</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../../assets/pages.js"></script></body></html>

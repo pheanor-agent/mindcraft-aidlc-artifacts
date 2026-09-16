@@ -1,0 +1,119 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JOB-73 — Windows installer/update/release evidence 계획 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="windows-installer-release-evidence-plan.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="job-73--windows-installerupdaterelease-evidence-계획">JOB-73 — Windows installer/update/release evidence 계획</h1>
+<ul>
+<li>작업 방식: <strong>DDT 기본 작업 워크플로우</strong></li>
+<li>상태: <strong>Linux cross-build 구현 및 unsigned artifact 생성 완료</strong></li>
+<li>실제 Windows 실행/서명/clean VM: <strong>검증 대기</strong></li>
+</ul>
+<h2 id="1-1차-배포-형태">1. 1차 배포 형태</h2>
+<pre><code class="language-text">사용자 단위 installer
+→ %LOCALAPPDATA%/Programs/MindCraft/
+→ MindCraft.exe + versioned runtime/app
+</code></pre>
+<p>관리자 권한 없이 설치한다. 시작 메뉴 shortcut을 만들고 desktop shortcut은 선택 사항으로 둔다. PATH 등록은 필수가 아니다.</p>
+<p>단일 portable <code>.exe</code>는 1차 필수 조건이 아니며 후속 대안으로 분리한다.</p>
+<h2 id="2-version-layout">2. Version layout</h2>
+<pre><code class="language-text">Programs/MindCraft/
+  MindCraft.exe
+  current/runtime/node.exe
+  current/app/
+  current/bin/wincred-helper.exe
+  current/release-manifest.json
+
+LocalAppData/MindCraft/
+  settings.json
+  logs/
+  diagnostics/
+</code></pre>
+<p>작업 폴더와 user data는 설치 version 디렉터리와 분리한다.</p>
+<p>생성 산출물은 <code>dist/MindCraft-0.1.0-win-x64-setup.exe</code>와 <code>dist/MindCraft-0.1.0-win-x64.zip</code>이다. <code>dist/</code>는 생성물이므로 Git에서 제외하고 native source, NSIS 정의, manifest generator를 version control한다.</p>
+<h2 id="3-updaterollback">3. Update/rollback</h2>
+<pre><code class="language-text">새 version staging
+→ manifest/file integrity 확인
+→ app close 확인
+→ active version 전환
+→ migration backup
+→ 첫 시작 검증
+</code></pre>
+<p>실패 시 이전 version, 원본 config, workspace journal을 보존한다. 상위 schema는 덮어쓰지 않는다. 실행 중 업데이트는 종료 후 재시도한다.</p>
+<h2 id="4-remove">4. Remove</h2>
+<p>기본 제거 대상:</p>
+<ul>
+<li>launcher binary</li>
+<li>installed version files</li>
+<li>shortcuts</li>
+</ul>
+<p>기본 보존 대상:</p>
+<ul>
+<li>workspace 원본 파일</li>
+<li>workspace <code>.mindcraft</code> 기록</li>
+<li>사용자 설정과 diagnostics는 별도 삭제 선택</li>
+</ul>
+<h2 id="5-release-manifestevidence">5. Release manifest/evidence</h2>
+<p>manifest 필수 항목:</p>
+<ul>
+<li>app/version</li>
+<li>target platform/architecture</li>
+<li>bundled Node version</li>
+<li>Pi/dependency version</li>
+<li>file list와 SHA-256</li>
+<li>license inventory 위치</li>
+<li>SBOM 위치</li>
+<li>signing status</li>
+<li>build source revision</li>
+</ul>
+<p>E2E evidence 필수 항목:</p>
+<ul>
+<li>OS build와 architecture</li>
+<li>terminal 종류/버전</li>
+<li>일반 사용자 조건</li>
+<li>artifact hash</li>
+<li>설치·시작·업데이트·제거 결과</li>
+<li>시나리오별 PASS/FAIL</li>
+<li>실행 시간과 known limitation</li>
+<li>비밀값 제거 확인</li>
+</ul>
+<h2 id="6-release-gate">6. Release gate</h2>
+<p>차단 조건:</p>
+<ul>
+<li>개발 도구 설치가 필수</li>
+<li>동봉 runtime/resource 누락</li>
+<li>설치 폴더와 workspace 혼동</li>
+<li>credential 원문 노출</li>
+<li>승인 전 side effect</li>
+<li>process tree 잔존</li>
+<li>config/journal 데이터 손상</li>
+<li>한글 경로/입력 실패</li>
+<li>manifest/hash 불일치</li>
+<li>Windows native 증거 없이 지원 완료 주장</li>
+</ul>
+<h2 id="7-검증-분리">7. 검증 분리</h2>
+<p>다음 결과는 서로 대체하지 않는다.</p>
+<ul>
+<li>source unit/regression test</li>
+<li>package dry-run</li>
+<li>runtime artifact smoke</li>
+<li>Windows clean VM</li>
+<li>mock/offline rehearsal</li>
+<li>live provider smoke</li>
+<li>signing/installer verification</li>
+</ul>
+<h2 id="8-2026-09-07-구현검증-결과">8. 2026-09-07 구현·검증 결과</h2>
+<p>완료:</p>
+<ul>
+<li>Win32 x64 launcher와 Credential Manager helper cross-build</li>
+<li>Node.js 22.19.0 Windows x64 runtime 및 production dependencies 패키징</li>
+<li>CycloneDX SBOM 생성</li>
+<li>25,231개 packaged file SHA-256 manifest 검증</li>
+<li>portable ZIP 및 NSIS installer PE artifact 생성</li>
+<li><code>npm run build</code> 통과</li>
+<li><code>npm test</code> 152/152 통과</li>
+<li><code>npm run release:check</code> 통과</li>
+</ul>
+<p>Windows native 검증 대기:</p>
+<ul>
+<li>Authenticode code signing</li>
+<li>clean Windows VM 설치·시작·업데이트·제거</li>
+<li>Credential Manager와 Job Object 실동작</li>
+<li>한글 IME 및 공백·한글·장경로 workspace</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-1차-배포-형태">1. 1차 배포 형태</a></li><li><a href="#2-version-layout">2. Version layout</a></li><li><a href="#3-updaterollback">3. Update/rollback</a></li><li><a href="#4-remove">4. Remove</a></li><li><a href="#5-release-manifestevidence">5. Release manifest/evidence</a></li><li><a href="#6-release-gate">6. Release gate</a></li><li><a href="#7-검증-분리">7. 검증 분리</a></li><li><a href="#8-2026-09-07-구현검증-결과">8. 2026-09-07 구현·검증 결과</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

@@ -1,0 +1,11 @@
+job_id: "JOB-51"
+created_at: "2026-08-31T21:30:00Z"
+type: "기획"
+profile: "standard"
+scope:
+  type: group
+  group_tag: ""
+  resolution_basis: "user_requested"
+  group_config_version: 1
+parent: JOB-40
+status: "planned"

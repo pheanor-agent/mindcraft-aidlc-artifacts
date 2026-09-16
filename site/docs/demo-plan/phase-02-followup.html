@@ -1,0 +1,10 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phase 2 보완 수행 기록 · MindCraft</title><link rel="stylesheet" href="../../assets/pages.css"></head><body><header><a class="brand" href="../../index.html">MindCraft <span>문서</span></a><nav><a href="../../index.html">← 전체 문서</a><a href="phase-02-followup.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="phase-2-보완-수행-기록">Phase 2 보완 수행 기록</h1>
+<ul>
+<li>baseline: <code>9055ea135eeb7171d02fe9ac16732b793afe18ec</code> after Phase 1 follow-up commit.</li>
+<li>기존 충족: CLI/TUI 공통 dispatcher와 <code>CommandQueue</code>, active Run 중복 차단, streaming 상태, Ctrl-C 경로가 이미 있었다.</li>
+<li>보완: readline과 TUI 모두 <code>approve/reject</code>뿐 아니라 <code>cancel/quit/exit</code>를 제어 경로로 즉시 dispatch한다. 인자 없는 <code>cancel</code>은 active Run을 대상으로 하며 quit도 active Run을 먼저 정상 cancel한다.</li>
+<li>검증: <code>node --test test/phase-02-followup.test.mjs</code> 통과(1 test), <code>npm run build</code> 통과. 후속 Phase 3 변경 포함 최종 전체 <code>npm test</code>는 105 tests passed. 고정 sleep만 사용하지 않고 queue가 실제 blocked promise를 해소하는 경계를 확인했다.</li>
+<li>남은 문제: 실제 interactive terminal/Windows Terminal 수동 리허설은 Phase 6에서 수행한다.</li>
+<li>다음 조건: Phase 3은 승인 request snapshot, run 취소 무효화, 고정 command argv 경계를 검증한다.</li>
+</ul>
+</article></main><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../assets/pages.js"></script></body></html>

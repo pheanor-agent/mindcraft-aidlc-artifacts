@@ -1,0 +1,84 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Commit History — MindCraft local baseline · MindCraft</title><link rel="stylesheet" href="assets/pages.css"></head><body><header><a class="brand" href="index.html">MindCraft <span>문서</span></a><nav><a href="index.html">← 전체 문서</a><a href="COMMIT-HISTORY.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="commit-history--mindcraft-local-baseline">Commit History — MindCraft local baseline</h1>
+<ul>
+<li>작성 시점: 2026-09-03</li>
+<li>기준 HEAD: <code>4d327107b524f76f2a836162ca6776cbf8487b34</code> (<code>feat: add opt-in token doctor mode</code>)</li>
+<li>대상 branch: <code>master</code></li>
+<li>목적: 기존 미커밋 변경과 JOB-53 Model routing 변경을 하나의 검토 가능한 local baseline으로 기록</li>
+<li>원격 반영: workflow 파일을 제외한 변경만 수행</li>
+</ul>
+<h2 id="변경-이력-및-파일-분류">변경 이력 및 파일 분류</h2>
+<h3 id="기존-mindcraft-전달물문서환경-산출물">기존 MindCraft 전달물·문서·환경 산출물</h3>
+<p>다음 파일은 기준 HEAD 시점에 이미 working tree에 존재하던 미커밋 산출물이다. 프로젝트 baseline, 설치, CI, 설계, TODO를 구성한다.</p>
+<ul>
+<li><code>DESIGN.md</code></li>
+<li><code>ENVIRONMENT.md</code></li>
+<li><code>README.md</code></li>
+<li><code>TODO.md</code></li>
+<li><code>install.sh</code></li>
+</ul>
+<p><code>.github/workflows/windows-smoke.yml</code>은 GitHub OAuth App의 <code>workflow</code> scope 부족으로 원격 push가 거부되어 이번 원격 커밋에서는 제외했다. 로컬 파일도 삭제했으며, workflow 반영은 권한 보완 후 별도 작업으로 진행해야 한다.</p>
+<h3 id="job-53-이중-model-routing-구현">JOB-53 이중 Model routing 구현</h3>
+<p>이번 요청에서 추가·수정한 파일이다.</p>
+<ul>
+<li><code>ROUTING.md</code>: 현재 routing SSOT</li>
+<li><code>src/model-routing.mjs</code>: registry validation, task classification, deterministic selection, fail-closed policy</li>
+<li><code>src/config-store.mjs</code>: <code>.mindcraft/config.json</code> 로드 및 atomic save</li>
+<li><code>src/mindcraft-app.mjs</code>: 고정 Model 조회를 routing policy 경유로 변경, Run routing audit 저장</li>
+<li><code>src/cli.mjs</code>: <code>MINDCRAFT_CONFIG</code>/기본 config 경로 로드</li>
+<li><code>test/model-routing.test.mjs</code>: dual/single/no-model 및 오류 시나리오</li>
+<li><code>package.json</code>: build 대상 및 ROUTING.md package 포함</li>
+</ul>
+<h3 id="legacy-이력-보존">Legacy 이력 보존</h3>
+<p><code>docs/legacy/2026-09-03-pre-dual-model-routing/</code> 아래에는 JOB-53 이전 문서와 컨셉 검토 이력을 삭제하지 않고 보존한다.</p>
+<ul>
+<li>현재 문서 원본: <code>README.md</code>, <code>DESIGN.md</code>, <code>ENVIRONMENT.md</code>, <code>ROUTING.md</code>, <code>TODO.md</code></li>
+<li>관련 이력은 git history와 <code>docs/legacy/</code>에서 확인한다.</li>
+</ul>
+<h2 id="프로세스-확인">프로세스 확인</h2>
+<ol>
+<li>기준 HEAD와 branch 확인</li>
+<li>tracked diff와 untracked file 목록 확인</li>
+<li>기존 산출물과 JOB-53 변경을 분리 분류</li>
+<li>상세 설계·리뷰·승인 기록 확인</li>
+<li>변경 구현 및 deterministic test 수행</li>
+<li>explicit file manifest 기반 stage</li>
+<li>staged diff/stat 검토 후 local commit</li>
+<li>commit 후 <code>git show</code>와 working tree 재확인</li>
+</ol>
+<h2 id="검증-증적">검증 증적</h2>
+<ul>
+<li><code>npm run build</code>: pass</li>
+<li><code>npm test</code>: 93 pass, 0 fail, 0 skip</li>
+<li><code>npm run release:check</code>: pass, package 17 files, <code>ROUTING.md</code> 포함</li>
+<li><code>git diff --check</code>: pass</li>
+<li>routing test: pass</li>
+<li>최초 local commit <code>8124514</code>는 44개 파일에 생성했으나 workflow scope 오류로 원격 push되지 않았다.</li>
+<li>원격 반영용 재구성 커밋에서는 workflow 파일을 제외한다.</li>
+<li>실제 외부 Model/API 호출: 미수행</li>
+<li>credential 변경/수집: 미수행</li>
+<li>remote push: 미수행</li>
+</ul>
+<h2 id="phase-2--tui-command-workflow">Phase 2 — TUI command workflow</h2>
+<p>이번 변경은 CLI와 Windows Terminal TUI의 command surface를 통합하고 입력·실행
+상태 처리를 보강한 것이다.</p>
+<ul>
+<li><code>src/command-queue.mjs</code>: 공통 command parser/dispatcher와 비동기 입력 queue</li>
+<li><code>src/cli.mjs</code>: 공통 dispatcher 사용 및 Phase 2 명령 연결</li>
+<li><code>src/tui-runner.mjs</code>: queue, streaming event, tool decision, 상단 상태 표시, Ctrl-C cancel</li>
+<li><code>src/mindcraft-app.mjs</code>: event callback, 중복 실행 방지, cancel 상태 영속화</li>
+<li><code>test/cli-command-queue.test.mjs</code>: 빠른 연속 입력 순서 및 command flow 검증</li>
+<li><code>README.md</code>, <code>DESIGN.md</code>, <code>docs/demo-plan/README.md</code>: Phase 2 구현 상태와 명령 문서화</li>
+</ul>
+<p>검증:</p>
+<ul>
+<li><code>npm run build</code>: pass</li>
+<li><code>npm test</code>: 95 pass, 0 fail, 0 skip</li>
+</ul>
+<h2 id="커밋-경계">커밋 경계</h2>
+<ul>
+<li>이 문서가 커밋되는 모든 파일의 변경 목적과 출처를 기록한다.</li>
+<li><code>node_modules</code>, <code>.mindcraft</code> runtime state, credential, 개인 파일은 stage 대상이 아니다.</li>
+<li>원격 push는 별도 승인·preflight·read-back 절차가 필요하다.</li>
+<li><code>.github/workflows/windows-smoke.yml</code>은 GitHub <code>workflow</code> scope 부족으로 별도 미반영 상태다.</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#변경-이력-및-파일-분류">변경 이력 및 파일 분류</a></li><li><a href="#기존-mindcraft-전달물문서환경-산출물">기존 MindCraft 전달물·문서·환경 산출물</a></li><li><a href="#job-53-이중-model-routing-구현">JOB-53 이중 Model routing 구현</a></li><li><a href="#legacy-이력-보존">Legacy 이력 보존</a></li><li><a href="#프로세스-확인">프로세스 확인</a></li><li><a href="#검증-증적">검증 증적</a></li><li><a href="#phase-2--tui-command-workflow">Phase 2 — TUI command workflow</a></li><li><a href="#커밋-경계">커밋 경계</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="assets/pages.js"></script></body></html>

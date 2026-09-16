@@ -1,0 +1,111 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>실제 Pi TUI 검증 및 수정 이력 — 2026-09-07 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="windows-tui-validation-2026-09-07.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="실제-pi-tui-검증-및-수정-이력--2026-09-07">실제 Pi TUI 검증 및 수정 이력 — 2026-09-07</h1>
+<h2 id="결론">결론</h2>
+<p>Windows ConPTY에서 native <code>MindCraft.exe --tui --mock --workspace &lt;전용경로&gt;</code>를 실행해 실제 Pi TUI를 확인했다. 기존 CLI 출력 뷰어와 달리 애플리케이션의 ANSI 화면 제어, 입력창 및 상태줄을 xterm.js가 터미널로 렌더링했다. Windows Terminal 앱 자체와 IME 조합 입력 검증은 별도 미완료다.</p>
+<p>검증 중 발견한 <strong>출력 누적 레이아웃, 초기 설정 안내 갱신, quit 종료</strong>의 세 가지 문제를 수정했다.</p>
+<ul>
+<li>원본 제품 소스: <code>9de0f2c52f8294ba71f9072b719ae46e13ce9058</code></li>
+<li>수정 커밋: <code>1e3c5317069bb1614e473f6690a35f574bafd710</code></li>
+<li>대상 파일: <code>src/tui-runner.mjs</code></li>
+<li>회귀 테스트: <code>test/tui-native-regressions.test.mjs</code></li>
+<li>수정 담당: 이 Windows 검증 작업의 Codex/Astra. DDT의 구현이나 Windows 직접 검증으로 소급 표시하지 않는다.</li>
+</ul>
+<h2 id="실제-실행-화면">실제 실행 화면</h2>
+<h3 id="수정-후">수정 후</h3>
+<p><img src="validation/2026-09-07-windows/images/windows-tui-fixed.png" alt="수정된 실제 Pi TUI"></p>
+<p>mock 설정, 환경 진단, 한글 작업 생성, 상단 작업 ID, 목록 조회가 표시된다. 주변 브라우저 제목·검증 안내는 캡처용 터미널 호스트이고, 안쪽 터미널 내용은 실제 제품 TUI의 출력이다. CLI transcript를 제품 TUI처럼 재작성한 이미지가 아니다.</p>
+<h3 id="원본-초기-화면">원본 초기 화면</h3>
+<p><img src="validation/2026-09-07-windows/images/windows-tui-initial.png" alt="원본 TUI 초기 화면"></p>
+<h3 id="수정-전-누적-출력-문제">수정 전 누적 출력 문제</h3>
+<p><img src="validation/2026-09-07-windows/images/windows-tui-task.png" alt="수정 전 TUI 누적 출력"></p>
+<h2 id="재현원인변경">재현·원인·변경</h2>
+<table>
+<thead>
+<tr>
+<th>문제</th>
+<th>수정 전 재현</th>
+<th>원인</th>
+<th>변경</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>누적 출력 레이아웃</td>
+<td>setup → doctor → task → tasks 후 기존 줄의 들여쓰기·빈 줄·줄바꿈 증가</td>
+<td>이미 패딩·개행 처리된 <code>Text.render(120)</code> 결과를 다음 원문으로 재사용</td>
+<td>원문 줄 배열을 보존하고 매번 현재 폭에서 한 번만 렌더링</td>
+</tr>
+<tr>
+<td>초기 안내 갱신</td>
+<td>setup 성공 후에도 <code>Model=0</code>, 첫 설정 필요 안내 표시</td>
+<td>생성자에서 만든 안내 문자열 고정</td>
+<td>출력 시 현재 preflight에서 모델 수·설정 안내 재구성</td>
+</tr>
+<tr>
+<td>TUI quit</td>
+<td><code>quit</code>으로 workspace는 닫히지만 프로세스와 TUI 입력창이 잔존</td>
+<td>우선 처리 분기가 <code>result.exit</code> 확인 전에 반환</td>
+<td>우선 처리 분기에서도 <code>stop()</code>과 종료 콜백 실행</td>
+</tr>
+</tbody></table>
+<p>원본에서 <code>quit</code> 뒤 약 45초 동안 종료되지 않는 상태를 확인했고 Escape로 종료 코드 0을 받았다. 수정 후에는 <code>quit</code>만으로 종료 코드 0이 기록됐다.</p>
+<h2 id="실제-검증-결과">실제 검증 결과</h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>실제 TTY 분기</td>
+<td><code>MINDCRAFT_TUI</code> 강제 환경변수 없이 ConPTY에서 <code>--tui</code> 실행; Pi의 한국어 화면·상태줄·입력창 표시</td>
+</tr>
+<tr>
+<td>초기 설정과 doctor</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>한글 제목 입력</td>
+<td>붙여넣기·Enter로 생성 및 화면 표시 PASS; IME 조합 입력 검증은 아님</td>
+</tr>
+<tr>
+<td>입력 편집</td>
+<td>원본에서 <code>tasksx</code> → Backspace → Enter가 <code>tasks</code>로 처리됨</td>
+</tr>
+<tr>
+<td>작업 ID 상단 반영·목록</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>원본 Escape 종료·재시작 복원</td>
+<td>exit 0, 이전 한글 Task 목록 복원</td>
+</tr>
+<tr>
+<td>수정 후 설정 안내·줄 정렬</td>
+<td>화면에서 갱신·정렬 유지 확인</td>
+</tr>
+<tr>
+<td>수정 후 quit 종료</td>
+<td>실제 ConPTY exitCode 0</td>
+</tr>
+<tr>
+<td>신규 회귀 3개</td>
+<td>수정 전 0/3 통과 → 수정 후 3/3 통과</td>
+</tr>
+<tr>
+<td>전체 회귀, Node 22.19.0</td>
+<td>155개 중 141개 통과 / 14개 실패; 기존 14개 유지</td>
+</tr>
+<tr>
+<td>문법 검사</td>
+<td><code>npm run build</code> 통과</td>
+</tr>
+</tbody></table>
+<p>기존 workspace 경계 필터 문제 등 14개 실패는 이번 수정 대상이 아니며 해결됐다고 주장하지 않는다. 승인·취소·LLM Run 전 과정, terminal resize, 강제 종료 process tree, Native Windows Terminal, IME는 이번 검증 범위 밖이다. 브라우저 Ctrl+C 시도는 터미널 제어 바이트가 전달되지 않아 제품 테스트 결과에서 제외했다.</p>
+<h2 id="도구-및-재현">도구 및 재현</h2>
+<p>캡처 전용 도구는 제품 의존성과 분리했다: node-pty 1.1.0, xterm.js 6.0.0, addon-fit 0.11.0, ws 8.21.3. 실행 런타임은 패키지의 Node.js 22.19.0이며 PATH에서 개발용 Node를 제외했다.</p>
+<pre><code class="language-powershell">MindCraft.exe --tui --mock --workspace &#39;C:\MindCraft Workspace&#39;
+</code></pre>
+<p>실행 후 <code>setup mock deterministic</code>, <code>doctor</code>, <code>task 한글 TUI 검증</code>, <code>tasks</code>, <code>quit</code>을 순서대로 입력한다. 실제 터미널에서는 기본 TUI 모드도 사용할 수 있다.</p>
+<h2 id="ddt-작업-산출물">DDT 작업 산출물</h2>
+<p>사용자 지시에 따라 원인·수정 전후·패치·시험 결과·화면 증거를 DDT 에이전트 작업 산출물로 전달한다. 원격 수신 해시 확인과 DDT의 문서 기반 검토를 Windows 실행 검증과 구분해 보존한다. <a href="ddt-handoff/windows-tui-20260907/README.html">DDT 인계·수신 기록</a>을 참조한다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#결론">결론</a></li><li><a href="#실제-실행-화면">실제 실행 화면</a></li><li><a href="#수정-후">수정 후</a></li><li><a href="#원본-초기-화면">원본 초기 화면</a></li><li><a href="#수정-전-누적-출력-문제">수정 전 누적 출력 문제</a></li><li><a href="#재현원인변경">재현·원인·변경</a></li><li><a href="#실제-검증-결과">실제 검증 결과</a></li><li><a href="#도구-및-재현">도구 및 재현</a></li><li><a href="#ddt-작업-산출물">DDT 작업 산출물</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

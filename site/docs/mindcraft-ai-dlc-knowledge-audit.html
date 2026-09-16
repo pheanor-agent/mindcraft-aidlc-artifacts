@@ -1,0 +1,211 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft / AI-DLC 지식·문서 경계 점검 기록 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="mindcraft-ai-dlc-knowledge-audit.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft--ai-dlc-지식문서-경계-점검-기록">MindCraft / AI-DLC 지식·문서 경계 점검 기록</h1>
+<ul>
+<li>점검일: 2026-09-06</li>
+<li>대상 저장소: <code>/opt/data/workspace/mindcraft</code></li>
+<li>목적: 다른 세션에서 MindCraft 제품 개념과 AI-DLC 개발 방법론을 혼동하지 않도록 현재 문서·Knowledge 저장 상태를 기록</li>
+<li>상태: 정정 반영 승인·로컬 커밋 완료</li>
+</ul>
+<h2 id="1-정정된-기준선">1. 정정된 기준선</h2>
+<blockquote>
+<p><strong>AI-DLC는 해커톤에서 MindCraft를 개발·검증하기 위해 사용한 외부 개발 방법론/개발 하네스이며, MindCraft 제품 내부의 런타임 개념이나 하네스가 아니다.</strong></p>
+</blockquote>
+<p>관계는 다음과 같다.</p>
+<pre><code class="language-text">AI-DLC
+└─ MindCraft를 개발·검증하기 위한 외부 방법론
+
+MindCraft
+└─ 해커톤 결과물인 독립형 Pi 기반 terminal TUI 제품
+   ├─ Task / Episode / Run workflow
+   ├─ Knowledge 관리
+   ├─ Model 설정 및 routing
+   ├─ Approval / GrantedScope / Tool safety
+   ├─ Persistence / Recovery
+   └─ Demo / onboarding UX
+</code></pre>
+<p>AI-DLC의 개발 단계와 MindCraft 제품 런타임의 Task/Episode/Run은 동일한 상태 모델이 아니다.</p>
+<h2 id="2-점검-결과-요약">2. 점검 결과 요약</h2>
+<p>현재 권위 문서와 제품 Knowledge 저장소에는 AI-DLC를 MindCraft 런타임 내부 기능으로 정의한 내용이 확인되지 않았다.</p>
+<p>다만 다음 과거 자료와 대화 기록에는 혼동을 유발할 수 있는 표현이 남아 있다.</p>
+<ul>
+<li><code>docs/legacy/2026-09-03-pre-dual-model-routing/**</code></li>
+<li>과거 Discord 메시지의 <code>AI-DLC workspace</code> 표현</li>
+<li>일부 제안 문서에서 AI-DLC 개발 단계와 MindCraft 제품 Workflow가 같은 문서에 함께 설명된 부분</li>
+</ul>
+<p>이 과거 자료는 현재 SSOT로 승격하지 않는다.</p>
+<h2 id="3-현재-ssot-점검">3. 현재 SSOT 점검</h2>
+<h3 id="정상-문서">정상 문서</h3>
+<h4 id="docsssotmd"><code>docs/SSOT.md</code></h4>
+<ul>
+<li>제품 문서의 권위 순서를 정의한다.</li>
+<li><code>docs/legacy/**</code>를 과거 자료로 분리한다.</li>
+<li>개발 process 자료·과거 기록·미승인 제안을 실행 Context에 자동 포함하지 않는다.</li>
+<li>제품 Knowledge와 개발 process 자료를 통합하지 않는다.</li>
+</ul>
+<h4 id="docsmindcraft-design-and-background-bundlemd"><code>docs/mindcraft-design-and-background-bundle.md</code></h4>
+<p>다음 기준을 명시한다.</p>
+<ul>
+<li>AI-DLC는 MindCraft runtime이 아니라 MindCraft를 개발·검증하는 governance workflow</li>
+<li>MindCraft의 제품 Workflow는 Task/Episode/Run 및 Pi AgentSession 중심</li>
+<li>AI-DLC 기록은 제품 runtime approval 상태를 대신하지 않음</li>
+</ul>
+<h4 id="docsmindcraft-design-and-background-bundle-revision1md"><code>docs/mindcraft-design-and-background-bundle-revision1.md</code></h4>
+<p>다음 기준을 명시한다.</p>
+<ul>
+<li>AI-DLC는 제품 runtime이 아니라 개발 governance process</li>
+<li>AI-DLC 기록은 제품의 runtime approval 상태를 대신하지 않음</li>
+<li>AI-DLC 단계는 INCEPTION, CONSTRUCTION, OPERATIONS의 개발 프로세스 기록</li>
+</ul>
+<h4 id="designmd"><code>DESIGN.md</code></h4>
+<p>MindCraft 자체 실행 흐름은 다음으로 정의된다.</p>
+<pre><code class="language-text">Task → Episode → Run → Pi AgentSession
+</code></pre>
+<p>AI-DLC Phase를 MindCraft 런타임 상태로 정의하지 않는다.</p>
+<h4 id="routingmd"><code>ROUTING.md</code></h4>
+<p>MindCraft 제품의 현재 Model 정책만 다룬다.</p>
+<ul>
+<li>Episode 시작 시 purpose 기반으로 Model을 한 번 선택</li>
+<li>자동 Model switching/fallback 없음</li>
+<li>사용자가 지정한 Model과 purpose를 사용</li>
+</ul>
+<p>AI-DLC 개념 오염은 확인되지 않았다.</p>
+<h4 id="docsmindcraft-product-metadatamd"><code>docs/MINDCRAFT-PRODUCT-METADATA.md</code></h4>
+<p>MindCraft의 제품 목적, Knowledge, Model, Tool, Platform 정책을 정의한다. AI-DLC를 제품 런타임 개념으로 저장한 내용은 확인되지 않았다.</p>
+<h2 id="4-혼동-가능-문서">4. 혼동 가능 문서</h2>
+<h3 id="docsmindcraft-concept-alignment-proposalmd"><code>docs/mindcraft-concept-alignment-proposal.md</code></h3>
+<p>이 문서는 <code>INCEPTION 종료 및 CONSTRUCTION 진입 승인</code>을 다루는 승인 대기 제안서다. AI-DLC 개발 프로세스와 MindCraft 제품 설계를 같은 문서에서 설명하므로 독자가 계층을 혼동할 가능성이 있다.</p>
+<p>직접적인 오정의는 확인되지 않았지만 다음 주의 문구를 추가하는 것이 권장된다.</p>
+<pre><code class="language-markdown">&gt; 주의: 이 문서의 AI-DLC 단계는 MindCraft를 개발하기 위한 외부 개발 프로세스다.
+&gt; MindCraft 제품 런타임의 Task/Episode/Run 상태나 사용자 실행 단계와 동일한 개념이 아니다.
+</code></pre>
+<h3 id="docsdemo-plan"><code>docs/demo-plan/**</code></h3>
+<p>Phase 0~6은 MindCraft 데모를 개발·검증하기 위한 작업 단계다.</p>
+<ul>
+<li>Phase 0: 데모 기준선과 fixture</li>
+<li>Phase 1: 초기화·Preflight·Model 설정</li>
+<li>Phase 2: TUI command workflow</li>
+<li>Phase 3: 승인·Tool safety</li>
+<li>Phase 4: Knowledge 재사용</li>
+<li>Phase 5: 상태·복구·관찰성</li>
+<li>Phase 6: Windows Terminal 검증·릴리스</li>
+</ul>
+<p>이 Phase들은 MindCraft 사용자 실행 시의 AI-DLC Phase가 아니다. 문서 상단에 다음 문구를 추가하면 안전하다.</p>
+<pre><code class="language-markdown">&gt; 이 문서의 Phase 0~6은 MindCraft 개발·검증을 위한 해커톤 작업 단계다.
+&gt; MindCraft 제품 사용자의 런타임 workflow나 AI-DLC 실행 엔진을 의미하지 않는다.
+</code></pre>
+<h2 id="5-legacy-문서-점검">5. Legacy 문서 점검</h2>
+<p>다음 경로에는 과거의 잘못되었거나 현재 기준에서 폐기된 표현이 남아 있다.</p>
+<pre><code class="language-text">docs/legacy/2026-09-03-pre-dual-model-routing/
+</code></pre>
+<p>대표 표현:</p>
+<ul>
+<li><code>협업형 AI-DLC workspace</code></li>
+<li><code>팀 협업형 AI-DLC workspace</code></li>
+<li>MindCraft를 AI-DLC workspace로 정의</li>
+</ul>
+<p>현재 기준에서는 이 표현을 제품 정의로 사용하지 않는다. 단, 해당 자료가 <code>docs/legacy/**</code> 아래에 있으므로 현재 SSOT나 실행 Context에 자동 반영되지는 않는다.</p>
+<p>파일 삭제 대신 각 Legacy 문서 상단에 다음 경고를 추가하는 것이 권장된다.</p>
+<pre><code class="language-markdown">&gt; Historical note:
+&gt; 이 문서는 2026-09-03 이전의 개념 검토 기록이다.
+&gt; 당시의 `AI-DLC workspace` 표현은 현재 기준에서 폐기되었다.
+&gt; AI-DLC는 MindCraft 런타임이 아니라 MindCraft 개발·검증에 사용한 외부 방법론이다.
+</code></pre>
+<h2 id="6-runtime-knowledge-저장소-점검">6. Runtime Knowledge 저장소 점검</h2>
+<p>점검 시점에 다음 파일은 존재하지 않았다.</p>
+<pre><code class="language-text">/opt/data/workspace/mindcraft/.mindcraft/knowledge.jsonl
+</code></pre>
+<p>따라서 현재 저장된 제품 Knowledge에서 AI-DLC를 MindCraft 런타임으로 설명하는 Knowledge item은 확인되지 않았다.</p>
+<p>존재하는 <code>.mindcraft/state.jsonl</code>에는 테스트 실행 기록이 있으며 다음 내용이 확인된다.</p>
+<ul>
+<li>Task/Run 상태</li>
+<li>Knowledge metrics</li>
+<li>mock Model 선택 결과</li>
+<li>filesystem read decision</li>
+<li>pending filesystem write approval</li>
+</ul>
+<p>AI-DLC 개념을 제품 런타임으로 저장한 기록은 확인되지 않았다.</p>
+<h2 id="7-discord-기록-점검">7. Discord 기록 점검</h2>
+<p>과거 Discord 기록에는 다음과 같은 혼동 가능 표현이 있다.</p>
+<ul>
+<li>MindCraft를 AI-DLC 컨셉의 스펙 문서로 재정의</li>
+<li>AI-DLC workspace</li>
+<li>AI-DLC가 MindCraft 프로젝트 안에 포함</li>
+<li>AI-DLC 하네스 역할의 파일</li>
+</ul>
+<p>이는 과거 대화 기록이므로 임의 삭제하지 않는다. 이후 기준을 별도 메시지나 정본 문서로 명시해 해석 기준을 고정한다.</p>
+<p>권장 기준 문장:</p>
+<pre><code class="language-text">[개념 정정]
+AI-DLC는 MindCraft 제품 내부의 런타임 기능이나 하네스가 아니다.
+AI-DLC는 해커톤에서 MindCraft를 개발·검증하기 위해 사용한 외부 개발 방법론이다.
+MindCraft의 제품 기능과 상태 모델은 Task/Episode/Run, TUI, Knowledge,
+Approval, Model, Recovery를 기준으로 설명한다.
+</code></pre>
+<h2 id="8-현재-판정">8. 현재 판정</h2>
+<table>
+<thead>
+<tr>
+<th>범위</th>
+<th>판정</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>현재 SSOT</td>
+<td>정상</td>
+</tr>
+<tr>
+<td>현재 설계 통합본</td>
+<td>정상</td>
+</tr>
+<tr>
+<td>현재 제품 Metadata</td>
+<td>정상</td>
+</tr>
+<tr>
+<td>현재 Model 정책</td>
+<td>정상</td>
+</tr>
+<tr>
+<td>Demo plan Phase 0~6</td>
+<td>개발·검증 단계로 해석해야 하며 주의 문구 권장</td>
+</tr>
+<tr>
+<td>Concept alignment proposal</td>
+<td>계층 혼동 가능성 있음, 주의 문구 권장</td>
+</tr>
+<tr>
+<td>Legacy 문서</td>
+<td>과거의 잘못된 표현 보존 중, 현재 기준으로 승격 금지</td>
+</tr>
+<tr>
+<td>Runtime Knowledge</td>
+<td><code>knowledge.jsonl</code> 없음, AI-DLC 오염 확인 안 됨</td>
+</tr>
+<tr>
+<td>Discord 기록</td>
+<td>과거 혼동 표현 존재, 삭제보다 정정 기준 고정 권장</td>
+</tr>
+</tbody></table>
+<h2 id="9-다음-세션-시작-시-읽을-파일">9. 다음 세션 시작 시 읽을 파일</h2>
+<ol>
+<li>이 파일: <code>docs/mindcraft-ai-dlc-knowledge-audit.md</code></li>
+<li><code>docs/SSOT.md</code></li>
+<li><code>README.md</code></li>
+<li><code>DESIGN.md</code></li>
+<li><code>ROUTING.md</code></li>
+<li><code>docs/mindcraft-design-and-background-bundle.md</code></li>
+<li>필요할 때만 <code>docs/legacy/**</code>를 historical 참고자료로 읽는다.</li>
+</ol>
+<h2 id="10-다음-작업-권장-순서">10. 다음 작업 권장 순서</h2>
+<ol>
+<li><code>docs/demo-plan/README.md</code> 상단에 Phase의 성격을 명시한다.</li>
+<li><code>docs/mindcraft-concept-alignment-proposal.md</code>에 AI-DLC와 제품 런타임의 경계 문구를 추가한다.</li>
+<li>Legacy 문서에는 폐기된 과거 표현이라는 historical note를 추가한다.</li>
+<li>AI-DLC 개발 산출물과 MindCraft 제품 문서를 검색·주입할 때 서로 다른 namespace로 취급한다.</li>
+<li>새로운 제품 Knowledge를 저장할 때 AI-DLC 개발 process 자료를 자동 promoted하지 않는다.</li>
+</ol>
+<h2 id="핵심-결론">핵심 결론</h2>
+<p>현재 SSOT와 제품 Knowledge가 잘못 저장된 상태는 아니다. 문제는 과거 문서와 Discord 기록에 남은 표현이 현재 개념과 충돌할 수 있다는 점이다.</p>
+<p>앞으로의 기준은 다음 한 문장으로 고정한다.</p>
+<blockquote>
+<p><strong>AI-DLC는 MindCraft를 개발하기 위해 사용한 외부 개발 방법론이며, MindCraft 제품 내부의 런타임 개념이나 하네스가 아니다.</strong></p>
+</blockquote>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-정정된-기준선">1. 정정된 기준선</a></li><li><a href="#2-점검-결과-요약">2. 점검 결과 요약</a></li><li><a href="#3-현재-ssot-점검">3. 현재 SSOT 점검</a></li><li><a href="#정상-문서">정상 문서</a></li><li><a href="#4-혼동-가능-문서">4. 혼동 가능 문서</a></li><li><a href="#docsmindcraft-concept-alignment-proposalmd">docs/mindcraft-concept-alignment-proposal.md</a></li><li><a href="#docsdemo-plan">docs/demo-plan/**</a></li><li><a href="#5-legacy-문서-점검">5. Legacy 문서 점검</a></li><li><a href="#6-runtime-knowledge-저장소-점검">6. Runtime Knowledge 저장소 점검</a></li><li><a href="#7-discord-기록-점검">7. Discord 기록 점검</a></li><li><a href="#8-현재-판정">8. 현재 판정</a></li><li><a href="#9-다음-세션-시작-시-읽을-파일">9. 다음 세션 시작 시 읽을 파일</a></li><li><a href="#10-다음-작업-권장-순서">10. 다음 작업 권장 순서</a></li><li><a href="#핵심-결론">핵심 결론</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

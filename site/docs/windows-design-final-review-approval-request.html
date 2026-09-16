@@ -1,0 +1,127 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft Windows 설계 통합 리뷰 및 구현 승인요청 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="windows-design-final-review-approval-request.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-windows-설계-통합-리뷰-및-구현-승인요청">MindCraft Windows 설계 통합 리뷰 및 구현 승인요청</h1>
+<ul>
+<li>작업: <strong>JOB-68</strong></li>
+<li>작업 방식: <strong>DDT 기본 작업 워크플로우</strong></li>
+<li>조사·설계·리뷰 상태: <strong>완료</strong></li>
+<li>구현 상태: <strong>미적용</strong></li>
+<li>실제 Windows 실행/설치/live 호출: <strong>미수행</strong></li>
+</ul>
+<h2 id="1-검토-대상">1. 검토 대상</h2>
+<ul>
+<li><code>docs/windows-executable-investigation-and-design.md</code></li>
+<li><code>docs/windows-launcher-runtime-spike-plan.md</code></li>
+<li><code>docs/windows-workspace-bootstrap-config-contract.md</code></li>
+<li><code>docs/windows-credential-provider-onboarding-contract.md</code></li>
+<li><code>docs/windows-tui-approval-shutdown-contract.md</code></li>
+<li><code>docs/windows-installer-release-evidence-plan.md</code></li>
+<li><code>docs/windows-executable-design-review.md</code></li>
+</ul>
+<h2 id="2-통합-리뷰-결과">2. 통합 리뷰 결과</h2>
+<table>
+<thead>
+<tr>
+<th>영역</th>
+<th>판정</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>기본 작업 워크플로우 정합</td>
+<td>PASS</td>
+<td>AI-DLC를 기본 작업 상태로 사용하지 않음</td>
+</tr>
+<tr>
+<td>현재 코드·문서 추적성</td>
+<td>PASS</td>
+<td>CLI/App/TUI/provider/config/path/lock 근거 반영</td>
+</tr>
+<tr>
+<td>사용자 흐름</td>
+<td>PASS</td>
+<td>설치부터 workspace·설정·Run·승인·복구 흐름 정의</td>
+</tr>
+<tr>
+<td>안전성</td>
+<td>PASS</td>
+<td>approval, scope, credential redaction, unknown effect 유지</td>
+</tr>
+<tr>
+<td>모델 정책</td>
+<td>PASS</td>
+<td>0/1/2 Model, purpose, fallback 금지 유지</td>
+</tr>
+<tr>
+<td>mock/live 분리</td>
+<td>PASS</td>
+<td>mode snapshot과 readiness 분리</td>
+</tr>
+<tr>
+<td>종료·복구</td>
+<td>PASS</td>
+<td>coordinator, process tree, journal, lock 순서 정의</td>
+</tr>
+<tr>
+<td>패키징</td>
+<td>CONDITIONAL</td>
+<td>실제 Windows launcher/installer/resource 검증 필요</td>
+</tr>
+<tr>
+<td>credential</td>
+<td>CONDITIONAL</td>
+<td>Credential Manager helper/binding의 실제 적합성 검증 필요</td>
+</tr>
+<tr>
+<td>경로/process</td>
+<td>CONDITIONAL</td>
+<td>Windows API와 reparse/process tree 실제 검증 필요</td>
+</tr>
+<tr>
+<td>릴리스 판정</td>
+<td>PASS</td>
+<td>native/live 증거 없이는 완료 주장 금지</td>
+</tr>
+</tbody></table>
+<h2 id="3-구현-순서">3. 구현 순서</h2>
+<pre><code class="language-text">구현 단위 승인
+→ WIN-01 launcher/runtime spike 구현
+→ WIN-02 workspace/bootstrap/config 구현
+→ WIN-03 credential/provider/onboarding 구현
+→ WIN-04 TUI/approval/shutdown/recovery 구현
+→ WIN-05 installer/update/release metadata 구현
+→ 실제 Windows 검증
+→ 결과 리뷰
+→ 릴리스 승인요청
+</code></pre>
+<p>각 구현 단위는 기본 작업 워크플로우에서 별도 작업·변경 파일·테스트·rollback·증거를 남긴다.</p>
+<h2 id="4-구현-승인-요청-범위">4. 구현 승인 요청 범위</h2>
+<p>다음을 승인해 주십시오.</p>
+<ol>
+<li>조사·설계 문서의 계약을 기준으로 Windows 구현 단위를 시작</li>
+<li>WIN-01은 launcher/runtime 기술 spike로 한정하고, 결과가 실패하면 기술 선택을 재검토</li>
+<li>WIN-02~05는 기존 MindCraft runtime과 approval/Knowledge/routing/recovery 정책을 유지하며 구현</li>
+<li>mock/offline 검증과 Windows native/live 검증을 분리</li>
+<li>실제 실행 결과가 없는 항목은 완료로 표시하지 않음</li>
+<li>구현 중 범위 변경은 기본 작업 워크플로우의 별도 승인으로 처리</li>
+</ol>
+<h2 id="5-이번-승인에-포함되지-않는-범위">5. 이번 승인에 포함되지 않는 범위</h2>
+<ul>
+<li>공개 배포·외부 push</li>
+<li>실제 유료 provider 호출</li>
+<li>사용자 credential 변경</li>
+<li>Windows clean VM 완료 판정</li>
+<li>signing 완료 판정</li>
+<li>portable 단일 <code>.exe</code> 1차 필수 확정</li>
+<li>자동 provider fallback/switching</li>
+<li>동시 workspace writer</li>
+</ul>
+<h2 id="6-승인-선택지">6. 승인 선택지</h2>
+<h3 id="approve-amp-continue">Approve &amp; Continue</h3>
+<p>WIN-01 launcher/runtime spike 구현과 이후 구현 단위 작업을 시작한다. 실제 Windows 실행·설치·live 검증은 각 검증 승인과 환경 확보 후 수행한다.</p>
+<h3 id="request-changes">Request Changes</h3>
+<p>구현 범위, 배포 형태, 지원 OS/architecture, credential 정책, portable 여부, live 검증 조건을 수정한다.</p>
+<h3 id="hold">Hold</h3>
+<p>현재 설계 승인 게이트에서 보류한다.</p>
+<h2 id="7-권고">7. 권고</h2>
+<p><strong>권고: Approve &amp; Continue</strong></p>
+<p>현재 설계는 조사와 자체 리뷰를 통과했지만, Windows native 기술 위험은 실제 spike 전까지 미확정이다. 따라서 전체 제품 출시 승인이 아니라 <strong>구현 단위 시작 승인</strong>으로 한정해야 한다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-검토-대상">1. 검토 대상</a></li><li><a href="#2-통합-리뷰-결과">2. 통합 리뷰 결과</a></li><li><a href="#3-구현-순서">3. 구현 순서</a></li><li><a href="#4-구현-승인-요청-범위">4. 구현 승인 요청 범위</a></li><li><a href="#5-이번-승인에-포함되지-않는-범위">5. 이번 승인에 포함되지 않는 범위</a></li><li><a href="#6-승인-선택지">6. 승인 선택지</a></li><li><a href="#approve-amp-continue">Approve &amp;amp; Continue</a></li><li><a href="#request-changes">Request Changes</a></li><li><a href="#hold">Hold</a></li><li><a href="#7-권고">7. 권고</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

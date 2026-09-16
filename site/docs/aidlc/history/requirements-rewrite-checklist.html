@@ -1,0 +1,67 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Requirements Rewrite Preflight Checklist · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="requirements-rewrite-checklist.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="requirements-rewrite-preflight-checklist">Requirements Rewrite Preflight Checklist</h1>
+<p>Use this checklist before creating a new MindCraft AI-DLC Requirements or Constraints draft.</p>
+<h2 id="a-workspace-and-provenance">A. Workspace and provenance</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Confirm the exact workspace path and record it in the document.</li>
+<li><input disabled="" type="checkbox"> Confirm the product baseline path and whether it is reference-only or reusable.</li>
+<li><input disabled="" type="checkbox"> Confirm one canonical requirements file path.</li>
+<li><input disabled="" type="checkbox"> Confirm one canonical constraints file path.</li>
+<li><input disabled="" type="checkbox"> Search for duplicate requirement/constraint copies and classify each as canonical, alias, or historical.</li>
+<li><input disabled="" type="checkbox"> Confirm AI-DLC rules repository, tag, commit, installed paths, and file hashes.</li>
+<li><input disabled="" type="checkbox"> Mark every unverified path or hash as <code>Pending verification</code>.</li>
+</ul>
+<h2 id="b-productprocess-boundary">B. Product/process boundary</h2>
+<ul>
+<li><input disabled="" type="checkbox"> State that AI-DLC is external development governance.</li>
+<li><input disabled="" type="checkbox"> State that AI-DLC stages are not MindCraft runtime Task/Episode/Run states.</li>
+<li><input disabled="" type="checkbox"> Keep product SSOT, AI-DLC artifacts, and runtime Knowledge in separate namespaces.</li>
+</ul>
+<h2 id="c-classification">C. Classification</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Classify the AI-DLC construction workspace.</li>
+<li><input disabled="" type="checkbox"> Classify the product/repository baseline separately.</li>
+<li><input disabled="" type="checkbox"> State whether existing code is reference-only, reusable, or out of scope.</li>
+</ul>
+<h2 id="d-requirement-quality">D. Requirement quality</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Every FR has priority, acceptance signal, source, and evidence owner.</li>
+<li><input disabled="" type="checkbox"> Every NFR has a measurable target or an explicit deferred decision.</li>
+<li><input disabled="" type="checkbox"> Every resolved decision links back to the original open question.</li>
+<li><input disabled="" type="checkbox"> Every introduced field/invariant has a schema or contract owner.</li>
+<li><input disabled="" type="checkbox"> Every extension identifier maps to a pinned source rule.</li>
+</ul>
+<h2 id="e-stateful-behavior">E. Stateful behavior</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Define original Run immutability before defining resume success.</li>
+<li><input disabled="" type="checkbox"> Distinguish valid committed, uncommitted/torn, and corrupt records.</li>
+<li><input disabled="" type="checkbox"> Define fallback behavior for invalid checkpoints.</li>
+<li><input disabled="" type="checkbox"> Define same/different Episode and Run linkage.</li>
+<li><input disabled="" type="checkbox"> Define cross-mode and cross-workspace resume behavior.</li>
+<li><input disabled="" type="checkbox"> Define stale-lock and concurrent-writer behavior.</li>
+</ul>
+<h2 id="f-context-and-safety">F. Context and safety</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Define explicit file source rules.</li>
+<li><input disabled="" type="checkbox"> Define approved Knowledge source rules.</li>
+<li><input disabled="" type="checkbox"> Define overlap/conflict precedence and manifest behavior.</li>
+<li><input disabled="" type="checkbox"> Define secret-like and control-file exclusions.</li>
+<li><input disabled="" type="checkbox"> Define approval scope, fail-closed behavior, and no-self-approval.</li>
+<li><input disabled="" type="checkbox"> Ensure diagnostics never expose credential material.</li>
+</ul>
+<h2 id="g-metrics-and-evidence">G. Metrics and evidence</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Define measurement start/end boundaries.</li>
+<li><input disabled="" type="checkbox"> Define sample size and workload.</li>
+<li><input disabled="" type="checkbox"> Define cold/warm conditions.</li>
+<li><input disabled="" type="checkbox"> Define CI versus manual evidence ownership.</li>
+<li><input disabled="" type="checkbox"> State what offline/mock evidence does not prove.</li>
+<li><input disabled="" type="checkbox"> Record environment, Node/npm versions, OS, and hardware class.</li>
+</ul>
+<h2 id="h-approval-gate">H. Approval gate</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Requirements status is clear: Draft, Review, Approval Requested, or Approved.</li>
+<li><input disabled="" type="checkbox"> Construction authorization is separate from Requirements approval.</li>
+<li><input disabled="" type="checkbox"> Code changes, live provider calls, credentials, external push, and deployment require explicit later gates.</li>
+<li><input disabled="" type="checkbox"> Review findings are linked from the current document.</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#a-workspace-and-provenance">A. Workspace and provenance</a></li><li><a href="#b-productprocess-boundary">B. Product/process boundary</a></li><li><a href="#c-classification">C. Classification</a></li><li><a href="#d-requirement-quality">D. Requirement quality</a></li><li><a href="#e-stateful-behavior">E. Stateful behavior</a></li><li><a href="#f-context-and-safety">F. Context and safety</a></li><li><a href="#g-metrics-and-evidence">G. Metrics and evidence</a></li><li><a href="#h-approval-gate">H. Approval gate</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

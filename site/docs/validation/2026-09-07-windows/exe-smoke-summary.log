@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "executable": "<VALIDATION_ROOT>\\dist\\windows-package\\MindCraft.exe",
+  "workspace": "<VALIDATION_ROOT>\\workspaces\\한글 공백 1788783785478",
+  "checks": [
+    "bundled runtime with Node absent from PATH",
+    "Unicode and spaces in workspace argument",
+    "mock setup",
+    "task creation",
+    "status",
+    "clean exit",
+    "restart and persisted task"
+  ]
+}

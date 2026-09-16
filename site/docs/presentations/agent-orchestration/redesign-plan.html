@@ -1,0 +1,84 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>7분 발표 구성과 디자인 설계 · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="redesign-plan.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="7분-발표-구성과-디자인-설계">7분 발표 구성과 디자인 설계</h1>
+<h2 id="구성-원칙">구성 원칙</h2>
+<p>핵심 질문은 “공용 에이전트와 팀이 함께 만든 경험이, 다른 에이전트를 조율하는 방식으로 어떻게 확장됐는가?”다. AI 자체에 대한 기초 설명은 생략하고, MindCraft·DDT·AI-DLC의 역할은 등장하는 순간에 짧게 소개한다.</p>
+<p>첫 165초는 공용 DDT의 실제 팀원 요청과 컨셉→MVP 이력, 다음 255초는 Astra의 두 에이전트 연결·독립 판단·컴퓨터 조작·자동 기록을 다룬다. 본편 12장과 부록 1장이다.</p>
+<h2 id="장면-설계">장면 설계</h2>
+<table>
+<thead>
+<tr>
+<th>장</th>
+<th>전달할 한 가지</th>
+<th>시각 구성</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>공용 AI에서 에이전트 조율로 확장</td>
+<td>네이비 표지, 전후 두 구조</td>
+</tr>
+<tr>
+<td>2</td>
+<td>만들던 제품의 목적</td>
+<td>작업·실행·이어가기 흐름</td>
+</tr>
+<tr>
+<td>3</td>
+<td>서로 다른 팀원의 요청이 같은 제품에 누적</td>
+<td>실제 요청 요약, DDT, 공통 기록</td>
+</tr>
+<tr>
+<td>4</td>
+<td>스레드별 대화와 공통 산출물의 구분</td>
+<td>분리·공유 양면 비교</td>
+</tr>
+<tr>
+<td>5</td>
+<td>여러 정정을 거쳐 구현된 MVP</td>
+<td>날짜별 인터랙션, 실제 커밋</td>
+</tr>
+<tr>
+<td>6</td>
+<td>기존 지식을 새 개발의 기준으로 사용</td>
+<td>DDT–Astra–Claude 연결</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Astra가 작성·검토·후속 행동을 조율</td>
+<td>단계별 강조 인터랙션</td>
+</tr>
+<tr>
+<td>8</td>
+<td>실제 11개 검토 지적의 반영</td>
+<td>스토리·지적·재검토의 순서</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Astra가 검토 결과도 원문과 대조</td>
+<td>번호 차이 발견과 후속 확인</td>
+</tr>
+<tr>
+<td>10</td>
+<td>화면 조작을 실제 수정으로 연결</td>
+<td>실제 TUI 수정 전후 캡처</td>
+</tr>
+<tr>
+<td>11</td>
+<td>개발 절차를 연결하고 완료 범위를 기록</td>
+<td>AI-DLC와 기존 MVP의 두 이력</td>
+</tr>
+<tr>
+<td>12</td>
+<td>팀의 맥락이 다음 에이전트의 출발점</td>
+<td>표지 색을 반복한 결말</td>
+</tr>
+<tr>
+<td>부록</td>
+<td>관찰 범위와 원문 확인</td>
+<td>근거 문서 링크</td>
+</tr>
+</tbody></table>
+<h2 id="디자인-언어">디자인 언어</h2>
+<p>모든 장면은 16:9이며 1280×720 설계 좌표를 cqw로 비례 적용한다. 네이비 #14213d, 코발트 #3d63f4, 흰색 #f7f9fd, 블루 틴트 #e8eeff를 유지한다. 번들 Noto Sans KR 하나를 쓰고 제목은 600·기본 자간, 본문은 400–500을 사용한다. 텍스트가 뭉개지지 않도록 transform scale은 사용하지 않는다.</p>
+<p>표지와 결말은 강한 네이비, 본문은 흰색 배경과 넓은 여백을 쓴다. 원시 경로·세부 승인 조건은 발표 노트와 근거 문서로 옮기되, 계획 승인과 구현 완료를 혼동할 핵심 정보는 화면에도 남긴다. 인터랙션은 설명의 순서를 도울 때만 사용한다. 캡처는 실제 실행 화면이며 장식 이미지를 사실의 증거처럼 사용하지 않는다.</p>
+<p><a href="index.html">슬라이드</a> · <a href="speaker-script.html">발표 대본</a> · <a href="research-dossier.html">조사 보고서</a></p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#구성-원칙">구성 원칙</a></li><li><a href="#장면-설계">장면 설계</a></li><li><a href="#디자인-언어">디자인 언어</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

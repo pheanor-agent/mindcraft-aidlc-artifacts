@@ -1,0 +1,149 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft Windows 실행 파일 설계 자체 리뷰 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="windows-executable-design-review.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-windows-실행-파일-설계-자체-리뷰">MindCraft Windows 실행 파일 설계 자체 리뷰</h1>
+<ul>
+<li>작업: <strong>JOB-68</strong></li>
+<li>리뷰 대상: <code>docs/windows-executable-investigation-and-design.md</code></li>
+<li>리뷰 방식: 문서 내부 일관성·현재 코드 대조·기존 정책 대조</li>
+<li>실제 실행: <strong>수행하지 않음</strong></li>
+<li>리뷰 상태: <strong>완료</strong></li>
+</ul>
+<h2 id="1-리뷰-체크리스트">1. 리뷰 체크리스트</h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>결과</th>
+<th>리뷰 의견</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>기본 작업 워크플로우와 정합</td>
+<td>PASS</td>
+<td>AI-DLC를 기본 상태·승인 체계로 사용하지 않음</td>
+</tr>
+<tr>
+<td>현재 코드와의 추적성</td>
+<td>PASS</td>
+<td>cli, app, pi-tools, preflight, config, TUI, lock 근거를 반영</td>
+</tr>
+<tr>
+<td>설치 위치/workspace 분리</td>
+<td>PASS</td>
+<td>확정 전 생성 금지와 user-data 분리 명시</td>
+</tr>
+<tr>
+<td>Model/routing 정책 보존</td>
+<td>PASS</td>
+<td>0/1/2 Model, purpose, fallback 금지 유지</td>
+</tr>
+<tr>
+<td>approval 경계 보존</td>
+<td>PASS</td>
+<td>request digest, decision, execution_started, unknown 순서 유지</td>
+</tr>
+<tr>
+<td>credential privacy</td>
+<td>PASS</td>
+<td>argv/log/config/transcript 원문 금지, 평문 fallback 금지</td>
+</tr>
+<tr>
+<td>path safety</td>
+<td>PASS</td>
+<td>canonical containment와 reparse/ADS/UNC 미지원 시 fail-closed</td>
+</tr>
+<tr>
+<td>recovery safety</td>
+<td>PASS</td>
+<td>unknown effect 자동 재실행 금지, 새 Run 연결</td>
+</tr>
+<tr>
+<td>mock/live 구분</td>
+<td>PASS</td>
+<td>mode snapshot과 readiness 분리</td>
+</tr>
+<tr>
+<td>기존 CLI 호환</td>
+<td>PASS</td>
+<td>기본 TUI, <code>--cli</code>, 구조화 workspace 인자 계획</td>
+</tr>
+<tr>
+<td>Windows 증거 과장 방지</td>
+<td>PASS</td>
+<td>실제 실행 전 완료 주장 금지</td>
+</tr>
+<tr>
+<td>구현 가능성</td>
+<td>CONDITIONAL</td>
+<td>launcher/credential/process-tree는 spike 결과로 기술 선택 필요</td>
+</tr>
+</tbody></table>
+<h2 id="2-발견된-설계-위험과-대응">2. 발견된 설계 위험과 대응</h2>
+<h3 id="r1-현재-cli의-환경변수와-workspace-registry-이중-경로">R1. 현재 CLI의 환경변수와 workspace registry 이중 경로</h3>
+<ul>
+<li>위험: preflight와 실제 runtime이 서로 다른 model/provider를 볼 수 있다.</li>
+<li>대응: <code>EffectiveConfigResolver</code> 결과를 preflight·doctor·provider·Run에 주입하고 Run snapshot을 저장한다.</li>
+<li>차단 기준: resolver 없이 기존 독립 env selection을 새 UI에서 재사용하지 않는다.</li>
+</ul>
+<h3 id="r2-windows-credential-helper-배포-실패">R2. Windows credential helper 배포 실패</h3>
+<ul>
+<li>위험: native binding/helper가 설치·백신·ACL 문제로 실패할 수 있다.</li>
+<li>대응: WIN-01 이전에 helper 방식의 package/resource/ACL spike를 수행한다.</li>
+<li>금지: 평문 JSON·일반 log fallback.</li>
+<li>허용 대안: session-only credential.</li>
+</ul>
+<h3 id="r3-console-ownership과-terminal-restore">R3. console ownership과 terminal restore</h3>
+<ul>
+<li>위험: Explorer 실행과 terminal 실행에서 창이 즉시 닫히거나 입력이 꼬일 수 있다.</li>
+<li>대응: launcher가 console attach/create를 소유하고 TUI는 terminal lifecycle을 한 번만 소유한다.</li>
+<li>검증 대상: Explorer, 시작 메뉴, Windows Terminal, Console Host, EOF, Ctrl-C, 창 닫기.</li>
+</ul>
+<h3 id="r4-process-tree-취소">R4. process tree 취소</h3>
+<ul>
+<li>위험: child 하나만 종료되고 손자 process가 남을 수 있다.</li>
+<li>대응: Windows Job Object 또는 동등한 process-tree adapter를 선택하고 fixture로 손자 종료를 검증한다.</li>
+<li>차단 기준: 단일 <code>child.kill</code>만으로 완료 처리하지 않는다.</li>
+</ul>
+<h3 id="r5-path-identity와-reparse-point">R5. path identity와 reparse point</h3>
+<ul>
+<li>위험: 문자열 prefix가 형제 폴더·junction escape를 허용할 수 있다.</li>
+<li>대응: canonical identity, parent validation, 실행 직전 재검사, 불명확한 reparse/UNC/ADS fail-closed.</li>
+<li>차단 기준: Windows path matrix 없이 native 지원을 주장하지 않는다.</li>
+</ul>
+<h3 id="r6-schemaconfig-migration">R6. schema/config migration</h3>
+<ul>
+<li>위험: 업데이트가 기존 workspace를 손상시키거나 상위 schema를 덮어쓸 수 있다.</li>
+<li>대응: backup → temp write → replace, 상위 schema read-only 오류, rollback metadata.</li>
+</ul>
+<h3 id="r7-현재-tui-transcript-저장-방식">R7. 현재 TUI transcript 저장 방식</h3>
+<ul>
+<li>위험: <code>render(120)</code> 결과를 다시 transcript로 저장하면 resize에서 줄바꿈이 누적된다.</li>
+<li>대응: 원본 message/event 모델과 width-aware renderer를 분리하고 보관 상한을 별도 적용한다.</li>
+</ul>
+<h3 id="r8-mock-결과의-과장">R8. mock 결과의 과장</h3>
+<ul>
+<li>위험: offline/mock 성공을 Windows native/live provider 성공으로 오해할 수 있다.</li>
+<li>대응: evidence에 OS, terminal, mode, provider, artifact hash를 필수로 기록하고 결과 종류를 분리한다.</li>
+</ul>
+<h2 id="3-승인-전-설계-결정">3. 승인 전 설계 결정</h2>
+<p>다음은 구현 전에 승인받아야 한다.</p>
+<ol>
+<li>1차 배포는 installer + installed launcher로 하고 portable 단일 exe는 후속으로 둔다.</li>
+<li>기본 실행은 TUI, <code>--cli</code>는 호환 모드로 둔다.</li>
+<li>workspace는 <code>--workspace</code> → 최근 workspace → 사용자 선택 순이며 현재 cwd는 후보일 뿐 자동 확정하지 않는다.</li>
+<li>credential 보호 저장 실패 시 session-only만 허용한다.</li>
+<li>mock/live 자동 전환과 Model fallback은 금지한다.</li>
+<li>root 밖 접근, reparse escape, unknown effect는 fail-closed 또는 사용자 확인이다.</li>
+<li>Windows native/live/clean VM 결과는 Linux/mock 결과와 분리한다.</li>
+</ol>
+<h2 id="4-리뷰-결론">4. 리뷰 결론</h2>
+<p><strong>설계는 현재 MindCraft 정책과 구현 경계에 부합하며, 구현 전 설계 승인요청을 제출할 수 있다.</strong></p>
+<p>단, 다음은 실제 실행이 아니라 설계상 기술 선택을 위해 별도 spike가 필요한 항목이다.</p>
+<ul>
+<li>launcher 기술과 console 동작</li>
+<li>동봉 Node/ESM/Pi resource loading</li>
+<li>Credential Manager helper/binding</li>
+<li>Windows process tree cancellation</li>
+<li>canonical path/reparse handling</li>
+<li>installer/update/signing pipeline</li>
+</ul>
+<p>이 리뷰는 해당 항목들이 성공했다고 의미하지 않는다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-리뷰-체크리스트">1. 리뷰 체크리스트</a></li><li><a href="#2-발견된-설계-위험과-대응">2. 발견된 설계 위험과 대응</a></li><li><a href="#r1-현재-cli의-환경변수와-workspace-registry-이중-경로">R1. 현재 CLI의 환경변수와 workspace registry 이중 경로</a></li><li><a href="#r2-windows-credential-helper-배포-실패">R2. Windows credential helper 배포 실패</a></li><li><a href="#r3-console-ownership과-terminal-restore">R3. console ownership과 terminal restore</a></li><li><a href="#r4-process-tree-취소">R4. process tree 취소</a></li><li><a href="#r5-path-identity와-reparse-point">R5. path identity와 reparse point</a></li><li><a href="#r6-schemaconfig-migration">R6. schema/config migration</a></li><li><a href="#r7-현재-tui-transcript-저장-방식">R7. 현재 TUI transcript 저장 방식</a></li><li><a href="#r8-mock-결과의-과장">R8. mock 결과의 과장</a></li><li><a href="#3-승인-전-설계-결정">3. 승인 전 설계 결정</a></li><li><a href="#4-리뷰-결론">4. 리뷰 결론</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

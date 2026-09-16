@@ -1,0 +1,38 @@
+{
+  "name": "forced-kill",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788791199615,
+      "output": "MindCraft TUI (Pi runtime, mode=mock) — commands: setup <provider> <model> [purpose] | doctor | task <title> | tasks | use <task-id> | model | mode default|token-doctor|mock | run <prompt> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel <run-id> | knowledge | promote <id> | reject-knowledge <id> | quit\n"
+    },
+    {
+      "at": 1788791199616,
+      "output": "model: mock/deterministic  built-in  key: none\n"
+    },
+    {
+      "at": 1788791199616,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791199629,
+      "input": "task survive crash"
+    },
+    {
+      "at": 1788791199631,
+      "output": "> task survive crash\n"
+    },
+    {
+      "at": 1788791199633,
+      "output": "task=6a313e26-f720-42c6-a808-ad47bad20559 purpose=general\nmindcraft> "
+    },
+    {
+      "at": 1788791201398,
+      "input": "quit"
+    },
+    {
+      "at": 1788791201398,
+      "output": "> quit\n"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JOB-38: MindCraft 팀 협업 및 LLM Wiki 방향 반영 · MindCraft</title><link rel="stylesheet" href="../../../../assets/pages.css"></head><body><header><a class="brand" href="../../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../../index.html">← 전체 문서</a><a href="request.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><p class="historical">과거 설계 이력입니다. 현재 제품 기준은 SSOT를 확인하세요.</p><main><article><h1 id="job-38-mindcraft-팀-협업-및-llm-wiki-방향-반영">JOB-38: MindCraft 팀 협업 및 LLM Wiki 방향 반영</h1>
+<blockquote>
+<p>Historical note: 이 문서는 2026-09-03 이전의 개념 검토 기록이다. 당시의 <code>AI-DLC workspace</code> 표현은 현재 기준에서 폐기되었다. AI-DLC는 MindCraft 런타임이 아니라 MindCraft 개발·검증에 사용한 외부 방법론이다. 이 문서는 현재 SSOT가 아니다.</p>
+</blockquote>
+<h2 id="요청-원문">요청 (원문)</h2>
+<blockquote>
+<p>해당 프로젝트는 개인을 위한 툴이 아닌 팀을 위한 툴로 &quot;협업&quot; 관점에서 어떻게 더 효율적으로 시너지를 낼 수 있는지 고민
+저장되는 지식 정보를 관련도 순으로 묶고 LLM Wiki처럼 TUI로 정리
+사용자 관점에서 직관적이고 편하게 사용 가능한 형태로 구현</p>
+</blockquote>
+<h2 id="목표">목표</h2>
+<p>MindCraft를 개인용 AI 실행 도구가 아닌 팀 협업형 AI-DLC workspace로 명확히 정의하고, 관련도 기반 LLM Wiki와 직관적인 TUI/UX를 이후 구현의 핵심 기준으로 삼는다.</p>
+<h2 id="요구사항">요구사항</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>요구사항</th>
+<th>우선순위</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R1</td>
+<td>팀 공유 workflow와 협업 효율을 제품 방향에 반영</td>
+<td>P0</td>
+<td>완료</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>Knowledge를 관련도·신뢰도·provenance 중심으로 LLM Wiki화</td>
+<td>P0</td>
+<td>방향/ToDo 반영</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>TUI에서 Knowledge 검색·필터·상세·연결 관계·승인 흐름 제공</td>
+<td>P0</td>
+<td>ToDo 등록</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>현재 상태와 다음 행동이 명확한 직관적 UX</td>
+<td>P0</td>
+<td>방향/ToDo 반영</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>해커톤 심사 기준에 따른 자체 심사와 피드백 루프 유지</td>
+<td>P1</td>
+<td>기존 문서 연계</td>
+</tr>
+</tbody></table>
+<h2 id="범위">범위</h2>
+<ul>
+<li>포함:<ul>
+<li><code>HACKATHON.md</code>에 제품 방향과 우선순위 추가</li>
+<li><code>TODO.md</code>에 팀 협업, LLM Wiki TUI, UX, 검증 ToDo 추가</li>
+<li><code>README.md</code>에 핵심 방향과 관련 문서 링크 추가</li>
+</ul>
+</li>
+<li>제외:<ul>
+<li>이번 작업에서 실제 TUI 기능 구현</li>
+<li>Knowledge ranking 알고리즘 구현</li>
+<li>팀 계정/권한 backend 구현</li>
+</ul>
+</li>
+</ul>
+<h2 id="산출물">산출물</h2>
+<ul>
+<li><code>/opt/data/workspace/mindcraft/HACKATHON.md</code></li>
+<li><code>/opt/data/workspace/mindcraft/TODO.md</code></li>
+<li><code>/opt/data/workspace/mindcraft/README.md</code></li>
+</ul>
+<h2 id="피드백-이력">피드백 이력</h2>
+<ul>
+<li>사용자 추가 요구사항을 반영해 개인용 도구 관점을 제거하고 팀 협업 관점으로 수정함.</li>
+<li>관련도 기반 LLM Wiki TUI와 직관적인 사용자 경험을 P0 ToDo로 승격함.</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#요청-원문">요청 (원문)</a></li><li><a href="#목표">목표</a></li><li><a href="#요구사항">요구사항</a></li><li><a href="#범위">범위</a></li><li><a href="#산출물">산출물</a></li><li><a href="#피드백-이력">피드백 이력</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../../assets/pages.js"></script></body></html>

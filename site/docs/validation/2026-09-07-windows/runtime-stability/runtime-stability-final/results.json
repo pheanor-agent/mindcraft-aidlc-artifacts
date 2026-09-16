@@ -1,0 +1,106 @@
+{
+  "time": "2026-09-07T14:22:21.638Z",
+  "exe": "C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\dist\\windows-package\\MindCraft.exe",
+  "results": [
+    {
+      "name": "clean isolated startup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: run no task",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: setup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: use missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: approve",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: cancel missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: mode invalid",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: knowledge-detail missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "offline setup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "unicode task",
+      "pass": true,
+      "detail": "0819f542-be6f-4f74-8d38-d7a3afa74a51"
+    },
+    {
+      "name": "mock run completes",
+      "pass": false,
+      "detail": "> run inspect\nerror: Airouter model is not registered\nmindcraft> "
+    },
+    {
+      "name": "approval requests visible",
+      "pass": false,
+      "detail": "> approvals\nNo pending approvals\nmindcraft> "
+    },
+    {
+      "name": "query runs",
+      "pass": true,
+      "detail": "> runs\nf39f382d-ff3b-4bbd-a088-340650096f1f 7db14f90-3663-41c6-8bbd-78c50159d48d failed\nmindcraft> "
+    },
+    {
+      "name": "query history",
+      "pass": true,
+      "detail": "    \"baselineType\": \"all_promoted_knowledge\",\n      \"unit\": \"characters\",\n      \"contextLevel\": \"empty\",\n      \"fallbackReason\": \"no promoted Knowledge available\",\n      \"manifest\": [],\n      \"exclusions\": []\n    },\n    \"routing\": {\n      \"selectedModelId\": \"mock-deterministic\",\n      \"selectedProfile\": \"user_selected\",\n      \"selectedPurpose\": \"general\",\n      \"routingReason\": \"single user-selected Model\",\n      \"fallback\": null,\n      \"costEstimate\": \"unknown\",\n      \"availability\": \"available\",\n      \"policyVersion\": 2\n    },\n    \"error\": \"Airouter model is not registered\"\n  }\n]\nmindcraft> "
+    },
+    {
+      "name": "query knowledge",
+      "pass": true,
+      "detail": "> knowledge\nNo Knowledge found\nmindcraft> "
+    },
+    {
+      "name": "query preview release",
+      "pass": true,
+      "detail": "> preview release\n{\n  \"level\": \"empty\",\n  \"manifest\": [],\n  \"exclusions\": [],\n  \"text\": \"\"\n}\nmindcraft> "
+    },
+    {
+      "name": "query status",
+      "pass": true,
+      "detail": "      },\n      \"providers\": [\n        {\n          \"id\": \"mock-deterministic\",\n          \"provider\": \"mock\",\n          \"status\": \"available\",\n          \"credential\": \"not configured\"\n        }\n      ],\n      \"credentials\": [\n        {\n          \"id\": \"mock-deterministic\",\n          \"status\": \"not configured\"\n        }\n      ],\n      \"storage\": {\n        \"status\": \"pass\",\n        \"state\": true,\n        \"knowledge\": true\n      },\n      \"providerReadiness\": {\n        \"status\": \"pass\",\n        \"liveReady\": true,\n        \"message\": \"All configured providers are ready\"\n      }\n    }\n  }\n}\nmindcraft> "
+    },
+    {
+      "name": "concurrent workspace blocked",
+      "pass": false,
+      "detail": ""
+    },
+    {
+      "name": "normal quit exit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "suite interruption",
+      "pass": false,
+      "detail": "Error: restart timeout /mindcraft>/\n    at s.wait (file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/tui-validation/runtime-suite.mjs:19:124)\n    at async file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/tui-validation/runtime-suite.mjs:36:71"
+    }
+  ]
+}

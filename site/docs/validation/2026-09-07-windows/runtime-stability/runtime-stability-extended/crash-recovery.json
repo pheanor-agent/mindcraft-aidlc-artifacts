@@ -1,0 +1,14 @@
+{
+  "name": "crash-recovery",
+  "code": 1,
+  "events": [
+    {
+      "at": 1788791108748,
+      "output": "file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/dist/windows-package/current/app/src/workspace-lock.mjs:45\r\n        const conflict = new Error(`Workspace is already in use: ${this.journalPath}`);\r\n                         ^\r\n\r\nError: Workspace is already in use: C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\workspaces\\runtime-stability-extended\\forced-kill/.mindcraft/state.jsonl\r\n    at WorkspaceLock.acquire (file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/dist/windows-package/current/app/src/workspace-lock.mjs:45:26)\r\n    at async MindCraftApp.init (file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/dist/windows-package/current/app/src/mindcraft-app.mjs:115:29)\r\n    at async file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/dist/windows-package/current/app/src/cli.mjs:76:13 {\r\n  code: 'WORKSPACE_LOCKED',\r\n  owner: '{\"pid\":31616,\"owner\":\"31616:379852c0-40bd-43f8-b045-ac05c89c7c0b\",\"journalPath\":\"C:\\\\\\\\Users\\\\\\\\bot\\\\\\\\Documents\\\\\\\\ChatGPT\\\\\\\\mindcraft\\\\\\\\windows-validation\\\\\\\\workspaces\\\\\\\\runtime-stability-extended\\\\\\\\forced-kill/.mindcraft/state.jsonl\",\"acquiredAt\":\"2026-09-07T14:25:03.735Z\"}'\r\n}\r\n"
+    },
+    {
+      "at": 1788791108748,
+      "output": "\r\nNode.js v22.19.0\r\n"
+    }
+  ]
+}

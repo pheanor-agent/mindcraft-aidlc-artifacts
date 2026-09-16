@@ -1,0 +1,34 @@
+{
+  "name": "restart",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788791065835,
+      "output": "MindCraft TUI (Pi runtime, mode=mock) — commands: setup <provider> <model> [purpose] | doctor | task <title> | tasks | use <task-id> | model | mode default|token-doctor|mock | run <prompt> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel <run-id> | knowledge | promote <id> | reject-knowledge <id> | quit\n"
+    },
+    {
+      "at": 1788791065835,
+      "output": "model: mock/deterministic  built-in  key: none\n"
+    },
+    {
+      "at": 1788791065836,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791065876,
+      "input": "tasks"
+    },
+    {
+      "at": 1788791065878,
+      "output": "> tasks\n3e5a05a0-0bd3-40d0-99b1-0aaa862b8474 안정성 검증 😀 active\nmindcraft> "
+    },
+    {
+      "at": 1788791066110,
+      "input": "quit"
+    },
+    {
+      "at": 1788791066110,
+      "output": "> quit\n"
+    }
+  ]
+}

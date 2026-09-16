@@ -1,0 +1,39 @@
+TAP version 13
+# Subtest: offline CLI setup, approval and persisted command result (0)
+not ok 1 - offline CLI setup, approval and persisted command result (0)
+  ---
+  duration_ms: 17120.9434
+  type: 'test'
+  location: 'C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\repo\\test\\windows-runtime-flow.test.mjs:8:35'
+  failureType: 'testCodeFailure'
+  error: "EBUSY: resource busy or locked, rmdir 'C:\\Users\\bot\\AppData\\Local\\Temp\\mindcraft-runtime-3b16W9'"
+  code: 'EBUSY'
+  ...
+# Subtest: offline CLI setup, approval and persisted command result (7)
+not ok 2 - offline CLI setup, approval and persisted command result (7)
+  ---
+  duration_ms: 17139.139
+  type: 'test'
+  location: 'C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\repo\\test\\windows-runtime-flow.test.mjs:8:35'
+  failureType: 'testCodeFailure'
+  error: ''
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    wait (file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/repo/test/windows-runtime-flow.test.mjs:20:131)
+    async TestContext.<anonymous> (file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/repo/test/windows-runtime-flow.test.mjs:23:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 35397.2677

@@ -1,0 +1,97 @@
+diff --git a/src/tui-runner.mjs b/src/tui-runner.mjs
+index a1523fd..c6c78b4 100644
+--- a/src/tui-runner.mjs
++++ b/src/tui-runner.mjs
+@@ -8,10 +8,9 @@ export class MindCraftInteractiveTui {
+     this.onExit = onExit;
+     this.tui = new TuiMainScreen(terminal);
+     this.root = new Container();
+-    const preflight = app?.preflight;
+-    const modelLine = preflight ? `\n환경 점검: 작업공간=정상 | Model=${preflight.checks.modelRegistry.count} | 저장소=${preflight.checks.storage.status === "pass" ? "정상" : preflight.checks.storage.status}` : "";
+-    const onboarding = preflight?.checks?.modelRegistry?.count ? "" : `\n${ko.firstRun}\n${ko.firstRunHint}`;
+-    this.transcript = new Text(`${ko.title} (mode=${app?.mode ?? "default"})${modelLine}${onboarding}\n${ko.commands}`);
++    this.transcriptLines = [];
++    this.transcript = new Text("");
++    this.refreshTranscript();
+     this.input = new Input();
+     this.state = { currentTask: null };
+     this.commandQueue = new CommandQueue();
+@@ -35,12 +34,19 @@ export class MindCraftInteractiveTui {
+   }
+
+   append(line) {
+-    const previous = this.transcript.render(120).join("\n");
+-    this.transcript.setText(`${previous}\n${line}`);
+-    this.transcript.invalidate();
++    this.transcriptLines.push(String(line));
++    this.refreshTranscript();
+     this.tui.requestRender();
+   }
+
++  refreshTranscript() {
++    const preflight = this.app?.preflight;
++    const modelLine = preflight ? `\n환경 점검: 작업공간=정상 | Model=${preflight.checks.modelRegistry.count} | 저장소=${preflight.checks.storage.status === "pass" ? "정상" : preflight.checks.storage.status}` : "";
++    const onboarding = preflight?.checks?.modelRegistry?.count ? "" : `\n${ko.firstRun}\n${ko.firstRunHint}`;
++    this.transcript.setText([`${ko.title} (mode=${this.app?.mode ?? "default"})${modelLine}${onboarding}\n${ko.commands}`, ...this.transcriptLines].join("\n"));
++    this.transcript.invalidate();
++  }
++
+   async submit(raw) {
+     const value = String(raw ?? "").trim();
+     this.input.setValue("");
+@@ -50,6 +56,7 @@ export class MindCraftInteractiveTui {
+     if (["approve", "reject", "cancel", "quit", "exit"].includes(parsed.command)) {
+       const result = await executeApplicationCommand({ app: this.app, state: this.state, raw: value, locale: "ko", write: (line) => this.append(line) });
+       this.refreshHeader();
++      if (result.exit) this.stop();
+       return result;
+     }
+     return this.commandQueue.enqueue(async () => {
+diff --git a/test/tui-native-regressions.test.mjs b/test/tui-native-regressions.test.mjs
+new file mode 100644
+index 0000000..c7ac0e6
+--- /dev/null
++++ b/test/tui-native-regressions.test.mjs
+@@ -0,0 +1,42 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { MindCraftInteractiveTui } from '../src/tui-runner.mjs';
++
++function fixture(onExit = () => {}) {
++  const app = {
++    mode: 'mock', liveSessions: new Map(),
++    preflight: { ok: true, checks: { modelRegistry: { count: 0 }, storage: { status: 'pass' } } },
++    async close() {},
++    async configureModel(model) { this.preflight.checks.modelRegistry.count = 1; return model; },
++  };
++  const ui = new MindCraftInteractiveTui({ app, terminal: { columns: 120, rows: 40 }, onExit });
++  ui.tui.requestRender = () => {};
++  ui.tui.stop = () => {};
++  return ui;
++}
++
++test('TUI transcript preserves previous line alignment after repeated output', () => {
++  const ui = fixture();
++  ui.append('ALIGNMENT-SENTINEL');
++  const original = ui.transcript.render(120).find(line => line.includes('ALIGNMENT-SENTINEL'));
++  for (let i = 0; i < 6; i++) ui.append(`new line ${i}`);
++  assert.equal(ui.transcript.render(120).find(line => line.includes('ALIGNMENT-SENTINEL')), original);
++});
++
++test('TUI setup refreshes Model count and removes the obsolete first-run guidance', async () => {
++  const ui = fixture();
++  await ui.submit('setup mock deterministic');
++  const screen = ui.transcript.render(120).join('\n');
++  assert.match(screen, /Model=1/);
++  assert.doesNotMatch(screen, /첫 실행 설정이 필요합니다/);
++  assert.match(screen, /첫 실행 설정이 완료되었습니다/);
++});
++
++test('TUI quit stops the screen and triggers process-exit callback', async () => {
++  let exits = 0;
++  const ui = fixture(() => { exits++; });
++  await ui.submit('quit');
++  await new Promise(resolve => setImmediate(resolve));
++  assert.equal(ui.stopped, true);
++  assert.equal(exits, 1);
++});

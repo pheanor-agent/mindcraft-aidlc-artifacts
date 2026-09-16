@@ -1,0 +1,106 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft SSOT 안내 · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="SSOT.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-ssot-안내">MindCraft SSOT 안내</h1>
+<h2 id="역할">역할</h2>
+<p>이 문서는 제품 문서가 같은 사실을 서로 다르게 소유하지 않도록 권위와 참조 규칙을 정의한다. 새로운 SSOT 서비스나 별도 상태 저장소를 만들지 않는다.</p>
+<h2 id="권위-순서">권위 순서</h2>
+<ol>
+<li><code>ROUTING.md</code>: 현재 Model 수, purpose mapping, Episode 시작 시 1회 선택, fallback 정책</li>
+<li><code>README.md</code>: 사용자-facing 제품 범위와 실행 계약</li>
+<li><code>DESIGN.md</code>: 구현 구조·상태·안전 경계</li>
+<li><code>docs/MINDCRAFT-PRODUCT-METADATA.md</code>: 승인된 제품 결정</li>
+<li><code>src/**</code>, <code>test/**</code>: 특정 리비전에서 확인된 실제 동작과 검증 증거</li>
+</ol>
+<p>작업 요청·설계·리뷰·승인·검증 자료는 <code>/opt/data/workspace/jobs/**</code>에 있으며 제품 요구사항의 권위가 아니다. 과거 자료는 <code>docs/legacy/**</code>에 보존하며 현재 요구사항으로 자동 승격하지 않는다.</p>
+<h2 id="사실별-ownership">사실별 ownership</h2>
+<p>전역 문서 권위 순서는 정책 문서를 읽는 기준이고, 실제 관측 사실은 별도의 원본을 가진다. 새 SSOT 서비스나 별도 상태 저장소를 만들지 않는다.</p>
+<table>
+<thead>
+<tr>
+<th>사실</th>
+<th>authoritative owner</th>
+<th>파생/표시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>제품 범위·사용 목적</td>
+<td>승인된 product policy 문서</td>
+<td>README 요약</td>
+</tr>
+<tr>
+<td>Model 수/purpose/fallback</td>
+<td><code>ROUTING.md</code></td>
+<td>setup/help/UI</td>
+</tr>
+<tr>
+<td>현재 workspace 설정</td>
+<td><code>.mindcraft/config.json</code></td>
+<td>resolved config/display</td>
+</tr>
+<tr>
+<td>effective config</td>
+<td>설정과 명시적 override의 deterministic 해석 결과</td>
+<td>doctor/preflight/provider</td>
+</tr>
+<tr>
+<td>특정 Run의 실제 Model/provider/mode</td>
+<td>Run-start snapshot in state journal</td>
+<td>history/status</td>
+</tr>
+<tr>
+<td>Task/Episode/Run lifecycle</td>
+<td>state journal</td>
+<td>memory/TUI</td>
+</tr>
+<tr>
+<td>approval/effect lifecycle</td>
+<td>state journal</td>
+<td>approval UI/audit</td>
+</tr>
+<tr>
+<td>Knowledge 상태·revision</td>
+<td>Knowledge journal</td>
+<td>search/index/UI</td>
+</tr>
+<tr>
+<td>실제 workspace artifact</td>
+<td>workspace file</td>
+<td>digest/reference</td>
+</tr>
+<tr>
+<td>특정 Run Context</td>
+<td>RunContextManifest</td>
+<td>preview/context inspector</td>
+</tr>
+<tr>
+<td>Pi 실행 상세</td>
+<td>Pi session/transcript 원본</td>
+<td>MindCraft history reference</td>
+</tr>
+<tr>
+<td>provider 지원 여부</td>
+<td>provider registry/source + tests</td>
+<td>README/provider help</td>
+</tr>
+<tr>
+<td>release artifact 구성</td>
+<td>release manifest + artifact hash</td>
+<td>README/release 안내</td>
+</tr>
+<tr>
+<td>실행 검증 결과</td>
+<td><code>docs/validation/**</code> + revision/environment/command</td>
+<td>README 링크</td>
+</tr>
+</tbody></table>
+<p>정책 문서는 관측된 runtime 사실을 대신하지 않고, validation report는 제품 정책을 자동 변경하지 않는다. bundle과 발표 자료도 SSOT가 아니다.</p>
+<h2 id="현재와-제안의-구분">현재와 제안의 구분</h2>
+<ul>
+<li>문서가 승인됐다는 사실은 구현 완료를 의미하지 않는다.</li>
+<li>source에 구현됐다는 사실은 기존 요구사항이 폐기됐다는 의미가 아니다.</li>
+<li>Token Switching과 verification feedback routing은 현재 기능이 아니라 후속 제안이다.</li>
+<li>현재 routing은 Episode 시작 시 purpose를 확인해 Model을 한 번 선택한다.</li>
+</ul>
+<h2 id="knowledge-경계">Knowledge 경계</h2>
+<p>제품 Knowledge는 제품 runtime의 <code>captured/promoted/rejected</code> lifecycle과 provenance/redaction 정책을 따른다. 개발 process 자료·과거 기록·미승인 제안은 실행 context에 자동 포함하지 않는다. DDT 공통 Knowledge와 제품 Knowledge를 통합하지 않는다.</p>
+<h2 id="변경-게이트">변경 게이트</h2>
+<p>문서나 코드에 새 주장을 추가할 때는 제품 범위, 현재/후속 상태, source·config·test 근거, 승인 범위를 함께 확인한다. 충돌은 임의 삭제 대신 <code>미구현</code>, <code>불일치</code>, <code>미확인</code>, <code>historical</code> 중 근거에 맞는 상태로 기록한다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#역할">역할</a></li><li><a href="#권위-순서">권위 순서</a></li><li><a href="#사실별-ownership">사실별 ownership</a></li><li><a href="#현재와-제안의-구분">현재와 제안의 구분</a></li><li><a href="#knowledge-경계">Knowledge 경계</a></li><li><a href="#변경-게이트">변경 게이트</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

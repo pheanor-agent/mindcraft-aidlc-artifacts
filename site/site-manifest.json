@@ -1,0 +1,596 @@
+{
+  "documents": 98,
+  "trackedInputs": 184,
+  "sourceCommit": "a9fbe830fdd4e1e769e626647c98e4c4ed90f2e4",
+  "catalog": [
+    {
+      "title": "Commit History — MindCraft local baseline",
+      "path": "COMMIT-HISTORY.html",
+      "source": "COMMIT-HISTORY.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 상세 설계 및 리뷰",
+      "path": "DESIGN.html",
+      "source": "DESIGN.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 로컬·설치 검증 환경 설계",
+      "path": "ENVIRONMENT.html",
+      "source": "ENVIRONMENT.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 종합 개발 현황 및 상세 설계",
+      "path": "MINDCRAFT-종합-개발현황-및-상세설계.html",
+      "source": "MINDCRAFT-종합-개발현황-및-상세설계.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft",
+      "path": "README.html",
+      "source": "README.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 현재 Model Configuration 정책",
+      "path": "ROUTING.html",
+      "source": "ROUTING.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft TODO",
+      "path": "TODO.html",
+      "source": "TODO.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft Product Metadata — Current Decision Baseline",
+      "path": "docs/MINDCRAFT-PRODUCT-METADATA.html",
+      "source": "docs/MINDCRAFT-PRODUCT-METADATA.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 문서 목록",
+      "path": "docs/README.html",
+      "source": "docs/README.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft SSOT 안내",
+      "path": "docs/SSOT.html",
+      "source": "docs/SSOT.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft AI-DLC History Index",
+      "path": "docs/aidlc/history/README.html",
+      "source": "docs/aidlc/history/README.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft AI-DLC Requirements Evolution and Review History",
+      "path": "docs/aidlc/history/requirements-evolution.html",
+      "source": "docs/aidlc/history/requirements-evolution.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "Requirements Rewrite Preflight Checklist",
+      "path": "docs/aidlc/history/requirements-rewrite-checklist.html",
+      "source": "docs/aidlc/history/requirements-rewrite-checklist.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft AI-DLC Inception — Initial Documents Approval Request",
+      "path": "docs/aidlc/inception/approval-request.html",
+      "source": "docs/aidlc/inception/approval-request.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft AI-DLC Inception — Initial Constraints",
+      "path": "docs/aidlc/inception/constraints/constraint.html",
+      "source": "docs/aidlc/inception/constraints/constraint.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft — Requirements Verification Answers",
+      "path": "docs/aidlc/inception/requirements/requirement-verification-answers.html",
+      "source": "docs/aidlc/inception/requirements/requirement-verification-answers.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft AI-DLC Inception — Initial Requirements",
+      "path": "docs/aidlc/inception/requirements/requirement.html",
+      "source": "docs/aidlc/inception/requirements/requirement.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft Requirements Rev. 2 — Review",
+      "path": "docs/aidlc/inception/requirements/requirements-rev2-review.html",
+      "source": "docs/aidlc/inception/requirements/requirements-rev2-review.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft Requirements Consolidated Document — Review",
+      "path": "docs/aidlc/inception/requirements/requirements-review.html",
+      "source": "docs/aidlc/inception/requirements/requirements-review.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "Story Generation Plan — Answers and Rationale",
+      "path": "docs/aidlc/inception/story-generation-plan-answers.html",
+      "source": "docs/aidlc/inception/story-generation-plan-answers.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft Windows 실행 파일·신규 사용자 경험 설계 검토 및 승인요청",
+      "path": "docs/aidlc/inception/windows-executable-review-approval-request.html",
+      "source": "docs/aidlc/inception/windows-executable-review-approval-request.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft Windows AI-DLC Stage·Unit Plan",
+      "path": "docs/aidlc/inception/windows-stage-unit-plan.html",
+      "source": "docs/aidlc/inception/windows-stage-unit-plan.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft Windows 배포·신규 사용자 경험 User Stories 및 Acceptance Criteria",
+      "path": "docs/aidlc/inception/windows-user-stories-acceptance.html",
+      "source": "docs/aidlc/inception/windows-user-stories-acceptance.md",
+      "group": "AI-DLC 개발 과정"
+    },
+    {
+      "title": "MindCraft Architecture Baseline",
+      "path": "docs/architecture-baseline.html",
+      "source": "docs/architecture-baseline.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "DDT 문서 기반 접수 검토 — Windows TUI",
+      "path": "docs/ddt-handoff/windows-tui-20260907/DDT-REVIEW.html",
+      "source": "docs/ddt-handoff/windows-tui-20260907/DDT-REVIEW.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "DDT 로컬 작업 워크플로우 등록 결과 — JOB-69",
+      "path": "docs/ddt-handoff/windows-tui-20260907/DDT-WORKFLOW-REGISTRATION.html",
+      "source": "docs/ddt-handoff/windows-tui-20260907/DDT-WORKFLOW-REGISTRATION.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "DDT 작업 산출물 접수 — Windows TUI",
+      "path": "docs/ddt-handoff/windows-tui-20260907/README.html",
+      "source": "docs/ddt-handoff/windows-tui-20260907/README.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "MindCraft 데모 보강 작업 — 종합 프롬프트 배경 자료",
+      "path": "docs/demo-plan/PROMPT-BACKGROUND.html",
+      "source": "docs/demo-plan/PROMPT-BACKGROUND.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "MindCraft Windows Terminal TUI Demo 작업 계획",
+      "path": "docs/demo-plan/README.html",
+      "source": "docs/demo-plan/README.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 0 — 데모 기준선과 fixture",
+      "path": "docs/demo-plan/phase-00-acceptance.html",
+      "source": "docs/demo-plan/phase-00-acceptance.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 0 — 데모 기준선과 Sample Fixture",
+      "path": "docs/demo-plan/phase-00-baseline-and-fixture.html",
+      "source": "docs/demo-plan/phase-00-baseline-and-fixture.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 1 보완 수행 기록",
+      "path": "docs/demo-plan/phase-01-followup.html",
+      "source": "docs/demo-plan/phase-01-followup.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 1 — 초기화·Preflight·Model 설정",
+      "path": "docs/demo-plan/phase-01-preflight-and-config.html",
+      "source": "docs/demo-plan/phase-01-preflight-and-config.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 2 보완 수행 기록",
+      "path": "docs/demo-plan/phase-02-followup.html",
+      "source": "docs/demo-plan/phase-02-followup.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 2 — TUI Command Workflow",
+      "path": "docs/demo-plan/phase-02-tui-workflow.html",
+      "source": "docs/demo-plan/phase-02-tui-workflow.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 3 — 승인·Tool Safety",
+      "path": "docs/demo-plan/phase-03-approval-and-tools.html",
+      "source": "docs/demo-plan/phase-03-approval-and-tools.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 3 보완 수행 기록",
+      "path": "docs/demo-plan/phase-03-followup.html",
+      "source": "docs/demo-plan/phase-03-followup.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 4 — Knowledge 검색·검토·재사용",
+      "path": "docs/demo-plan/phase-04-knowledge-reuse.html",
+      "source": "docs/demo-plan/phase-04-knowledge-reuse.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 5 — 상태·복구·관찰성",
+      "path": "docs/demo-plan/phase-05-recovery-observability.html",
+      "source": "docs/demo-plan/phase-05-recovery-observability.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 5 — 상태·복구·관찰성",
+      "path": "docs/demo-plan/phase-05-status-recovery.html",
+      "source": "docs/demo-plan/phase-05-status-recovery.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Phase 6 — Windows Terminal + WSL 검증·릴리스",
+      "path": "docs/demo-plan/phase-06-windows-release.html",
+      "source": "docs/demo-plan/phase-06-windows-release.md",
+      "group": "개발 계획"
+    },
+    {
+      "title": "Approval Request — First-Run TUI Onboarding",
+      "path": "docs/first-run-onboarding-approval-request.html",
+      "source": "docs/first-run-onboarding-approval-request.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft First-Run Onboarding — Approval Draft",
+      "path": "docs/first-run-onboarding-design.html",
+      "source": "docs/first-run-onboarding-design.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "GitHub Pages 문서 배포",
+      "path": "docs/github-pages.html",
+      "source": "docs/github-pages.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 개선 작업 현황",
+      "path": "docs/improvement-tasks.html",
+      "source": "docs/improvement-tasks.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 상세 설계 및 리뷰",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/DESIGN.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/DESIGN.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "MindCraft 로컬·설치 검증 환경 설계",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/ENVIRONMENT.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/ENVIRONMENT.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "사내 해커톤 기준 — MindCraft",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/HACKATHON.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/HACKATHON.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Design",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/design.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/design.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Execution report",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/execution-report.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/execution-report.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Execution review",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/execution-review.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/execution-review.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "JOB-38: MindCraft 팀 협업 및 LLM Wiki 방향 반영",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/request.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/request.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Verification",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/verification.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/verification.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Design",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/design.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/design.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Execution report",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/execution-report.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/execution-report.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Execution review",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/execution-review.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/execution-review.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "JOB-40: 바이브 코딩 지원형 자동 개입 및 Routing 방향 반영",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/request.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/request.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Verification",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/verification.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-40-Vibe-coding-aware-intervention-and-routing-direction/verification.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "JOB-51 상세 설계",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/design.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/design.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "Execution review",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/execution-review.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/execution-review.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "JOB-51: MindCraft 컨셉 충돌 및 실행환경 조사",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/request.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/request.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "JOB-51 설계 리뷰",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/review.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/review.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "JOB-51 검증 계획",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/verification.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/JOB-51-MindCraft-컨셉-충돌-및-실행환경-조사/verification.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "MindCraft",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/README.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/README.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "MindCraft ToDo 및 자체 심사",
+      "path": "docs/legacy/2026-09-03-pre-dual-model-routing/TODO.html",
+      "source": "docs/legacy/2026-09-03-pre-dual-model-routing/TODO.md",
+      "group": "과거 이력"
+    },
+    {
+      "title": "MindCraft AI-DLC 실행 키트 전체 검토 및 승인요청",
+      "path": "docs/mindcraft-ai-dlc-kit-review-approval-request.html",
+      "source": "docs/mindcraft-ai-dlc-kit-review-approval-request.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft / AI-DLC 지식·문서 경계 점검 기록",
+      "path": "docs/mindcraft-ai-dlc-knowledge-audit.html",
+      "source": "docs/mindcraft-ai-dlc-knowledge-audit.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 컨셉 정렬 제안서",
+      "path": "docs/mindcraft-concept-alignment-proposal.html",
+      "source": "docs/mindcraft-concept-alignment-proposal.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 설계 및 배경 자료 통합본 — Revision 1",
+      "path": "docs/mindcraft-design-and-background-bundle-revision1.html",
+      "source": "docs/mindcraft-design-and-background-bundle-revision1.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 설계 및 배경 자료 통합본",
+      "path": "docs/mindcraft-design-and-background-bundle.html",
+      "source": "docs/mindcraft-design-and-background-bundle.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "MindCraft 해커톤 발표",
+      "path": "docs/presentations/README.html",
+      "source": "docs/presentations/README.md",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "발표 이미지 출처",
+      "path": "docs/presentations/agent-orchestration/assets/README.html",
+      "source": "docs/presentations/agent-orchestration/assets/README.md",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "발표 서체",
+      "path": "docs/presentations/agent-orchestration/assets/fonts/README.html",
+      "source": "docs/presentations/agent-orchestration/assets/fonts/README.md",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "MindCraft 발표 재설계 — 이야기와 디자인 검토",
+      "path": "docs/presentations/agent-orchestration/design-review.html",
+      "source": "docs/presentations/agent-orchestration/design-review.html",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "슬라이드별 주장과 근거",
+      "path": "docs/presentations/agent-orchestration/evidence.html",
+      "source": "docs/presentations/agent-orchestration/evidence.md",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "MindCraft · 공용 에이전트에서 오케스트레이션까지",
+      "path": "docs/presentations/agent-orchestration/index.html",
+      "source": "docs/presentations/agent-orchestration/index.html",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "7분 발표 구성과 디자인 설계",
+      "path": "docs/presentations/agent-orchestration/redesign-plan.html",
+      "source": "docs/presentations/agent-orchestration/redesign-plan.md",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "MindCraft 개발 협업 조사 보고서",
+      "path": "docs/presentations/agent-orchestration/research-dossier.html",
+      "source": "docs/presentations/agent-orchestration/research-dossier.md",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "7분 발표 대본",
+      "path": "docs/presentations/agent-orchestration/speaker-script.html",
+      "source": "docs/presentations/agent-orchestration/speaker-script.md",
+      "group": "발표와 개발 경험"
+    },
+    {
+      "title": "Windows 검증 증거 (2026-09-07)",
+      "path": "docs/validation/2026-09-07-windows/README.html",
+      "source": "docs/validation/2026-09-07-windows/README.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "DDT Workflow Receipt — JOB-69 후속 Windows 실행 환경 검증",
+      "path": "docs/validation/2026-09-07-windows/runtime-stability/DDT-WORKFLOW-RECEIPT.html",
+      "source": "docs/validation/2026-09-07-windows/runtime-stability/DDT-WORKFLOW-RECEIPT.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "DDT Workflow Receipt — JOB-69",
+      "path": "docs/validation/2026-09-08-runtime-fixes/DDT-WORKFLOW-RECEIPT.html",
+      "source": "docs/validation/2026-09-08-runtime-fixes/DDT-WORKFLOW-RECEIPT.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "JOB-71 — Windows credential/provider/onboarding 계약",
+      "path": "docs/windows-credential-provider-onboarding-contract.html",
+      "source": "docs/windows-credential-provider-onboarding-contract.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "MindCraft Windows 설계 통합 리뷰 및 구현 승인요청",
+      "path": "docs/windows-design-final-review-approval-request.html",
+      "source": "docs/windows-design-final-review-approval-request.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "MindCraft Windows 실행 파일·신규 사용자 경험 설계 승인요청",
+      "path": "docs/windows-executable-design-approval-request.html",
+      "source": "docs/windows-executable-design-approval-request.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "MindCraft Windows 실행 파일·신규 사용자 경험 설계 검토 및 승인요청",
+      "path": "docs/windows-executable-design-review-approval.html",
+      "source": "docs/windows-executable-design-review-approval.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "MindCraft Windows 실행 파일 설계 자체 리뷰",
+      "path": "docs/windows-executable-design-review.html",
+      "source": "docs/windows-executable-design-review.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "MindCraft Windows 실행 파일·신규 사용자 경험 조사 및 상세 설계",
+      "path": "docs/windows-executable-investigation-and-design.html",
+      "source": "docs/windows-executable-investigation-and-design.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "JOB-73 — Windows installer/update/release evidence 계획",
+      "path": "docs/windows-installer-release-evidence-plan.html",
+      "source": "docs/windows-installer-release-evidence-plan.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "JOB-69 — MindCraft Windows launcher/runtime 기술 spike 설계",
+      "path": "docs/windows-launcher-runtime-spike-plan.html",
+      "source": "docs/windows-launcher-runtime-spike-plan.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "Windows 실행 흐름 개선 및 재검증",
+      "path": "docs/windows-runtime-improvements-2026-09-08.html",
+      "source": "docs/windows-runtime-improvements-2026-09-08.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "Windows 실행 환경 기능·안정성 검증",
+      "path": "docs/windows-runtime-stability-2026-09-07.html",
+      "source": "docs/windows-runtime-stability-2026-09-07.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "JOB-72 — Windows TUI·approval·shutdown·recovery 계약",
+      "path": "docs/windows-tui-approval-shutdown-contract.html",
+      "source": "docs/windows-tui-approval-shutdown-contract.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "실제 Pi TUI 검증 및 수정 이력 — 2026-09-07",
+      "path": "docs/windows-tui-validation-2026-09-07.html",
+      "source": "docs/windows-tui-validation-2026-09-07.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "Windows 네이티브 빌드·실행 검증 이력 (2026-09-07)",
+      "path": "docs/windows-validation-2026-09-07.html",
+      "source": "docs/windows-validation-2026-09-07.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "JOB-70 — MindCraft Windows workspace/bootstrap/config 계약",
+      "path": "docs/windows-workspace-bootstrap-config-contract.html",
+      "source": "docs/windows-workspace-bootstrap-config-contract.md",
+      "group": "Windows 실행·검증"
+    },
+    {
+      "title": "Release demo workspace",
+      "path": "examples/release-demo/README.html",
+      "source": "examples/release-demo/README.md",
+      "group": "제품과 아키텍처"
+    },
+    {
+      "title": "Release notes",
+      "path": "examples/release-demo/docs/release-notes.html",
+      "source": "examples/release-demo/docs/release-notes.md",
+      "group": "제품과 아키텍처"
+    }
+  ],
+  "unavailableReferences": []
+}

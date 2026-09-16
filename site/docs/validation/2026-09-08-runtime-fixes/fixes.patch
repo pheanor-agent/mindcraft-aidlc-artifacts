@@ -1,0 +1,208 @@
+commit 57c859f6ea6f229fe3260dbd5f5a1a18ca530fb6
+Author:     pheanor-agent <284806348+pheanor-agent@users.noreply.github.com>
+AuthorDate: Tue Sep 8 00:11:49 2026 +0900
+Commit:     pheanor-agent <284806348+pheanor-agent@users.noreply.github.com>
+CommitDate: Tue Sep 8 00:11:49 2026 +0900
+
+    fix(runtime): align model routing and unblock portable command approvals
+
+diff --git a/src/cli.mjs b/src/cli.mjs
+index 65cb1f1..4218048 100755
+--- a/src/cli.mjs
++++ b/src/cli.mjs
+@@ -87,8 +87,11 @@ if (useTui) {
+   const inputQueue = new CommandQueue();
+   rl.on("line", (line) => { const parsed = parseCommand(line); const execute = async () => {
+     const write = (line) => String(line).startsWith("error:") ? console.error(line) : console.log(line);
+-    const result = await executeApplicationCommand({ app, state, raw: line, write, onEvent: (event) => console.log(`event=${event.type}`) });
++    const result = await executeApplicationCommand({ app, state, raw: line, write, onEvent: (event) => {
++      console.log(`event=${event.type}`);
++      if (event.type === "tool_decision" && event.status === "pending") console.log(`approval=${event.id} ${event.request?.kind} ${event.request?.path ?? event.request?.command ?? ""} pending`);
++    } });
+     if (result.exit) return rl.close();
+     rl.prompt();
+-  }; if (["approve", "reject", "cancel", "quit", "exit"].includes(parsed.command)) void execute(); else inputQueue.enqueue(execute); });
++  }; if (["approvals", "approve", "reject", "cancel", "quit", "exit"].includes(parsed.command)) void execute(); else inputQueue.enqueue(execute); });
+ }
+diff --git a/src/mindcraft-app.mjs b/src/mindcraft-app.mjs
+index df167fe..7e731b1 100644
+--- a/src/mindcraft-app.mjs
++++ b/src/mindcraft-app.mjs
+@@ -16,8 +16,6 @@ import { createProviderForSelection, describeSelection, resolveModelSelection }
+ import { WorkspaceLock } from "./workspace-lock.mjs";
+ import { ShutdownCoordinator } from "./shutdown-coordinator.mjs";
+ 
+-const DEFAULT_MODEL_REGISTRY = [{ id: "Qwen3.6", provider: "airouter", model: "Qwen3.6", enabled: true }];
+-
+ export class MindCraftApp {
+   constructor({ cwd = process.cwd(), agentDir = ".mindcraft-agent", statePath = null, knowledgePath = null, configPath = null, runtimeFactory = null, sessionFactory = null, mode = "default", models = null, approvalManager = null, commands = [], sessionTimeoutMs = 120000, executionPromptMaxChars = 8000, modelSelection = null, env = process.env } = {}) {
+     this.cwd = cwd;
+@@ -42,7 +40,7 @@ export class MindCraftApp {
+     this.sessionTimeoutMs = sessionTimeoutMs;
+     this.executionPromptMaxChars = executionPromptMaxChars;
+     this.modelSelection = modelSelection ?? resolveModelSelection(env);
+-    this.modelRegistry = { schemaVersion: 1, models: models ?? DEFAULT_MODEL_REGISTRY };
++    this.modelRegistry = { schemaVersion: 1, models: models ?? [{ id: this.modelSelection.modelId, provider: this.modelSelection.provider, model: this.modelSelection.modelId, enabled: true }] };
+     this.liveSessions = new Map();
+     this.runtimeInjected = Boolean(runtimeFactory || sessionFactory);
+     this.runtimeFactory = runtimeFactory ?? (mode === "mock" ? async () => createMockRuntime() : ((options) => ModelRuntime.create(options)));
+@@ -93,6 +91,10 @@ export class MindCraftApp {
+   recordExecutionResult(event) {
+     const run = this.activeRun;
+     if (!run) return event;
++    const commandResult = event.result?.result;
++    if (event.request?.kind === "command.execute" && (event.result?.ok !== true || commandResult?.code !== 0 || commandResult?.error || commandResult?.timedOut || commandResult?.outputLimited)) {
++      (run.toolFailures ??= []).push({ requestId: event.requestId, code: commandResult?.code ?? null, reason: event.result?.error ?? commandResult?.error ?? (commandResult?.timedOut ? "command timed out" : commandResult?.outputLimited ? "command output limit exceeded" : "command exited unsuccessfully") });
++    }
+     const visible = { ...event, timestamp: new Date().toISOString() };
+     run.events.push(visible);
+     this.activeOnEvent?.(visible, run);
+@@ -237,8 +239,8 @@ export class MindCraftApp {
+       if (routing.errorCode) throw new Error(`${routing.errorCode}: selected Model is unavailable`);
+       if (this.repository) await this.repository.commit({ kind: "run", id: run.id, ...run });
+       if (this.mode === "mock" && routing.model.provider !== "mock") throw new Error("MOCK_MODE_REQUIRES_MOCK_PROVIDER");
+-      const model = this.getSelectedModel();
+-      ({ session } = await this.sessionFactory({ cwd: this.cwd, agentDir: this.agentDir, modelRuntime: this.runtime, model, noTools: "builtin", tools: [], customTools: createMindCraftTools({ scope: this.executionScope, runId: run.id, approvalManager: this.approvalManager, onDecision: (event) => { const visible = this.recordToolDecision({ type: "tool_decision", ...event }); onEvent(visible, run); } }) }));
++      const model = this.getSelectedModel(routing.model);
++      ({ session } = await this.sessionFactory({ cwd: this.cwd, agentDir: this.agentDir, modelRuntime: this.runtime, model, noTools: "builtin", tools: [], customTools: createMindCraftTools({ scope: this.executionScope, runId: run.id, approvalManager: this.approvalManager, onDecision: (event) => this.recordToolDecision({ type: "tool_decision", ...event }) }) }));
+       if (!session) throw new Error("Agent session was not created");
+       this.liveSessions.set(run.id, session);
+       unsubscribe = session.subscribe((event) => { const visible = { type: event.type }; run.events.push(visible); onEvent(visible, run); });
+@@ -255,6 +257,7 @@ export class MindCraftApp {
+       if (run.status === RunStatus.ABORTED) {
+         const abortError = new Error("Run cancelled"); abortError.name = "AbortError"; throw abortError;
+       }
++      if (run.toolFailures?.length) throw new Error(`COMMAND_EXECUTION_FAILED: ${run.toolFailures.length} command(s) failed; inspect history for details`);
+       run.status = RunStatus.COMPLETED;
+       run.completedAt = new Date().toISOString();
+       episode.status = "completed";
+@@ -353,8 +356,10 @@ export class MindCraftApp {
+     return this.modelRegistry.models[0];
+   }
+ 
+-  getSelectedModel() {
+-    const { provider, modelId } = this.modelSelection;
++  getSelectedModel(selected = null) {
++    const configured = selected ?? (this.modelRegistry.models.length === 1 ? this.modelRegistry.models[0] : null);
++    const provider = configured?.provider ?? this.modelSelection.provider;
++    const modelId = configured?.model ?? this.modelSelection.modelId;
+     const model = this.runtime?.getModel(provider, modelId);
+     if (model) return model;
+     const known = typeof this.runtime?.getModels === "function" ? this.runtime.getModels(provider).map((candidate) => candidate.id) : [];
+@@ -363,7 +368,11 @@ export class MindCraftApp {
+     throw new Error(`Provider not registered or has no models: ${provider}`);
+   }
+ 
+-  describeModel() { return describeSelection(this.modelSelection); }
++  describeModel() {
++    const configured = this.modelRegistry.models.length === 1 ? this.modelRegistry.models[0] : null;
++    if (configured && (configured.provider !== this.modelSelection.provider || configured.model !== this.modelSelection.modelId)) return `${configured.provider}/${configured.model}`;
++    return describeSelection(this.modelSelection);
++  }
+ 
+   listRuns(taskId = null) { return [...this.store.runs.values()].filter((run) => taskId == null || run.taskId === taskId); }
+ 
+diff --git a/src/pi-tools.mjs b/src/pi-tools.mjs
+index 7d40309..db0ca77 100644
+--- a/src/pi-tools.mjs
++++ b/src/pi-tools.mjs
+@@ -8,7 +8,10 @@ import { createGrantedScope, decideTool, validatePath, guardedExecute, redactOut
+ function result(text, decision) { return { content: [{ type: "text", text }], details: { decision } }; }
+ function runCommand(command, args, cwd, timeout) {
+   return new Promise((resolve) => {
+-    const child = spawn(command, args, { cwd, shell: false, env: { PATH: process.env.PATH ?? "" }, stdio: ["ignore", "pipe", "pipe"] });
++    // Resolve the approved logical Node command to the runtime running this app.
++    // This keeps portable installs independent of a development Node on PATH.
++    const executable = command === "node" ? process.execPath : command;
++    const child = spawn(executable, args, { cwd, shell: false, windowsHide: true, env: { PATH: process.env.PATH ?? "", ...(process.env.SystemRoot ? { SystemRoot: process.env.SystemRoot } : {}) }, stdio: ["ignore", "pipe", "pipe"] });
+     let stdout = "", stderr = "", timedOut = false, outputLimited = false;
+     const timer = setTimeout(() => { timedOut = true; child.kill("SIGTERM"); }, timeout);
+     const collect = (name) => (chunk) => { if (name === "stdout") stdout += chunk; else stderr += chunk; if (stdout.length + stderr.length > 12000 && !outputLimited) { outputLimited = true; child.kill("SIGTERM"); } };
+diff --git a/src/tui-runner.mjs b/src/tui-runner.mjs
+index c6c78b4..0679fb5 100644
+--- a/src/tui-runner.mjs
++++ b/src/tui-runner.mjs
+@@ -53,7 +53,7 @@ export class MindCraftInteractiveTui {
+     if (!value) return;
+     // Approval decisions must remain responsive while a run is blocked inside a tool.
+     const parsed = parseCommand(value);
+-    if (["approve", "reject", "cancel", "quit", "exit"].includes(parsed.command)) {
++    if (["approvals", "approve", "reject", "cancel", "quit", "exit"].includes(parsed.command)) {
+       const result = await executeApplicationCommand({ app: this.app, state: this.state, raw: value, locale: "ko", write: (line) => this.append(line) });
+       this.refreshHeader();
+       if (result.exit) this.stop();
+diff --git a/test/tui-native-regressions.test.mjs b/test/tui-native-regressions.test.mjs
+index c7ac0e6..c9735de 100644
+--- a/test/tui-native-regressions.test.mjs
++++ b/test/tui-native-regressions.test.mjs
+@@ -15,6 +15,18 @@ function fixture(onExit = () => {}) {
+   return ui;
+ }
+ 
++test('TUI approval list remains responsive while the command queue is busy', { timeout: 2000 }, async () => {
++  const ui = fixture();
++  ui.app.listPendingApprovals = () => [{ id: 'approval-test', request: { kind: 'command.execute', command: 'node' }, status: 'pending' }];
++  let release;
++  const busy = ui.commandQueue.enqueue(() => new Promise(resolve => { release = resolve; }));
++  await new Promise(resolve => setImmediate(resolve));
++  try {
++    await ui.submit('approvals');
++    assert.match(ui.transcriptLines.join('\n'), /approval-test command.execute node pending/);
++  } finally { release(); await busy; }
++});
++
+ test('TUI transcript preserves previous line alignment after repeated output', () => {
+   const ui = fixture();
+   ui.append('ALIGNMENT-SENTINEL');
+diff --git a/test/windows-runtime-flow.test.mjs b/test/windows-runtime-flow.test.mjs
+new file mode 100644
+index 0000000..21ea5e3
+--- /dev/null
++++ b/test/windows-runtime-flow.test.mjs
+@@ -0,0 +1,46 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { spawn } from 'node:child_process';
++import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
++import { tmpdir } from 'node:os';
++import { join, resolve } from 'node:path';
++
++for (const commandCode of [0, 7]) test(`offline CLI setup, approval and persisted command result (${commandCode})`, {timeout:45000}, async () => {
++  const cwd = await mkdtemp(join(tmpdir(), 'mindcraft-runtime-'));
++  await mkdir(join(cwd,'test'));
++  await writeFile(join(cwd,'test/release-check.test.mjs'), `process.exit(${commandCode});`);
++  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !/KEY|TOKEN|SECRET|MINDCRAFT|AIROUTER/i.test(key) && key.toLowerCase() !== 'path'));
++  env.PATH = process.platform === 'win32' ? join(process.env.SystemRoot,'System32') : '/nonexistent';
++  const executable = process.env.MINDCRAFT_TEST_EXE ?? process.execPath;
++  const args = [...(process.env.MINDCRAFT_TEST_EXE ? [] : [resolve('src/cli.mjs')]),'--cli','--mock','--workspace',cwd];
++  const child = spawn(executable,args,{cwd,env,windowsHide:true});
++  let output='';let exitCode=null;
++  child.stdout.on('data',d=>output+=d);child.stderr.on('data',d=>output+=d);
++  const exited=new Promise(r=>child.on('exit',c=>{exitCode=c;r(c);}));
++  async function wait(pattern) {const end=Date.now()+15000;while(!pattern.test(output)){assert.equal(exitCode,null,output);assert.ok(Date.now()<end,output);await new Promise(r=>setTimeout(r,25));}return output;}
++  function send(command){output='';child.stdin.write(command+'\n');}
++  try {
++    await wait(/mindcraft>/);send('setup mock deterministic');await wait(/setup=complete/);
++    send('model');await wait(/mock\/deterministic/);
++    send('task runtime validation');await wait(/task=/);
++    send('run inspect');await wait(/approval=([^\s]+)/);
++    const first=output.match(/approval=([^\s]+)/)[1];
++    send('approvals');await wait(new RegExp(first));assert.match(output,/filesystem.write/);
++    send('reject '+first);await wait(/approval=([^\s]+)/);
++    const second=output.match(/approval=([^\s]+)/)[1];
++    send('approvals');await wait(new RegExp(second));assert.match(output,/command.execute/);
++    send('approve '+second);
++    await wait(commandCode===0?/run=completed/:/COMMAND_EXECUTION_FAILED/);
++    assert.doesNotMatch(output,/ENOENT|event=undefined/);
++    send('quit');assert.equal(await exited,0);
++    const records=(await readFile(join(cwd,'.mindcraft/state.jsonl'),'utf8')).trim().split('\n').map(line=>JSON.parse(line).record);
++    const run=records.filter(r=>r.kind==='run').at(-1);
++    assert.equal(run.status,commandCode===0?'completed':'failed');
++    assert.equal(run.routing.selectedModelId,'mock-deterministic');
++    assert.equal(records.findLast(r=>r.type==='tool_execution_result').result.result.code,commandCode===0?0:1);
++    if(commandCode!==0) assert.equal(run.toolFailures.length,1);
++  } finally {
++    if(exitCode===null){child.stdin.write('quit\n');await Promise.race([exited,new Promise(r=>setTimeout(r,2000))]);if(exitCode===null)child.kill();}
++    await rm(cwd,{recursive:true,force:true});
++  }
++});

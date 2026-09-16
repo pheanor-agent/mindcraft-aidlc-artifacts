@@ -1,0 +1,27 @@
+# 대용량/재생성 가능 잔재 제외 (git 정책)
+node_modules/
+.next/
+.wrangler/
+web/out/_next/
+
+# credential 계열 (복사 제외 원칙)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Release-only standalone (GitHub 100MB 제한 초과)
+release-staging/
+.MindCraft Desktop.exe
+dist/
+*.exe
+
+# 로컬 해시 산출물 중간 데이터 (전체 해시 JSON은 .hermes-manifest/로 커밋됨)
+.hashdata/
+
+# OS/에디터
+.DS_Store
+Thumbs.db

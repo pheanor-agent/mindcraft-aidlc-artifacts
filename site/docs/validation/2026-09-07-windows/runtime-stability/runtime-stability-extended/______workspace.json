@@ -1,0 +1,354 @@
+{
+  "name": "한글 공백 workspace",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788791053495,
+      "output": "MindCraft TUI (Pi runtime, mode=mock) — commands: setup <provider> <model> [purpose] | doctor | task <title> | tasks | use <task-id> | model | mode default|token-doctor|mock | run <prompt> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel <run-id> | knowledge | promote <id> | reject-knowledge <id> | quit\n"
+    },
+    {
+      "at": 1788791053495,
+      "output": "model: mock/deterministic  built-in  key: none\n"
+    },
+    {
+      "at": 1788791053496,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791053533,
+      "input": "run no task"
+    },
+    {
+      "at": 1788791053535,
+      "output": "> run no task\n"
+    },
+    {
+      "at": 1788791053535,
+      "output": "error: create a task first\n"
+    },
+    {
+      "at": 1788791053536,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791053764,
+      "input": "setup"
+    },
+    {
+      "at": 1788791053765,
+      "output": "> setup\n"
+    },
+    {
+      "at": 1788791053765,
+      "output": "error: Usage: setup <provider> <model> [purpose]\n"
+    },
+    {
+      "at": 1788791053765,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791053997,
+      "input": "use missing"
+    },
+    {
+      "at": 1788791053998,
+      "output": "> use missing\n"
+    },
+    {
+      "at": 1788791053998,
+      "output": "error: Task not found: missing\n"
+    },
+    {
+      "at": 1788791053998,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791054230,
+      "input": "approve"
+    },
+    {
+      "at": 1788791054231,
+      "output": "> approve\nmindcraft> "
+    },
+    {
+      "at": 1788791054232,
+      "output": "error: approve requires an approval id\n"
+    },
+    {
+      "at": 1788791054463,
+      "input": "cancel missing"
+    },
+    {
+      "at": 1788791054463,
+      "output": "> cancel missing\n"
+    },
+    {
+      "at": 1788791054464,
+      "output": "error: Run not found: missing\n"
+    },
+    {
+      "at": 1788791054464,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791054696,
+      "input": "mode invalid"
+    },
+    {
+      "at": 1788791054697,
+      "output": "> mode invalid\n"
+    },
+    {
+      "at": 1788791054697,
+      "output": "error: Unknown mode: invalid\n"
+    },
+    {
+      "at": 1788791054697,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791054926,
+      "input": "knowledge-detail missing"
+    },
+    {
+      "at": 1788791054927,
+      "output": "> knowledge-detail missing\n"
+    },
+    {
+      "at": 1788791054927,
+      "output": "error: Knowledge item not found\n"
+    },
+    {
+      "at": 1788791054927,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791055158,
+      "input": "setup mock deterministic"
+    },
+    {
+      "at": 1788791055158,
+      "output": "> setup mock deterministic\n"
+    },
+    {
+      "at": 1788791055177,
+      "output": "setup=complete provider=mock model=deterministic\nmindcraft> "
+    },
+    {
+      "at": 1788791055390,
+      "input": "task 안정성 검증 😀"
+    },
+    {
+      "at": 1788791055391,
+      "output": "> task 안정성 검증 😀\n"
+    },
+    {
+      "at": 1788791055393,
+      "output": "task=3e5a05a0-0bd3-40d0-99b1-0aaa862b8474 purpose=general\n"
+    },
+    {
+      "at": 1788791055393,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791055625,
+      "input": "run inspect"
+    },
+    {
+      "at": 1788791055625,
+      "output": "> run inspect\n"
+    },
+    {
+      "at": 1788791055639,
+      "output": "event=tool_decision\nevent=undefined\n"
+    },
+    {
+      "at": 1788791055641,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791055641,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791055642,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791055642,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791055644,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791055847,
+      "input": "approvals"
+    },
+    {
+      "at": 1788791056685,
+      "input": "reject approval-1788791055643-3nf2oh"
+    },
+    {
+      "at": 1788791056685,
+      "output": "> reject approval-1788791055643-3nf2oh\n"
+    },
+    {
+      "at": 1788791056685,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791056685,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791056685,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791056687,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791056687,
+      "output": "reject=approval-1788791055643-3nf2oh status=rejected\nmindcraft> "
+    },
+    {
+      "at": 1788791057071,
+      "input": "approve approval-1788791056686-jkmcgq"
+    },
+    {
+      "at": 1788791057071,
+      "output": "> approve approval-1788791056686-jkmcgq\n"
+    },
+    {
+      "at": 1788791057071,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791057073,
+      "output": "event=tool_execution_started\n"
+    },
+    {
+      "at": 1788791057073,
+      "output": "approve=approval-1788791056686-jkmcgq status=approved\n"
+    },
+    {
+      "at": 1788791057073,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791057077,
+      "output": "event=tool_execution_result\n"
+    },
+    {
+      "at": 1788791057079,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791057082,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791057082,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791057091,
+      "output": "run=completed\n"
+    },
+    {
+      "at": 1788791057091,
+      "output": "Mock release review completed. Write: Approval rejected: rejected. Command: {\"code\":null,\"error\":\"spawn node ENOENT\",\"stdout\":\"\",\"stderr\":\"\"}. Tests are not claimed unless the command was approved and returned success.\nmindcraft> "
+    },
+    {
+      "at": 1788791057091,
+      "output": "> approvals\n"
+    },
+    {
+      "at": 1788791057091,
+      "output": "No pending approvals\n"
+    },
+    {
+      "at": 1788791057091,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791057304,
+      "input": "runs"
+    },
+    {
+      "at": 1788791057305,
+      "output": "> runs\n"
+    },
+    {
+      "at": 1788791057305,
+      "output": "26824de5-a24c-44b9-8496-411471e93011 ce5bbaaa-315b-4260-8bf3-b5da19c84bc4 completed\n"
+    },
+    {
+      "at": 1788791057305,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791057535,
+      "input": "history"
+    },
+    {
+      "at": 1788791057536,
+      "output": "> history\n"
+    },
+    {
+      "at": 1788791057537,
+      "output": "[\n  {\n    \"kind\": \"run\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"taskId\": \"3e5a05a0-0bd3-40d0-99b1-0aaa862b8474\",\n    \"episodeId\": \"ce5bbaaa-315b-4260-8bf3-b5da19c84bc4\",\n    \"sessionId\": \"87715d90-1b20-480e-a379-f686500707b0\",\n    \"mode\": \"mock\",\n    \"status\": \"running\",\n    \"events\": [\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/README.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.639Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/docs/docs/release-notes.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.640Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/src/src/release-check.mjs\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.642Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"timestamp\": \"2026-09-07T14:24:15.643Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"rejected\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"decidedAt\": \"2026-09-07T14:24:16.685Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": false,\n          \"reason\": \"rejected\",\n          \"status\": \"rejected\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.687Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"approved\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.071Z\"\n      },\n      {\n        \"type\": \"tool_execution_started\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.072Z\"\n      },\n      {\n        \"type\": \"tool_execution_result\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"result\": {\n          \"ok\": true,\n          \"result\": {\n            \"code\": null,\n            \"error\": \"spawn node ENOENT\",\n            \"stdout\": \"\",\n            \"stderr\": \"\"\n          }\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.077Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"executed\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"executedAt\": \"2026-09-07T14:24:17.079Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.079Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"approved\",\n          \"status\": \"executed\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.081Z\"\n      }\n    ],\n    \"startedAt\": \"2026-09-07T14:24:15.626Z\"\n  },\n  {\n    \"kind\": \"run\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"taskId\": \"3e5a05a0-0bd3-40d0-99b1-0aaa862b8474\",\n    \"episodeId\": \"ce5bbaaa-315b-4260-8bf3-b5da19c84bc4\",\n    \"sessionId\": \"87715d90-1b20-480e-a379-f686500707b0\",\n    \"mode\": \"mock\",\n    \"status\": \"running\",\n    \"events\": [\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/README.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.639Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/docs/docs/release-notes.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.640Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/src/src/release-check.mjs\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.642Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"timestamp\": \"2026-09-07T14:24:15.643Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"rejected\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"decidedAt\": \"2026-09-07T14:24:16.685Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": false,\n          \"reason\": \"rejected\",\n          \"status\": \"rejected\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.687Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"approved\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.071Z\"\n      },\n      {\n        \"type\": \"tool_execution_started\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.072Z\"\n      },\n      {\n        \"type\": \"tool_execution_result\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"result\": {\n          \"ok\": true,\n          \"result\": {\n            \"code\": null,\n            \"error\": \"spawn node ENOENT\",\n            \"stdout\": \"\",\n            \"stderr\": \"\"\n          }\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.077Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"executed\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"executedAt\": \"2026-09-07T14:24:17.079Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.079Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"approved\",\n          \"status\": \"executed\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.081Z\"\n      }\n    ],\n    \"startedAt\": \"2026-09-07T14:24:15.626Z\",\n    \"knowledgeMetrics\": {\n      \"promptChars\": 7,\n      \"promotedCandidates\": 0,\n      \"matchedCandidates\": 0,\n      \"includedCandidates\": 0,\n      \"knowledgeBudgetChars\": 2000,\n      \"selectedKnowledgeChars\": 0,\n      \"baselineKnowledgeChars\": 0,\n      \"executionPromptChars\": 7,\n      \"baselineExecutionPromptChars\": 7,\n      \"savedChars\": 0,\n      \"savedRatio\": 0,\n      \"estimatedInputTokens\": 2,\n      \"estimatedBaselineTokens\": 2,\n      \"estimateMethod\": \"estimated_chars_div_4_ceil\",\n      \"baselineType\": \"all_promoted_knowledge\",\n      \"unit\": \"characters\",\n      \"contextLevel\": \"empty\",\n      \"fallbackReason\": \"no promoted Knowledge available\",\n      \"manifest\": [],\n      \"exclusions\": []\n    }\n  },\n  {\n    \"kind\": \"run\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"taskId\": \"3e5a05a0-0bd3-40d0-99b1-0aaa862b8474\",\n    \"episodeId\": \"ce5bbaaa-315b-4260-8bf3-b5da19c84bc4\",\n    \"sessionId\": \"87715d90-1b20-480e-a379-f686500707b0\",\n    \"mode\": \"mock\",\n    \"status\": \"running\",\n    \"events\": [\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/README.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.639Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/docs/docs/release-notes.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.640Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/src/src/release-check.mjs\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.642Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"timestamp\": \"2026-09-07T14:24:15.643Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"rejected\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"decidedAt\": \"2026-09-07T14:24:16.685Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": false,\n          \"reason\": \"rejected\",\n          \"status\": \"rejected\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.687Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"approved\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.071Z\"\n      },\n      {\n        \"type\": \"tool_execution_started\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.072Z\"\n      },\n      {\n        \"type\": \"tool_execution_result\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"result\": {\n          \"ok\": true,\n          \"result\": {\n            \"code\": null,\n            \"error\": \"spawn node ENOENT\",\n            \"stdout\": \"\",\n            \"stderr\": \"\"\n          }\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.077Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"executed\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"executedAt\": \"2026-09-07T14:24:17.079Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.079Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"approved\",\n          \"status\": \"executed\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.081Z\"\n      }\n    ],\n    \"startedAt\": \"2026-09-07T14:24:15.626Z\",\n    \"knowledgeMetrics\": {\n      \"promptChars\": 7,\n      \"promotedCandidates\": 0,\n      \"matchedCandidates\": 0,\n      \"includedCandidates\": 0,\n      \"knowledgeBudgetChars\": 2000,\n      \"selectedKnowledgeChars\": 0,\n      \"baselineKnowledgeChars\": 0,\n      \"executionPromptChars\": 7,\n      \"baselineExecutionPromptChars\": 7,\n      \"savedChars\": 0,\n      \"savedRatio\": 0,\n      \"estimatedInputTokens\": 2,\n      \"estimatedBaselineTokens\": 2,\n      \"estimateMethod\": \"estimated_chars_div_4_ceil\",\n      \"baselineType\": \"all_promoted_knowledge\",\n      \"unit\": \"characters\",\n      \"contextLevel\": \"empty\",\n      \"fallbackReason\": \"no promoted Knowledge available\",\n      \"manifest\": [],\n      \"exclusions\": []\n    },\n    \"routing\": {\n      \"selectedModelId\": \"mock-deterministic\",\n      \"selectedProfile\": \"user_selected\",\n      \"selectedPurpose\": \"general\",\n      \"routingReason\": \"single user-selected Model\",\n      \"fallback\": null,\n      \"costEstimate\": \"unknown\",\n      \"availability\": \"available\",\n      \"policyVersion\": 2\n    }\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011:6018400a-aaec-448a-b8fc-cad5f3744f38\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"request\": {\n      \"kind\": \"filesystem.read\",\n      \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/README.md\",\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"decision\": {\n      \"allowed\": true,\n      \"reason\": \"scope\"\n    },\n    \"timestamp\": \"2026-09-07T14:24:15.639Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011:3c552806-0cfe-4e9e-904b-aa053c6092fc\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"request\": {\n      \"kind\": \"filesystem.read\",\n      \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/docs/docs/release-notes.md\",\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"decision\": {\n      \"allowed\": true,\n      \"reason\": \"scope\"\n    },\n    \"timestamp\": \"2026-09-07T14:24:15.640Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011:bf072a3c-5f67-4fa4-ba64-9fe36837923c\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"request\": {\n      \"kind\": \"filesystem.read\",\n      \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/src/src/release-check.mjs\",\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"decision\": {\n      \"allowed\": true,\n      \"reason\": \"scope\"\n    },\n    \"timestamp\": \"2026-09-07T14:24:15.642Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"approval-1788791055643-3nf2oh\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"status\": \"pending\",\n    \"request\": {\n      \"kind\": \"filesystem.write\",\n      \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n      \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n      \"impact\": \"write 113 bytes\",\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n    \"timestamp\": \"2026-09-07T14:24:15.643Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"approval-1788791055643-3nf2oh\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"status\": \"rejected\",\n    \"request\": {\n      \"kind\": \"filesystem.write\",\n      \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n      \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n      \"impact\": \"write 113 bytes\",\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n    \"decidedAt\": \"2026-09-07T14:24:16.685Z\",\n    \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011:7254703e-cba7-4447-9bb0-a8e9a444f0c3\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"request\": {\n      \"kind\": \"filesystem.write\",\n      \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n      \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n      \"impact\": \"write 113 bytes\",\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"decision\": {\n      \"allowed\": false,\n      \"reason\": \"rejected\",\n      \"status\": \"rejected\"\n    },\n    \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"approval-1788791056686-jkmcgq\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"status\": \"pending\",\n    \"request\": {\n      \"kind\": \"command.execute\",\n      \"command\": \"node\",\n      \"args\": [\n        \"--test\",\n        \"test/release-check.test.mjs\"\n      ],\n      \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n      \"timeoutMs\": 30000,\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n    \"timestamp\": \"2026-09-07T14:24:16.687Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"approval-1788791056686-jkmcgq\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"status\": \"approved\",\n    \"request\": {\n      \"kind\": \"command.execute\",\n      \"command\": \"node\",\n      \"args\": [\n        \"--test\",\n        \"test/release-check.test.mjs\"\n      ],\n      \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n      \"timeoutMs\": 30000,\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n    \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n    \"timestamp\": \"2026-09-07T14:24:17.071Z\"\n  },\n  {\n    \"kind\": \"event\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011:execution:27862dab-c96c-4599-aa9d-8094fe22ae2e\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_execution_started\",\n    \"requestId\": \"approval-1788791056686-jkmcgq\",\n    \"request\": {\n      \"kind\": \"command.execute\",\n      \"command\": \"node\",\n      \"args\": [\n        \"--test\",\n        \"test/release-check.test.mjs\"\n      ],\n      \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n      \"timeoutMs\": 30000,\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n      \"requestId\": \"approval-1788791056686-jkmcgq\"\n    },\n    \"timestamp\": \"2026-09-07T14:24:17.072Z\"\n  },\n  {\n    \"kind\": \"event\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011:result:approval-1788791056686-jkmcgq\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_execution_result\",\n    \"requestId\": \"approval-1788791056686-jkmcgq\",\n    \"request\": {\n      \"kind\": \"command.execute\",\n      \"command\": \"node\",\n      \"args\": [\n        \"--test\",\n        \"test/release-check.test.mjs\"\n      ],\n      \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n      \"timeoutMs\": 30000,\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n      \"requestId\": \"approval-1788791056686-jkmcgq\"\n    },\n    \"result\": {\n      \"ok\": true,\n      \"result\": {\n        \"code\": null,\n        \"error\": \"spawn node ENOENT\",\n        \"stdout\": \"\",\n        \"stderr\": \"\"\n      }\n    },\n    \"timestamp\": \"2026-09-07T14:24:17.077Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"approval-1788791056686-jkmcgq\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"status\": \"executed\",\n    \"request\": {\n      \"kind\": \"command.execute\",\n      \"command\": \"node\",\n      \"args\": [\n        \"--test\",\n        \"test/release-check.test.mjs\"\n      ],\n      \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n      \"timeoutMs\": 30000,\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n    \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n    \"executedAt\": \"2026-09-07T14:24:17.079Z\",\n    \"timestamp\": \"2026-09-07T14:24:17.079Z\"\n  },\n  {\n    \"kind\": \"tool_decision\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011:1c18b497-3662-4993-a8cb-5a1ee2ecce95\",\n    \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"type\": \"tool_decision\",\n    \"request\": {\n      \"kind\": \"command.execute\",\n      \"command\": \"node\",\n      \"args\": [\n        \"--test\",\n        \"test/release-check.test.mjs\"\n      ],\n      \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n      \"timeoutMs\": 30000,\n      \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n    },\n    \"decision\": {\n      \"allowed\": true,\n      \"reason\": \"approved\",\n      \"status\": \"executed\"\n    },\n    \"timestamp\": \"2026-09-07T14:24:17.081Z\"\n  },\n  {\n    \"kind\": \"run\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"taskId\": \"3e5a05a0-0bd3-40d0-99b1-0aaa862b8474\",\n    \"episodeId\": \"ce5bbaaa-315b-4260-8bf3-b5da19c84bc4\",\n    \"sessionId\": \"87715d90-1b20-480e-a379-f686500707b0\",\n    \"mode\": \"mock\",\n    \"status\": \"completed\",\n    \"events\": [\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/README.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.639Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/docs/docs/release-notes.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.640Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/src/src/release-check.mjs\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.642Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"timestamp\": \"2026-09-07T14:24:15.643Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"rejected\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"decidedAt\": \"2026-09-07T14:24:16.685Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": false,\n          \"reason\": \"rejected\",\n          \"status\": \"rejected\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.687Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"approved\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.071Z\"\n      },\n      {\n        \"type\": \"tool_execution_started\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.072Z\"\n      },\n      {\n        \"type\": \"tool_execution_result\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"result\": {\n          \"ok\": true,\n          \"result\": {\n            \"code\": null,\n            \"error\": \"spawn node ENOENT\",\n            \"stdout\": \"\",\n            \"stderr\": \"\"\n          }\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.077Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"executed\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"executedAt\": \"2026-09-07T14:24:17.079Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.079Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"approved\",\n          \"status\": \"executed\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.081Z\"\n      }\n    ],\n    \"startedAt\": \"2026-09-07T14:24:15.626Z\",\n    \"knowledgeMetrics\": {\n      \"promptChars\": 7,\n      \"promotedCandidates\": 0,\n      \"matchedCandidates\": 0,\n      \"includedCandidates\": 0,\n      \"knowledgeBudgetChars\": 2000,\n      \"selectedKnowledgeChars\": 0,\n      \"baselineKnowledgeChars\": 0,\n      \"executionPromptChars\": 7,\n      \"baselineExecutionPromptChars\": 7,\n      \"savedChars\": 0,\n      \"savedRatio\": 0,\n      \"estimatedInputTokens\": 2,\n      \"estimatedBaselineTokens\": 2,\n      \"estimateMethod\": \"estimated_chars_div_4_ceil\",\n      \"baselineType\": \"all_promoted_knowledge\",\n      \"unit\": \"characters\",\n      \"contextLevel\": \"empty\",\n      \"fallbackReason\": \"no promoted Knowledge available\",\n      \"manifest\": [],\n      \"exclusions\": []\n    },\n    \"routing\": {\n      \"selectedModelId\": \"mock-deterministic\",\n      \"selectedProfile\": \"user_selected\",\n      \"selectedPurpose\": \"general\",\n      \"routingReason\": \"single user-selected Model\",\n      \"fallback\": null,\n      \"costEstimate\": \"unknown\",\n      \"availability\": \"available\",\n      \"policyVersion\": 2\n    },\n    \"completedAt\": \"2026-09-07T14:24:17.082Z\"\n  },\n  {\n    \"kind\": \"run\",\n    \"id\": \"26824de5-a24c-44b9-8496-411471e93011\",\n    \"taskId\": \"3e5a05a0-0bd3-40d0-99b1-0aaa862b8474\",\n    \"episodeId\": \"ce5bbaaa-315b-4260-8bf3-b5da19c84bc4\",\n    \"sessionId\": \"87715d90-1b20-480e-a379-f686500707b0\",\n    \"mode\": \"mock\",\n    \"status\": \"completed\",\n    \"events\": [\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/README.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.639Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/docs/docs/release-notes.md\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.640Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.read\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/src/src/release-check.mjs\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"scope\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:15.642Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"timestamp\": \"2026-09-07T14:24:15.643Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791055643-3nf2oh\",\n        \"status\": \"rejected\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:15.643Z\",\n        \"decidedAt\": \"2026-09-07T14:24:16.685Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"filesystem.write\",\n          \"path\": \"C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/workspaces/runtime-stability-extended/한글 공백 workspace/release-report.md\",\n          \"contentDigest\": \"120aed39dc0cbb852a101dad4557527af284e28f4536b3f99beed3f5bfe28e8c\",\n          \"impact\": \"write 113 bytes\",\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": false,\n          \"reason\": \"rejected\",\n          \"status\": \"rejected\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:16.685Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"pending\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"timestamp\": \"2026-09-07T14:24:16.687Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"approved\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.071Z\"\n      },\n      {\n        \"type\": \"tool_execution_started\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.072Z\"\n      },\n      {\n        \"type\": \"tool_execution_result\",\n        \"requestId\": \"approval-1788791056686-jkmcgq\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\",\n          \"requestId\": \"approval-1788791056686-jkmcgq\"\n        },\n        \"result\": {\n          \"ok\": true,\n          \"result\": {\n            \"code\": null,\n            \"error\": \"spawn node ENOENT\",\n            \"stdout\": \"\",\n            \"stderr\": \"\"\n          }\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.077Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"id\": \"approval-1788791056686-jkmcgq\",\n        \"status\": \"executed\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"createdAt\": \"2026-09-07T14:24:16.686Z\",\n        \"decidedAt\": \"2026-09-07T14:24:17.071Z\",\n        \"executedAt\": \"2026-09-07T14:24:17.079Z\",\n        \"timestamp\": \"2026-09-07T14:24:17.079Z\"\n      },\n      {\n        \"type\": \"tool_decision\",\n        \"request\": {\n          \"kind\": \"command.execute\",\n          \"command\": \"node\",\n          \"args\": [\n            \"--test\",\n            \"test/release-check.test.mjs\"\n          ],\n          \"cwd\": \"C:\\\\Users\\\\bot\\\\Documents\\\\ChatGPT\\\\mindcraft\\\\windows-validation\\\\workspaces\\\\runtime-stability-extended\\\\한글 공백 workspace\",\n          \"timeoutMs\": 30000,\n          \"runId\": \"26824de5-a24c-44b9-8496-411471e93011\"\n        },\n        \"decision\": {\n          \"allowed\": true,\n          \"reason\": \"approved\",\n          \"status\": \"executed\"\n        },\n        \"timestamp\": \"2026-09-07T14:24:17.081Z\"\n      }\n    ],\n    \"startedAt\": \"2026-09-07T14:24:15.626Z\",\n    \"knowledgeMetrics\": {\n      \"promptChars\": 7,\n      \"promotedCandidates\": 0,\n      \"matchedCandidates\": 0,\n      \"includedCandidates\": 0,\n      \"knowledgeBudgetChars\": 2000,\n      \"selectedKnowledgeChars\": 0,\n      \"baselineKnowledgeChars\": 0,\n      \"executionPromptChars\": 7,\n      \"baselineExecutionPromptChars\": 7,\n      \"savedChars\": 0,\n      \"savedRatio\": 0,\n      \"estimatedInputTokens\": 2,\n      \"estimatedBaselineTokens\": 2,\n      \"estimateMethod\": \"estimated_chars_div_4_ceil\",\n      \"baselineType\": \"all_promoted_knowledge\",\n      \"unit\": \"characters\",\n      \"contextLevel\": \"empty\",\n      \"fallbackReason\": \"no promoted Knowledge available\",\n      \"manifest\": [],\n      \"exclusions\": []\n    },\n    \"routing\": {\n      \"selectedModelId\": \"mock-deterministic\",\n      \"selectedProfile\": \"user_selected\",\n      \"selectedPurpose\": \"general\",\n      \"routingReason\": \"single user-selected Model\",\n      \"fallback\": null,\n      \"costEstimate\": \"unknown\",\n      \"availability\": \"available\",\n      \"policyVersion\": 2\n    },\n    \"completedAt\": \"2026-09-07T14:24:17.082Z\",\n    \"knowledgeCapture\": {\n      \"status\": \"captured\",\n      \"itemId\": \"c8e0472c-d40c-44da-919c-e3e433d43358\",\n      \"revision\": \"2d86adff71cff57de03608dcaba7c9fa166fd26aa6cbab8e9ef4f7e2ed10219a\"\n    }\n  }\n]\nmindcraft> "
+    },
+    {
+      "at": 1788791057769,
+      "input": "knowledge"
+    },
+    {
+      "at": 1788791057769,
+      "output": "> knowledge\n"
+    },
+    {
+      "at": 1788791057770,
+      "output": "c8e0472c-d40c-44da-919c-e3e433d43358 captured source=episode run=26824de5-a24c-44b9-8496-411471e93011 chars=218\n"
+    },
+    {
+      "at": 1788791057770,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791058000,
+      "input": "preview release"
+    },
+    {
+      "at": 1788791058001,
+      "output": "> preview release\n"
+    },
+    {
+      "at": 1788791058001,
+      "output": "{\n  \"level\": \"empty\",\n  \"manifest\": [],\n  \"exclusions\": [],\n  \"text\": \"\"\n}\nmindcraft> "
+    },
+    {
+      "at": 1788791058228,
+      "input": "status"
+    },
+    {
+      "at": 1788791058229,
+      "output": "> status\n"
+    },
+    {
+      "at": 1788791058229,
+      "output": "{\n  \"task\": {\n    \"id\": \"3e5a05a0-0bd3-40d0-99b1-0aaa862b8474\",\n    \"title\": \"안정성 검증 😀\",\n    \"objective\": \"안정성 검증 😀\",\n    \"purpose\": \"general\",\n    \"status\": \"active\",\n    \"episodeIds\": [\n      \"ce5bbaaa-315b-4260-8bf3-b5da19c84bc4\"\n    ],\n    \"createdAt\": \"2026-09-07T14:24:15.391Z\"\n  },\n  \"runs\": [\n    {\n      \"id\": \"26824de5-a24c-44b9-8496-411471e93011\",\n      \"taskId\": \"3e5a05a0-0bd3-40d0-99b1-0aaa862b8474\",\n      \"episodeId\": \"ce5bbaaa-315b-4260-8bf3-b5da19c84bc4\",\n      \"status\": \"completed\",\n      \"model\": \"mock-deterministic\",\n      \"purpose\": \"general\",\n      \"latestEvent\": \"tool_decision\",\n      \"approvals\": {\n        \"pending\": 0,\n        \"approved\": 1,\n        \"rejected\": 1\n      },\n      \"knowledge\": {\n        \"manifest\": [],\n        \"capture\": {\n          \"status\": \"captured\",\n          \"itemId\": \"c8e0472c-d40c-44da-919c-e3e433d43358\",\n          \"revision\": \"2d86adff71cff57de03608dcaba7c9fa166fd26aa6cbab8e9ef4f7e2ed10219a\"\n        }\n      },\n      \"error\": null,\n      \"nextAction\": \"none\",\n      \"recovery\": {\n        \"valid\": true,\n        \"corruption\": null,\n        \"validRecords\": 22\n      }\n    }\n  ],\n  \"journal\": {\n    \"valid\": true,\n    \"corruption\": null,\n    \"validRecords\": 22\n  },\n  \"preflight\": {\n    \"ok\": true,\n    \"localReady\": true,\n    \"liveReady\": true,\n    \"checks\": {\n      \"modelRegistry\": {\n        \"status\": \"pass\",\n        \"count\": 1,\n        \"message\": \"Model registry is configured\"\n      },\n      \"providers\": [\n        {\n          \"id\": \"mock-deterministic\",\n          \"provider\": \"mock\",\n          \"status\": \"available\",\n          \"credential\": \"not configured\"\n        }\n      ],\n      \"credentials\": [\n        {\n          \"id\": \"mock-deterministic\",\n          \"status\": \"not configured\"\n        }\n      ],\n      \"storage\": {\n        \"status\": \"pass\",\n        \"state\": true,\n        \"knowledge\": true\n      },\n      \"providerReadiness\": {\n        \"status\": \"pass\",\n        \"liveReady\": true,\n        \"message\": \"All configured providers are ready\"\n      }\n    }\n  }\n}\nmindcraft> "
+    },
+    {
+      "at": 1788791062230,
+      "input": "quit"
+    },
+    {
+      "at": 1788791062231,
+      "output": "> quit\n"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "time": "2026-09-07T14:25:18.044Z",
+  "exe": "C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\dist\\windows-package\\MindCraft.exe",
+  "results": [
+    {
+      "name": "clean isolated startup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: run no task",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: setup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: use missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: approve",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: cancel missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: mode invalid",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: knowledge-detail missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "offline setup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "unicode task",
+      "pass": true,
+      "detail": "3e5a05a0-0bd3-40d0-99b1-0aaa862b8474"
+    },
+    {
+      "name": "approval list responsive during run",
+      "pass": false,
+      "detail": ""
+    },
+    {
+      "name": "reject via journal ID",
+      "pass": true,
+      "detail": "> reject approval-1788791055643-3nf2oh\nevent=tool_decision\nevent=tool_decision\nevent=undefined\nevent=tool_decision\nreject=approval-1788791055643-3nf2oh status=rejected\nmindcraft> "
+    },
+    {
+      "name": "approve via journal ID",
+      "pass": true,
+      "detail": "> approve approval-1788791056686-jkmcgq\nevent=tool_decision\nevent=tool_execution_started\napprove=approval-1788791056686-jkmcgq status=approved\nmindcraft> event=tool_execution_result\nevent=tool_decision\nevent=tool_decision\nevent=undefined\nrun=completed\nMock release review completed. Write: Approval rejected: rejected. Command: {\"code\":null,\"error\":\"spawn node ENOENT\",\"stdout\":\"\",\"stderr\":\"\"}. Tests are not claimed unless the command was approved and returned success.\nmindcraft> > approvals\nNo pending approvals\nmindcraft> "
+    },
+    {
+      "name": "mock run with diagnostic model override",
+      "pass": true,
+      "detail": "> approve approval-1788791056686-jkmcgq\nevent=tool_decision\nevent=tool_execution_started\napprove=approval-1788791056686-jkmcgq status=approved\nmindcraft> event=tool_execution_result\nevent=tool_decision\nevent=tool_decision\nevent=undefined\nrun=completed\nMock release review completed. Write: Approval rejected: rejected. Command: {\"code\":null,\"error\":\"spawn node ENOENT\",\"stdout\":\"\",\"stderr\":\"\"}. Tests are not claimed unless the command was approved and returned success.\nmindcraft> > approvals\nNo pending approvals\nmindcraft> "
+    },
+    {
+      "name": "query runs",
+      "pass": true,
+      "detail": "> runs\n26824de5-a24c-44b9-8496-411471e93011 ce5bbaaa-315b-4260-8bf3-b5da19c84bc4 completed\nmindcraft> "
+    },
+    {
+      "name": "query history",
+      "pass": true,
+      "detail": "ons\": []\n    },\n    \"routing\": {\n      \"selectedModelId\": \"mock-deterministic\",\n      \"selectedProfile\": \"user_selected\",\n      \"selectedPurpose\": \"general\",\n      \"routingReason\": \"single user-selected Model\",\n      \"fallback\": null,\n      \"costEstimate\": \"unknown\",\n      \"availability\": \"available\",\n      \"policyVersion\": 2\n    },\n    \"completedAt\": \"2026-09-07T14:24:17.082Z\",\n    \"knowledgeCapture\": {\n      \"status\": \"captured\",\n      \"itemId\": \"c8e0472c-d40c-44da-919c-e3e433d43358\",\n      \"revision\": \"2d86adff71cff57de03608dcaba7c9fa166fd26aa6cbab8e9ef4f7e2ed10219a\"\n    }\n  }\n]\nmindcraft> "
+    },
+    {
+      "name": "query knowledge",
+      "pass": true,
+      "detail": "> knowledge\nc8e0472c-d40c-44da-919c-e3e433d43358 captured source=episode run=26824de5-a24c-44b9-8496-411471e93011 chars=218\nmindcraft> "
+    },
+    {
+      "name": "query preview release",
+      "pass": true,
+      "detail": "> preview release\n{\n  \"level\": \"empty\",\n  \"manifest\": [],\n  \"exclusions\": [],\n  \"text\": \"\"\n}\nmindcraft> "
+    },
+    {
+      "name": "query status",
+      "pass": true,
+      "detail": "      },\n      \"providers\": [\n        {\n          \"id\": \"mock-deterministic\",\n          \"provider\": \"mock\",\n          \"status\": \"available\",\n          \"credential\": \"not configured\"\n        }\n      ],\n      \"credentials\": [\n        {\n          \"id\": \"mock-deterministic\",\n          \"status\": \"not configured\"\n        }\n      ],\n      \"storage\": {\n        \"status\": \"pass\",\n        \"state\": true,\n        \"knowledge\": true\n      },\n      \"providerReadiness\": {\n        \"status\": \"pass\",\n        \"liveReady\": true,\n        \"message\": \"All configured providers are ready\"\n      }\n    }\n  }\n}\nmindcraft> "
+    },
+    {
+      "name": "concurrent workspace blocked",
+      "pass": true,
+      "detail": "windows-package/current/app/src/cli.mjs:76:13 {\r\n  code: 'WORKSPACE_LOCKED',\r\n  owner: '{\"pid\":26588,\"owner\":\"26588:f3fe7c0c-cbce-4216-b88b-54823dc8d6f6\",\"journalPath\":\"C:\\\\\\\\Users\\\\\\\\bot\\\\\\\\Documents\\\\\\\\ChatGPT\\\\\\\\mindcraft\\\\\\\\windows-validation\\\\\\\\workspaces\\\\\\\\runtime-stability-extended\\\\\\\\한글 공백 workspace/.mindcraft/state.jsonl\",\"acquiredAt\":\"2026-09-07T14:24:13.478Z\"}'\r\n}\r\n\r\nNode.js v22.19.0\r\n"
+    },
+    {
+      "name": "normal quit exit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "task restored after restart",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "repeat launch 0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "repeat launch 1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "repeat launch 2",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "repeat launch 3",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "repeat launch 4",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "repeat launch 5",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "repeat launch 6",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "repeat launch 7",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "suite interruption",
+      "pass": false,
+      "detail": "Error: crash-recovery timeout /mindcraft>/\n    at s.wait (file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/tui-validation/runtime-suite.mjs:21:124)\n    at async file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/tui-validation/runtime-suite.mjs:48:76"
+    }
+  ]
+}

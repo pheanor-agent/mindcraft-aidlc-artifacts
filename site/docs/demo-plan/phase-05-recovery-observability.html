@@ -1,0 +1,18 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phase 5 — 상태·복구·관찰성 · MindCraft</title><link rel="stylesheet" href="../../assets/pages.css"></head><body><header><a class="brand" href="../../index.html">MindCraft <span>문서</span></a><nav><a href="../../index.html">← 전체 문서</a><a href="phase-05-recovery-observability.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="phase-5--상태복구관찰성">Phase 5 — 상태·복구·관찰성</h1>
+<p>Phase 5 수행 기록은 <a href="README.html#phase-5-%EC%88%98%ED%96%89-%EA%B8%B0%EB%A1%9D--%EC%83%81%ED%83%9C%EB%B3%B5%EA%B5%AC%EA%B4%80%EC%B0%B0%EC%84%B1">demo-plan README</a>를 정본으로 사용한다.</p>
+<p>이 문서는 중복 상태표를 만들지 않고 Phase 5의 범위와 정본 링크만 제공한다.</p>
+<h2 id="후속-작업-기록--mc-per-01">후속 작업 기록 — MC-PER-01</h2>
+<ul>
+<li>baseline: <code>69f0fe4bb23f5aef36d101bdb76d9b9890ea247f</code>; working tree clean.</li>
+<li>변경: <code>WorkflowRepository</code> 내부 append를 single-writer chain으로 직렬화하고, persistence failure 이후 후속 write를 fail-closed로 차단했다. repair는 pending write가 끝난 뒤 수행한다.</li>
+<li>검증: <code>node --test test/phase-05-recovery-observability.test.mjs</code> 통과(5/5). concurrent commit 순서와 persistence failure 이후 write 차단을 포함한다.</li>
+<li>상태: 전체 회귀 검증 및 커밋 대기.</li>
+</ul>
+<h2 id="후속-작업-기록--실행-중-command-취소">후속 작업 기록 — 실행 중 command 취소</h2>
+<ul>
+<li>변경: Run <code>AbortSignal</code>을 custom tool/command runner까지 전달하고, POSIX process group 및 Windows <code>taskkill /T /F</code> 기반 process-tree cleanup을 적용했다.</li>
+<li>관찰성: command execution result에 <code>cleanup</code>과 <code>effectStatus</code>를 기록한다. cancel/timeout 이후 effect는 <code>uncertain</code>으로 남기며 완료된 effect를 rollback했다고 가정하지 않는다.</li>
+<li>검증: <code>test/approval-workflow.test.mjs</code>에서 승인된 장시간 Node command를 cancel한 뒤 cleanup 완료를 확인하고, 지연 effect 파일이 생성되지 않음을 검증했다. 전체 <code>npm test</code>: 166/166 통과.</li>
+<li>환경 한계: Windows native process execution은 Linux CI에서 직접 수행하지 못했으며, Windows adapter 및 cross-platform code path는 build/focused tests로 검증했다.</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#후속-작업-기록--mc-per-01">후속 작업 기록 — MC-PER-01</a></li><li><a href="#후속-작업-기록--실행-중-command-취소">후속 작업 기록 — 실행 중 command 취소</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../assets/pages.js"></script></body></html>

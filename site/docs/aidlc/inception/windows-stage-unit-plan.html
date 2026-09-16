@@ -1,0 +1,120 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft Windows AI-DLC Stage·Unit Plan · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="windows-stage-unit-plan.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-windows-ai-dlc-stageunit-plan">MindCraft Windows AI-DLC Stage·Unit Plan</h1>
+<ul>
+<li>상태: <strong>이전 참고 기록 — 기본 작업 워크플로우 문서로 대체됨</strong></li>
+<li>주의: AI-DLC가 MindCraft 기본 작업 상태·승인 체계를 대체하지 않는다.</li>
+<li>Construction unit: <code>windows-distribution-and-first-run</code></li>
+<li>원칙: 기존 MindCraft runtime 정책을 유지하고, Windows 특화 책임은 adapter/native boundary 뒤에 둔다.</li>
+</ul>
+<h2 id="stage-plan">Stage plan</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>산출물</th>
+<th>Gate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Inception</td>
+<td>requirements, constraints, user stories, acceptance, open decisions, evidence schema</td>
+<td>사람 승인</td>
+</tr>
+<tr>
+<td>Design</td>
+<td>launcher/bootstrap, workspace, credential, provider, TUI, path/process, packaging 설계</td>
+<td>설계 승인</td>
+</tr>
+<tr>
+<td>Construction</td>
+<td>WIN-01~WIN-07 구현 및 offline 회귀</td>
+<td>구현 검증 gate</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>WIN-08 clean VM/live/user validation, artifact hash, known limits</td>
+<td>출시 판정 gate</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>installer, runtime ZIP, manifest, licenses, SBOM, signing status, guide</td>
+<td>별도 배포 승인</td>
+</tr>
+</tbody></table>
+<h2 id="construction-unit-work-packages">Construction unit work packages</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>목표</th>
+<th>완료 조건</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WIN-00</td>
+<td>Windows 기준선과 환경 실패 분류</td>
+<td>Windows 11 x64 일반 계정 기준선·지원/비지원 목록·재현 기록</td>
+</tr>
+<tr>
+<td>WIN-01</td>
+<td>동봉 runtime과 native launcher spike</td>
+<td>개발 도구 없는 PC에서 Pi 모듈·리소스·mock TUI 시작; 실패 시 기술 재선정</td>
+</tr>
+<tr>
+<td>WIN-02</td>
+<td>bootstrap/workspace/기본 TUI</td>
+<td>cwd 독립, workspace 확정 후 초기화, 기본 onboarding/home 진입</td>
+</tr>
+<tr>
+<td>WIN-03</td>
+<td>effective config/provider readiness</td>
+<td>preflight와 runtime이 같은 config snapshot을 사용하고 local/live 상태 분리</td>
+</tr>
+<tr>
+<td>WIN-04</td>
+<td>credential broker/onboarding</td>
+<td>보호 저장 또는 session-only, 평문 fallback 없음, 취소·저장 실패 복구</td>
+</tr>
+<tr>
+<td>WIN-05</td>
+<td>home/approval/Knowledge UX</td>
+<td>명령 암기 없이 mock Task/Run/승인/Knowledge review 흐름 완료</td>
+</tr>
+<tr>
+<td>WIN-06</td>
+<td>Windows path/command/shutdown/lock</td>
+<td>containment, process tree cancel, 종료 flush, single writer, recovery 검증</td>
+</tr>
+<tr>
+<td>WIN-07</td>
+<td>installer/update/remove/release metadata</td>
+<td>사용자 단위 설치, versioned update/rollback, 데이터 보존, manifest/license/SBOM</td>
+</tr>
+<tr>
+<td>WIN-08</td>
+<td>clean VM/live/user verification</td>
+<td>필수 시나리오 결과와 artifact hash를 별도 기록</td>
+</tr>
+<tr>
+<td>WIN-09</td>
+<td>release decision</td>
+<td>미검증 항목·제한·서명 상태를 포함한 출시 판정서와 별도 승인요청</td>
+</tr>
+</tbody></table>
+<h2 id="gate-규칙">Gate 규칙</h2>
+<ul>
+<li>WIN-00~01은 기술 feasibility를 확인하는 spike이며 결과에 따라 설계를 수정할 수 있다.</li>
+<li>Design 승인 전에는 Construction 코드·native helper·installer를 만들지 않는다.</li>
+<li>Construction 중에도 live provider와 credential 변경은 별도 승인 없이는 수행하지 않는다.</li>
+<li>Windows native 결과, Linux 회귀 결과, mock 결과, live 결과를 하나의 PASS로 합치지 않는다.</li>
+<li>각 unit은 변경 파일, 테스트 명령, 수동 절차, 산출물 hash, rollback, 알려진 제한을 남긴다.</li>
+</ul>
+<h2 id="open-decisions">Open decisions</h2>
+<ol>
+<li>resume은 같은 Episode의 새 Run으로 확정할지.</li>
+<li>live provider의 top-level readiness와 credential failure 계약.</li>
+<li>mock/live를 process와 workspace 중 어느 수준까지 분리할지.</li>
+<li>workspace context를 명시적 read만 허용할지, 제한된 자동 수집을 허용할지.</li>
+<li>TUI latency·복구·비용·지원 terminal의 정량 목표.</li>
+<li>Windows 10/ARM64/UNC/OneDrive의 지원 승격 조건.</li>
+</ol>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#stage-plan">Stage plan</a></li><li><a href="#construction-unit-work-packages">Construction unit work packages</a></li><li><a href="#gate-규칙">Gate 규칙</a></li><li><a href="#open-decisions">Open decisions</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

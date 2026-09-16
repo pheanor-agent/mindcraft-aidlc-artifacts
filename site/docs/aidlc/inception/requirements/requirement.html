@@ -1,0 +1,139 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft AI-DLC Inception — Initial Requirements · MindCraft</title><link rel="stylesheet" href="../../../../assets/pages.css"></head><body><header><a class="brand" href="../../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../../index.html">← 전체 문서</a><a href="requirement.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-ai-dlc-inception--initial-requirements">MindCraft AI-DLC Inception — Initial Requirements</h1>
+<ul>
+<li>Status: <strong>Draft — approval required</strong></li>
+<li>Scope: AI-DLC Inception requirements input</li>
+<li>Product baseline: MindCraft 0.1.0, Pi-based terminal TUI workflow package</li>
+<li>Process baseline: AI-DLC is an external development governance process, not a MindCraft runtime feature</li>
+<li>Source baseline: <code>README.md</code>, <code>DESIGN.md</code>, <code>ROUTING.md</code>, <code>docs/MINDCRAFT-PRODUCT-METADATA.md</code>, approved design/review records</li>
+</ul>
+<h2 id="1-product-intent">1. Product intent</h2>
+<p>MindCraft helps a developer manage a repeatable Task/Episode/Run workflow in a terminal TUI, execute work through a controlled Pi-based agent session, assemble bounded project context, require approval for risky side effects, and preserve durable state for recovery and sequential reuse.</p>
+<p>AI-DLC governs how MindCraft is developed. AI-DLC stages, artifacts, approvals, and audit records must not be represented as MindCraft&#39;s runtime Task/Episode/Run state.</p>
+<h2 id="2-primary-user-and-mvp-outcome">2. Primary user and MVP outcome</h2>
+<ul>
+<li>Primary user: individual developer or small development team member.</li>
+<li>Primary workflow: start and continue a project task safely, with visible model/configuration state, approval boundaries, streaming progress, durable history, and recoverable runs.</li>
+<li>Product form: Node.js package/CLI with terminal TUI; Windows Terminal is the first product validation target.</li>
+<li>Sharing: local/session-first. Team accounts, central synchronization, and cloud collaboration are out of MVP scope.</li>
+</ul>
+<h2 id="3-functional-requirements">3. Functional requirements</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th align="right">Priority</th>
+<th>Acceptance signal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FR-01</td>
+<td>Register/select a workspace and diagnose local runtime, storage, model registry, mock readiness, and live-provider readiness separately.</td>
+<td align="right">P0</td>
+<td><code>doctor</code> reports actionable local/live status and never treats local readiness as live-provider success.</td>
+</tr>
+<tr>
+<td>FR-02</td>
+<td>Create, list, and select Tasks; execute bounded Episodes as Runs through the common application dispatcher.</td>
+<td align="right">P0</td>
+<td>Task/Episode/Run state is persisted and visible in CLI/TUI.</td>
+</tr>
+<tr>
+<td>FR-03</td>
+<td>Show streaming events, tool requests, results, errors, current status, and cancellation without losing the durable record.</td>
+<td align="right">P0</td>
+<td>User can observe and cancel an active Run; aborted state is persisted.</td>
+</tr>
+<tr>
+<td>FR-04</td>
+<td>Use the configured Model according to the explicit registry policy: zero models blocks execution; one model serves all purposes; two models map to distinct purposes; duplicate-purpose mappings are rejected; automatic fallback is forbidden.</td>
+<td align="right">P0</td>
+<td>Invalid configuration fails before execution and the selected Model/purpose is shown.</td>
+</tr>
+<tr>
+<td>FR-05</td>
+<td>Keep mock and live provider modes separated by explicit mode/process/workspace boundaries; no automatic provider switching during a Run.</td>
+<td align="right">P0</td>
+<td>A mock rehearsal cannot silently call a live provider, and mode changes require an explicit new boundary.</td>
+</tr>
+<tr>
+<td>FR-06</td>
+<td>Apply execution-root file scope by default. Requests outside the root, shell commands, deletes, network calls, secrets, and other material side effects are denied or require explicit approval.</td>
+<td align="right">P0</td>
+<td>Out-of-scope and unapproved operations fail closed with reason and requested scope.</td>
+</tr>
+<tr>
+<td>FR-07</td>
+<td>Persist approval requests, GrantedScope, decisions, model/mode snapshots, tool events, and audit records without storing credential material.</td>
+<td align="right">P0</td>
+<td>History contains decision/provenance metadata and redacts secrets.</td>
+</tr>
+<tr>
+<td>FR-08</td>
+<td>Support sequential multi-session continuation: session identity/start/close records, replay of prior state, one active writer per workspace, and safe recovery of stale locks.</td>
+<td align="right">P0</td>
+<td>Session 2 can continue from Session 1; concurrent writers are blocked.</td>
+</tr>
+<tr>
+<td>FR-09</td>
+<td>Support recoverable Run resume without overwriting the original Run; resume semantics must be finalized during Inception.</td>
+<td align="right">P0</td>
+<td>Resume creates a traceable new Run and preserves the prior record.</td>
+</tr>
+<tr>
+<td>FR-10</td>
+<td>Capture Knowledge candidates with provenance and redaction; candidates do not enter approved context automatically.</td>
+<td align="right">P1</td>
+<td>Candidate status, source Run, and provenance are visible; promotion is explicit.</td>
+</tr>
+<tr>
+<td>FR-11</td>
+<td>Provide bounded context preview/manifest showing included sources, excluded sources, scope, and reasons.</td>
+<td align="right">P1</td>
+<td>User can inspect the context before a Run.</td>
+</tr>
+<tr>
+<td>FR-12</td>
+<td>Provide install, update, and supported-environment diagnostics; unsupported environments return a reason and manual alternative.</td>
+<td align="right">P1</td>
+<td>Fresh installation and offline mock rehearsal are repeatable.</td>
+</tr>
+</tbody></table>
+<h2 id="4-non-functional-requirements">4. Non-functional requirements</h2>
+<ul>
+<li>Safety: fail closed for unapproved or out-of-scope side effects; no self-approval.</li>
+<li>Recoverability: append-only/checkpointed state is authoritative; backend logs alone are insufficient.</li>
+<li>Responsiveness: command input and status controls remain responsive while a Run streams events.</li>
+<li>Testability: deterministic offline/mock tests cover core workflows without credentials or network access.</li>
+<li>Auditability: Task, Episode, Run, session, model, mode, approval, tool, Knowledge, and recovery decisions are traceable.</li>
+<li>Privacy: credentials and personal data are excluded from logs, docs, artifacts, and group output.</li>
+<li>Portability: platform and provider-specific behavior stays behind adapters; Windows Terminal is first validation, Linux/WSL/macOS are compatibility targets.</li>
+<li>Maintainability: product code and AI-DLC artifacts remain separate namespaces.</li>
+</ul>
+<h2 id="5-mvp-exclusions">5. MVP exclusions</h2>
+<ul>
+<li>Concurrent multi-writer or parallel sessions in one workspace</li>
+<li>Automatic provider fallback or switching</li>
+<li>Unapproved execution-root escape</li>
+<li>Full IDE/editor replacement</li>
+<li>Multi-agent autonomous parallel orchestration</li>
+<li>Central server, team accounts, cloud sync</li>
+<li>CI/CD and deployment operations</li>
+<li>Automatic promotion of generated Knowledge</li>
+<li>AI-DLC workflow engine embedded in MindCraft runtime</li>
+<li>Treating mock/offline or Linux results as proof of live provider or Windows-native completion</li>
+</ul>
+<h2 id="6-inception-decisions-required-before-construction">6. Inception decisions required before Construction</h2>
+<ol>
+<li>Resume contract: same Episode with a new Run versus a new Episode with a new Run.</li>
+<li>Provider preflight: exact top-level readiness and failure contract for live execution.</li>
+<li>Mock/live boundary: required process/workspace separation and explicit mode transition rules.</li>
+<li>Workspace context: explicit reads only versus any controlled automatic ingestion.</li>
+<li>Exact quantitative targets: TUI input latency, event latency, recovery success criterion, and offline/live verification matrix.</li>
+<li>AI-DLC extension policy: Security Baseline, Property-Based Testing, and Resiliency Baseline enablement.</li>
+</ol>
+<h2 id="7-traceability-rule">7. Traceability rule</h2>
+<p>Every approved requirement must map to a user story, acceptance criterion, design component, implementation unit, and verification result. Deferred or rejected requirements must retain the decision and reason.</p>
+<h2 id="8-approval-gate">8. Approval gate</h2>
+<p>This document is an initial Inception input. It is not approval to modify source code, apply a patch, call a live provider, create/push an external repository, or deploy anything. Those actions require later explicit gates.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-product-intent">1. Product intent</a></li><li><a href="#2-primary-user-and-mvp-outcome">2. Primary user and MVP outcome</a></li><li><a href="#3-functional-requirements">3. Functional requirements</a></li><li><a href="#4-non-functional-requirements">4. Non-functional requirements</a></li><li><a href="#5-mvp-exclusions">5. MVP exclusions</a></li><li><a href="#6-inception-decisions-required-before-construction">6. Inception decisions required before Construction</a></li><li><a href="#7-traceability-rule">7. Traceability rule</a></li><li><a href="#8-approval-gate">8. Approval gate</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../../assets/pages.js"></script></body></html>

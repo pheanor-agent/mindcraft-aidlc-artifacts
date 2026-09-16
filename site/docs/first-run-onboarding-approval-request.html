@@ -1,0 +1,30 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Approval Request — First-Run TUI Onboarding · MindCraft</title><link rel="stylesheet" href="../assets/pages.css"></head><body><header><a class="brand" href="../index.html">MindCraft <span>문서</span></a><nav><a href="../index.html">← 전체 문서</a><a href="first-run-onboarding-approval-request.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="approval-request--first-run-tui-onboarding">Approval Request — First-Run TUI Onboarding</h1>
+<h2 id="상태">상태</h2>
+<p><strong>Awaiting explicit team approval</strong></p>
+<h2 id="검토-산출물">검토 산출물</h2>
+<ul>
+<li><code>docs/first-run-onboarding-design.md</code></li>
+<li><code>src/cli.mjs</code></li>
+<li><code>src/command-queue.mjs</code></li>
+<li><code>src/tui-runner.mjs</code></li>
+<li><code>src/mindcraft-app.mjs</code></li>
+<li><code>test/first-run-onboarding.test.mjs</code></li>
+</ul>
+<h2 id="제안-결정">제안 결정</h2>
+<p>다음 범위의 구현을 승인해 주세요.</p>
+<ol>
+<li>실행 파일 하나로 TUI에 진입한다.</li>
+<li>첫 실행에서 Model이 없으면 TUI가 setup 명령을 안내한다.</li>
+<li>TUI와 non-TUI readline이 동일한 application command dispatcher를 사용한다.</li>
+<li>setup 완료 즉시 preflight와 runtime을 갱신한다.</li>
+<li>기존 workflow/approval/Knowledge 경계를 유지한다.</li>
+<li>deterministic mock은 오프라인 리허설용으로만 사용한다.</li>
+</ol>
+<h2 id="승인-선택지">승인 선택지</h2>
+<ul>
+<li><strong>Approve &amp; Continue</strong> — 이 vertical slice를 기준선으로 채택하고 Windows Terminal UX 및 반복 실행 검증을 계속 진행</li>
+<li><strong>Request Changes</strong> — 변경할 정책/UX/범위를 명시</li>
+<li><strong>Hold</strong> — 추가 제품/모델 정책 결정 전 보류</li>
+</ul>
+<p>승인은 GitHub 변경, 배포, credential, 외부 환경 변경을 승인하지 않습니다.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#상태">상태</a></li><li><a href="#검토-산출물">검토 산출물</a></li><li><a href="#제안-결정">제안 결정</a></li><li><a href="#승인-선택지">승인 선택지</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../assets/pages.js"></script></body></html>

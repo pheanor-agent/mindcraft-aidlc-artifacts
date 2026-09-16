@@ -1,0 +1,92 @@
+{
+  "name": "mindcraft",
+  "version": "0.1.0",
+  "description": "MindCraft Desktop workspace and safety-aware agent runtime",
+  "author": "DDT MindCraft",
+  "private": true,
+  "type": "module",
+  "main": "desktop/main.mjs",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "bin": {
+    "mindcraft": "src/cli.mjs"
+  },
+  "scripts": {
+    "start": "node src/cli.mjs",
+    "desktop": "node scripts/launch-desktop.mjs",
+    "desktop:mock": "node scripts/launch-desktop.mjs",
+    "web:dev": "npm --prefix web run dev",
+    "web": "npm --prefix web run dev",
+    "web:build": "npm --prefix web run build",
+    "desktop:check": "node scripts/check-desktop-runtime.mjs",
+    "desktop:package": "electron-builder --win --x64 --dir",
+    "desktop:installer": "electron-builder --win --x64 --nsis",
+    "syntax:check": "node scripts/check-syntax.mjs",
+    "build": "npm run syntax:check",
+    "test": "node --test test/*.test.mjs",
+    "test:live": "node --test test/live/*.test.mjs",
+    "desktop:e2e": "node --test test/e2e/*.test.mjs",
+    "probe": "node --test test/live/*.test.mjs",
+    "release:check": "npm pack --dry-run"
+  },
+  "files": [
+    "src",
+    "package.json",
+    "package-lock.json",
+    "README.md",
+    "ROUTING.md",
+    "install.sh",
+    "desktop",
+    "docs/DUI"
+  ],
+  "dependencies": {
+    "@earendil-works/pi-ai": "0.84.2",
+    "@earendil-works/pi-coding-agent": "0.84.2",
+    "@earendil-works/pi-tui": "0.84.2",
+    "@sinclair/typebox": "0.34.33"
+  },
+  "devDependencies": {
+    "electron": "^44.3.0",
+    "electron-builder": "^26.0.12",
+    "playwright": "^1.52.0"
+  },
+  "build": {
+    "appId": "com.ddt.mindcraft.desktop",
+    "productName": "MindCraft Desktop",
+    "asar": true,
+    "files": [
+      "desktop/**/*",
+      "src/**/*",
+      "docs/DUI/**/*",
+      "package.json",
+      "package-lock.json",
+      "README.md",
+      "ROUTING.md",
+      "install.sh"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "MindCraft-Desktop-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

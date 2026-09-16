@@ -1,0 +1,234 @@
+{
+  "name": "한글 공백 workspace",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788790993804,
+      "output": "MindCraft TUI (Pi runtime, mode=mock) — commands: setup <provider> <model> [purpose] | doctor | task <title> | tasks | use <task-id> | model | mode default|token-doctor|mock | run <prompt> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel <run-id> | knowledge | promote <id> | reject-knowledge <id> | quit\n"
+    },
+    {
+      "at": 1788790993805,
+      "output": "model: mock/deterministic  built-in  key: none\n"
+    },
+    {
+      "at": 1788790993806,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790993857,
+      "input": "run no task"
+    },
+    {
+      "at": 1788790993859,
+      "output": "> run no task\n"
+    },
+    {
+      "at": 1788790993860,
+      "output": "error: create a task first\n"
+    },
+    {
+      "at": 1788790993860,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790994088,
+      "input": "setup"
+    },
+    {
+      "at": 1788790994088,
+      "output": "> setup\n"
+    },
+    {
+      "at": 1788790994088,
+      "output": "error: Usage: setup <provider> <model> [purpose]\n"
+    },
+    {
+      "at": 1788790994089,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790994321,
+      "input": "use missing"
+    },
+    {
+      "at": 1788790994323,
+      "output": "> use missing\n"
+    },
+    {
+      "at": 1788790994324,
+      "output": "error: Task not found: missing\n"
+    },
+    {
+      "at": 1788790994324,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790994552,
+      "input": "approve"
+    },
+    {
+      "at": 1788790994553,
+      "output": "> approve\n"
+    },
+    {
+      "at": 1788790994553,
+      "output": "error: approve requires an approval id\n"
+    },
+    {
+      "at": 1788790994553,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790994786,
+      "input": "cancel missing"
+    },
+    {
+      "at": 1788790994787,
+      "output": "> cancel missing\n"
+    },
+    {
+      "at": 1788790994787,
+      "output": "error: Run not found: missing\n"
+    },
+    {
+      "at": 1788790994787,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790995019,
+      "input": "mode invalid"
+    },
+    {
+      "at": 1788790995019,
+      "output": "> mode invalid\n"
+    },
+    {
+      "at": 1788790995020,
+      "output": "error: Unknown mode: invalid\n"
+    },
+    {
+      "at": 1788790995020,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790995250,
+      "input": "knowledge-detail missing"
+    },
+    {
+      "at": 1788790995251,
+      "output": "> knowledge-detail missing\n"
+    },
+    {
+      "at": 1788790995252,
+      "output": "error: Knowledge item not found\n"
+    },
+    {
+      "at": 1788790995252,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790995483,
+      "input": "setup mock deterministic"
+    },
+    {
+      "at": 1788790995483,
+      "output": "> setup mock deterministic\n"
+    },
+    {
+      "at": 1788790995506,
+      "output": "setup=complete provider=mock model=deterministic\n"
+    },
+    {
+      "at": 1788790995506,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790995716,
+      "input": "task 안정성 검증 😀"
+    },
+    {
+      "at": 1788790995717,
+      "output": "> task 안정성 검증 😀\n"
+    },
+    {
+      "at": 1788790995720,
+      "output": "task=e2e9173d-12a2-4e1c-a72a-1253f566bf1e purpose=general\n"
+    },
+    {
+      "at": 1788790995721,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790995948,
+      "input": "run inspect"
+    },
+    {
+      "at": 1788790995949,
+      "output": "> run inspect\n"
+    },
+    {
+      "at": 1788790995971,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788790995971,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788790995973,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788790995973,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788790995975,
+      "output": "event=tool_decision\nevent=undefined\n"
+    },
+    {
+      "at": 1788790995977,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791008231,
+      "input": "quit"
+    },
+    {
+      "at": 1788791008232,
+      "output": "> quit\n"
+    },
+    {
+      "at": 1788791008234,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791008234,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791008235,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791008240,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791008245,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791008247,
+      "output": "error: session.prompt cancelled\n"
+    },
+    {
+      "at": 1788791008247,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791008248,
+      "output": "event=tool_decision\n"
+    }
+  ]
+}

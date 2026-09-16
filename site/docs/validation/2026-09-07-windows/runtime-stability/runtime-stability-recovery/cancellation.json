@@ -1,0 +1,154 @@
+{
+  "name": "cancellation",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788791194390,
+      "output": "MindCraft TUI (Pi runtime, mode=mock) — commands: setup <provider> <model> [purpose] | doctor | task <title> | tasks | use <task-id> | model | mode default|token-doctor|mock | run <prompt> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel <run-id> | knowledge | promote <id> | reject-knowledge <id> | quit\n"
+    },
+    {
+      "at": 1788791194390,
+      "output": "model: mock/deterministic  built-in  key: none\n"
+    },
+    {
+      "at": 1788791194392,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791194432,
+      "input": "setup mock deterministic"
+    },
+    {
+      "at": 1788791194434,
+      "output": "> setup mock deterministic\n"
+    },
+    {
+      "at": 1788791194441,
+      "output": "setup=complete provider=mock model=deterministic\n"
+    },
+    {
+      "at": 1788791194441,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791194663,
+      "input": "task cancel run"
+    },
+    {
+      "at": 1788791194664,
+      "output": "> task cancel run\n"
+    },
+    {
+      "at": 1788791194666,
+      "output": "task=69a32bce-fb6d-4bc5-bbec-cb6072762ad8 purpose=general\n"
+    },
+    {
+      "at": 1788791194666,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791194897,
+      "input": "run inspect"
+    },
+    {
+      "at": 1788791194898,
+      "output": "> run inspect\n"
+    },
+    {
+      "at": 1788791194914,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791194914,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791194916,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791194916,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791194918,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791194918,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791194921,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791195129,
+      "input": "cancel"
+    },
+    {
+      "at": 1788791195130,
+      "output": "> cancel\n"
+    },
+    {
+      "at": 1788791195131,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791195131,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791195131,
+      "output": "event=undefined\n"
+    },
+    {
+      "at": 1788791195133,
+      "output": "cancel=aborted\n"
+    },
+    {
+      "at": 1788791195133,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791195134,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791195138,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791195140,
+      "output": "error: session.prompt cancelled\n"
+    },
+    {
+      "at": 1788791195140,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788791195142,
+      "output": "event=tool_decision\n"
+    },
+    {
+      "at": 1788791195362,
+      "input": "tasks"
+    },
+    {
+      "at": 1788791195363,
+      "output": "> tasks\n"
+    },
+    {
+      "at": 1788791195363,
+      "output": "69a32bce-fb6d-4bc5-bbec-cb6072762ad8 cancel run active\nmindcraft> "
+    },
+    {
+      "at": 1788791195595,
+      "input": "quit"
+    },
+    {
+      "at": 1788791195596,
+      "output": "> quit\n"
+    }
+  ]
+}

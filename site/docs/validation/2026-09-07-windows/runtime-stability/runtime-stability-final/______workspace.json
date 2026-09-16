@@ -1,0 +1,266 @@
+{
+  "name": "한글 공백 workspace",
+  "code": 0,
+  "events": [
+    {
+      "at": 1788790922269,
+      "output": "MindCraft TUI (Pi runtime, mode=mock) — commands: setup <provider> <model> [purpose] | doctor | task <title> | tasks | use <task-id> | model | mode default|token-doctor|mock | run <prompt> | approvals | approve <id> | reject <id> | status | history | runs | resume <run-id> | cancel <run-id> | knowledge | promote <id> | reject-knowledge <id> | quit\n"
+    },
+    {
+      "at": 1788790922269,
+      "output": "model: airouter/Qwen3.6  https://api.airouter.ch/v1  key: AIROUTER_API_KEY\n"
+    },
+    {
+      "at": 1788790922270,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790922285,
+      "input": "run no task"
+    },
+    {
+      "at": 1788790922288,
+      "output": "> run no task\n"
+    },
+    {
+      "at": 1788790922288,
+      "output": "error: create a task first\n"
+    },
+    {
+      "at": 1788790922289,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790922519,
+      "input": "setup"
+    },
+    {
+      "at": 1788790922520,
+      "output": "> setup\n"
+    },
+    {
+      "at": 1788790922520,
+      "output": "error: Usage: setup <provider> <model> [purpose]\n"
+    },
+    {
+      "at": 1788790922520,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790922750,
+      "input": "use missing"
+    },
+    {
+      "at": 1788790922751,
+      "output": "> use missing\n"
+    },
+    {
+      "at": 1788790922751,
+      "output": "error: Task not found: missing\n"
+    },
+    {
+      "at": 1788790922751,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790922985,
+      "input": "approve"
+    },
+    {
+      "at": 1788790922986,
+      "output": "> approve\n"
+    },
+    {
+      "at": 1788790922986,
+      "output": "error: approve requires an approval id\n"
+    },
+    {
+      "at": 1788790922986,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790923219,
+      "input": "cancel missing"
+    },
+    {
+      "at": 1788790923219,
+      "output": "> cancel missing\n"
+    },
+    {
+      "at": 1788790923219,
+      "output": "error: Run not found: missing\n"
+    },
+    {
+      "at": 1788790923219,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790923452,
+      "input": "mode invalid"
+    },
+    {
+      "at": 1788790923453,
+      "output": "> mode invalid\n"
+    },
+    {
+      "at": 1788790923453,
+      "output": "error: Unknown mode: invalid\n"
+    },
+    {
+      "at": 1788790923453,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790923684,
+      "input": "knowledge-detail missing"
+    },
+    {
+      "at": 1788790923685,
+      "output": "> knowledge-detail missing\n"
+    },
+    {
+      "at": 1788790923685,
+      "output": "error: Knowledge item not found\n"
+    },
+    {
+      "at": 1788790923685,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790923916,
+      "input": "setup mock deterministic"
+    },
+    {
+      "at": 1788790923917,
+      "output": "> setup mock deterministic\n"
+    },
+    {
+      "at": 1788790923936,
+      "output": "setup=complete provider=mock model=deterministic\n"
+    },
+    {
+      "at": 1788790923937,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790924149,
+      "input": "task 안정성 검증 😀"
+    },
+    {
+      "at": 1788790924150,
+      "output": "> task 안정성 검증 😀\n"
+    },
+    {
+      "at": 1788790924164,
+      "output": "task=0819f542-be6f-4f74-8d38-d7a3afa74a51 purpose=general\n"
+    },
+    {
+      "at": 1788790924165,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790924380,
+      "input": "run inspect"
+    },
+    {
+      "at": 1788790924381,
+      "output": "> run inspect\n"
+    },
+    {
+      "at": 1788790924397,
+      "output": "error: Airouter model is not registered\n"
+    },
+    {
+      "at": 1788790924397,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790924611,
+      "input": "approvals"
+    },
+    {
+      "at": 1788790924612,
+      "output": "> approvals\n"
+    },
+    {
+      "at": 1788790924612,
+      "output": "No pending approvals\n"
+    },
+    {
+      "at": 1788790924612,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790924841,
+      "input": "runs"
+    },
+    {
+      "at": 1788790924842,
+      "output": "> runs\n"
+    },
+    {
+      "at": 1788790924842,
+      "output": "f39f382d-ff3b-4bbd-a088-340650096f1f 7db14f90-3663-41c6-8bbd-78c50159d48d failed\n"
+    },
+    {
+      "at": 1788790924842,
+      "output": "mindcraft> "
+    },
+    {
+      "at": 1788790925074,
+      "input": "history"
+    },
+    {
+      "at": 1788790925074,
+      "output": "> history\n"
+    },
+    {
+      "at": 1788790925075,
+      "output": "[\n  {\n    \"kind\": \"run\",\n    \"id\": \"f39f382d-ff3b-4bbd-a088-340650096f1f\",\n    \"taskId\": \"0819f542-be6f-4f74-8d38-d7a3afa74a51\",\n    \"episodeId\": \"7db14f90-3663-41c6-8bbd-78c50159d48d\",\n    \"sessionId\": \"34bc80e0-7ba7-45ee-a2c5-d8eae26c2fcc\",\n    \"mode\": \"mock\",\n    \"status\": \"running\",\n    \"events\": [],\n    \"startedAt\": \"2026-09-07T14:22:04.381Z\"\n  },\n  {\n    \"kind\": \"run\",\n    \"id\": \"f39f382d-ff3b-4bbd-a088-340650096f1f\",\n    \"taskId\": \"0819f542-be6f-4f74-8d38-d7a3afa74a51\",\n    \"episodeId\": \"7db14f90-3663-41c6-8bbd-78c50159d48d\",\n    \"sessionId\": \"34bc80e0-7ba7-45ee-a2c5-d8eae26c2fcc\",\n    \"mode\": \"mock\",\n    \"status\": \"running\",\n    \"events\": [],\n    \"startedAt\": \"2026-09-07T14:22:04.381Z\",\n    \"knowledgeMetrics\": {\n      \"promptChars\": 7,\n      \"promotedCandidates\": 0,\n      \"matchedCandidates\": 0,\n      \"includedCandidates\": 0,\n      \"knowledgeBudgetChars\": 2000,\n      \"selectedKnowledgeChars\": 0,\n      \"baselineKnowledgeChars\": 0,\n      \"executionPromptChars\": 7,\n      \"baselineExecutionPromptChars\": 7,\n      \"savedChars\": 0,\n      \"savedRatio\": 0,\n      \"estimatedInputTokens\": 2,\n      \"estimatedBaselineTokens\": 2,\n      \"estimateMethod\": \"estimated_chars_div_4_ceil\",\n      \"baselineType\": \"all_promoted_knowledge\",\n      \"unit\": \"characters\",\n      \"contextLevel\": \"empty\",\n      \"fallbackReason\": \"no promoted Knowledge available\",\n      \"manifest\": [],\n      \"exclusions\": []\n    }\n  },\n  {\n    \"kind\": \"run\",\n    \"id\": \"f39f382d-ff3b-4bbd-a088-340650096f1f\",\n    \"taskId\": \"0819f542-be6f-4f74-8d38-d7a3afa74a51\",\n    \"episodeId\": \"7db14f90-3663-41c6-8bbd-78c50159d48d\",\n    \"sessionId\": \"34bc80e0-7ba7-45ee-a2c5-d8eae26c2fcc\",\n    \"mode\": \"mock\",\n    \"status\": \"running\",\n    \"events\": [],\n    \"startedAt\": \"2026-09-07T14:22:04.381Z\",\n    \"knowledgeMetrics\": {\n      \"promptChars\": 7,\n      \"promotedCandidates\": 0,\n      \"matchedCandidates\": 0,\n      \"includedCandidates\": 0,\n      \"knowledgeBudgetChars\": 2000,\n      \"selectedKnowledgeChars\": 0,\n      \"baselineKnowledgeChars\": 0,\n      \"executionPromptChars\": 7,\n      \"baselineExecutionPromptChars\": 7,\n      \"savedChars\": 0,\n      \"savedRatio\": 0,\n      \"estimatedInputTokens\": 2,\n      \"estimatedBaselineTokens\": 2,\n      \"estimateMethod\": \"estimated_chars_div_4_ceil\",\n      \"baselineType\": \"all_promoted_knowledge\",\n      \"unit\": \"characters\",\n      \"contextLevel\": \"empty\",\n      \"fallbackReason\": \"no promoted Knowledge available\",\n      \"manifest\": [],\n      \"exclusions\": []\n    },\n    \"routing\": {\n      \"selectedModelId\": \"mock-deterministic\",\n      \"selectedProfile\": \"user_selected\",\n      \"selectedPurpose\": \"general\",\n      \"routingReason\": \"single user-selected Model\",\n      \"fallback\": null,\n      \"costEstimate\": \"unknown\",\n      \"availability\": \"available\",\n      \"policyVersion\": 2\n    }\n  },\n  {\n    \"kind\": \"run\",\n    \"id\": \"f39f382d-ff3b-4bbd-a088-340650096f1f\",\n    \"taskId\": \"0819f542-be6f-4f74-8d38-d7a3afa74a51\",\n    \"episodeId\": \"7db14f90-3663-41c6-8bbd-78c50159d48d\",\n    \"sessionId\": \"34bc80e0-7ba7-45ee-a2c5-d8eae26c2fcc\",\n    \"mode\": \"mock\",\n    \"status\": \"failed\",\n    \"events\": [],\n    \"startedAt\": \"2026-09-07T14:22:04.381Z\",\n    \"knowledgeMetrics\": {\n      \"promptChars\": 7,\n      \"promotedCandidates\": 0,\n      \"matchedCandidates\": 0,\n      \"includedCandidates\": 0,\n      \"knowledgeBudgetChars\": 2000,\n      \"selectedKnowledgeChars\": 0,\n      \"baselineKnowledgeChars\": 0,\n      \"executionPromptChars\": 7,\n      \"baselineExecutionPromptChars\": 7,\n      \"savedChars\": 0,\n      \"savedRatio\": 0,\n      \"estimatedInputTokens\": 2,\n      \"estimatedBaselineTokens\": 2,\n      \"estimateMethod\": \"estimated_chars_div_4_ceil\",\n      \"baselineType\": \"all_promoted_knowledge\",\n      \"unit\": \"characters\",\n      \"contextLevel\": \"empty\",\n      \"fallbackReason\": \"no promoted Knowledge available\",\n      \"manifest\": [],\n      \"exclusions\": []\n    },\n    \"routing\": {\n      \"selectedModelId\": \"mock-deterministic\",\n      \"selectedProfile\": \"user_selected\",\n      \"selectedPurpose\": \"general\",\n      \"routingReason\": \"single user-selected Model\",\n      \"fallback\": null,\n      \"costEstimate\": \"unknown\",\n      \"availability\": \"available\",\n      \"policyVersion\": 2\n    },\n    \"error\": \"Airouter model is not registered\"\n  }\n]\nmindcraft> "
+    },
+    {
+      "at": 1788790925307,
+      "input": "knowledge"
+    },
+    {
+      "at": 1788790925308,
+      "output": "> knowledge\n"
+    },
+    {
+      "at": 1788790925308,
+      "output": "No Knowledge found\nmindcraft> "
+    },
+    {
+      "at": 1788790925538,
+      "input": "preview release"
+    },
+    {
+      "at": 1788790925538,
+      "output": "> preview release\n"
+    },
+    {
+      "at": 1788790925538,
+      "output": "{\n  \"level\": \"empty\",\n  \"manifest\": [],\n  \"exclusions\": [],\n  \"text\": \"\"\n}\nmindcraft> "
+    },
+    {
+      "at": 1788790925770,
+      "input": "status"
+    },
+    {
+      "at": 1788790925770,
+      "output": "> status\n"
+    },
+    {
+      "at": 1788790925771,
+      "output": "{\n  \"task\": {\n    \"id\": \"0819f542-be6f-4f74-8d38-d7a3afa74a51\",\n    \"title\": \"안정성 검증 😀\",\n    \"objective\": \"안정성 검증 😀\",\n    \"purpose\": \"general\",\n    \"status\": \"active\",\n    \"episodeIds\": [\n      \"7db14f90-3663-41c6-8bbd-78c50159d48d\"\n    ],\n    \"createdAt\": \"2026-09-07T14:22:04.150Z\"\n  },\n  \"runs\": [\n    {\n      \"id\": \"f39f382d-ff3b-4bbd-a088-340650096f1f\",\n      \"taskId\": \"0819f542-be6f-4f74-8d38-d7a3afa74a51\",\n      \"episodeId\": \"7db14f90-3663-41c6-8bbd-78c50159d48d\",\n      \"status\": \"failed\",\n      \"model\": \"mock-deterministic\",\n      \"purpose\": \"general\",\n      \"latestEvent\": null,\n      \"approvals\": {\n        \"pending\": 0,\n        \"approved\": 0,\n        \"rejected\": 0\n      },\n      \"knowledge\": {\n        \"manifest\": [],\n        \"capture\": null\n      },\n      \"error\": \"Airouter model is not registered\",\n      \"nextAction\": \"inspect the failure before retrying\",\n      \"recovery\": {\n        \"valid\": true,\n        \"corruption\": null,\n        \"validRecords\": 9\n      }\n    }\n  ],\n  \"journal\": {\n    \"valid\": true,\n    \"corruption\": null,\n    \"validRecords\": 9\n  },\n  \"preflight\": {\n    \"ok\": true,\n    \"localReady\": true,\n    \"liveReady\": true,\n    \"checks\": {\n      \"modelRegistry\": {\n        \"status\": \"pass\",\n        \"count\": 1,\n        \"message\": \"Model registry is configured\"\n      },\n      \"providers\": [\n        {\n          \"id\": \"mock-deterministic\",\n          \"provider\": \"mock\",\n          \"status\": \"available\",\n          \"credential\": \"not configured\"\n        }\n      ],\n      \"credentials\": [\n        {\n          \"id\": \"mock-deterministic\",\n          \"status\": \"not configured\"\n        }\n      ],\n      \"storage\": {\n        \"status\": \"pass\",\n        \"state\": true,\n        \"knowledge\": true\n      },\n      \"providerReadiness\": {\n        \"status\": \"pass\",\n        \"liveReady\": true,\n        \"message\": \"All configured providers are ready\"\n      }\n    }\n  }\n}\nmindcraft> "
+    },
+    {
+      "at": 1788790927829,
+      "input": "quit"
+    },
+    {
+      "at": 1788790927830,
+      "output": "> quit\n"
+    }
+  ]
+}

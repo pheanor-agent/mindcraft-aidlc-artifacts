@@ -1,0 +1,61 @@
+{
+  "time": "2026-09-07T14:23:29.087Z",
+  "exe": "C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\dist\\windows-package\\MindCraft.exe",
+  "results": [
+    {
+      "name": "clean isolated startup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: run no task",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: setup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: use missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: approve",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: cancel missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: mode invalid",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid input: knowledge-detail missing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "offline setup",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "unicode task",
+      "pass": true,
+      "detail": "e2e9173d-12a2-4e1c-a72a-1253f566bf1e"
+    },
+    {
+      "name": "suite interruption",
+      "pass": false,
+      "detail": "Error: 한글 공백 workspace timeout /run=|error:/\n    at s.wait (file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/tui-validation/runtime-suite.mjs:21:124)\n    at async file:///C:/Users/bot/Documents/ChatGPT/mindcraft/windows-validation/tui-validation/runtime-suite.mjs:31:30"
+    }
+  ]
+}

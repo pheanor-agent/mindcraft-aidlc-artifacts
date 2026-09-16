@@ -1,0 +1,158 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft AI-DLC Requirements Evolution and Review History · MindCraft</title><link rel="stylesheet" href="../../../assets/pages.css"></head><body><header><a class="brand" href="../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../index.html">← 전체 문서</a><a href="requirements-evolution.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-ai-dlc-requirements-evolution-and-review-history">MindCraft AI-DLC Requirements Evolution and Review History</h1>
+<h2 id="1-timeline">1. Timeline</h2>
+<h3 id="a-initial-inception-documents">A. Initial Inception documents</h3>
+<p>Artifacts:</p>
+<ul>
+<li><code>docs/aidlc/inception/requirements/requirement.md</code></li>
+<li><code>docs/aidlc/inception/constraints/constraint.md</code></li>
+<li><code>docs/aidlc/inception/approval-request.md</code></li>
+</ul>
+<p>Initial direction:</p>
+<ul>
+<li>MindCraft is a Node.js package/CLI with terminal TUI.</li>
+<li>Product runtime is <code>Task → Episode → Run</code>.</li>
+<li>AI-DLC is an external development governance process, not a runtime feature.</li>
+<li>Safety, approval, execution-root scope, recovery, Knowledge provenance, and model policy are core requirements.</li>
+<li>Six Inception decisions and three extension decisions remained open.</li>
+</ul>
+<p>Initial quality gap:</p>
+<ul>
+<li>The documents captured product requirements well, but did not yet make workspace identity, canonical physical paths, extension-rule provenance, or recovery invariants explicit enough.</li>
+</ul>
+<h3 id="b-verification-answers">B. Verification answers</h3>
+<p>Artifact:</p>
+<ul>
+<li><code>docs/aidlc/inception/requirements/requirement-verification-answers.md</code></li>
+</ul>
+<p>Resolved decisions:</p>
+<ol>
+<li>Resume: same Episode + new Run.</li>
+<li>Live provider: explicit <code>doctor</code> preflight plus Run-start re-verification; fail closed.</li>
+<li>Mock/Live: separate process and workspace; no mid-Run switch.</li>
+<li>Context: explicit file reads plus approved Knowledge; no automatic file ingestion.</li>
+<li>MVP targets: p95 input/event targets and committed-checkpoint recovery baseline.</li>
+<li>Runtime: JavaScript ESM, not a TypeScript migration.</li>
+<li>Security: full blocking baseline.</li>
+<li>PBT: partial, focused on deterministic/stateful logic.</li>
+<li>Resiliency extension: formal extension off; product recovery requirements retained.</li>
+</ol>
+<p>Important reasoning:</p>
+<ul>
+<li>Mock/Live was deliberately resolved to the stronger process/workspace separation because the original review history already required isolation.</li>
+<li>JavaScript ESM was retained to avoid an unapproved language/build migration from the existing product baseline.</li>
+</ul>
+<h3 id="c-first-consolidated-requirements-review">C. First consolidated Requirements review</h3>
+<p>Artifact:</p>
+<ul>
+<li><code>docs/aidlc/inception/requirements/requirements-review.md</code></li>
+</ul>
+<p>Findings:</p>
+<ul>
+<li>Extension rule identifiers had no provenance.</li>
+<li>Greenfield classification was ambiguous because the product baseline already existed.</li>
+<li>Canonical paths in the proposed consolidated document did not match the prepared files.</li>
+<li>Quantitative targets lacked a measurement contract.</li>
+</ul>
+<p>Disposition:</p>
+<ul>
+<li>Request Changes before final Requirements approval.</li>
+</ul>
+<h3 id="d-consolidated-requirements-revision-2">D. Consolidated Requirements revision 2</h3>
+<p>The submitted revision 2 addressed the first review by adding:</p>
+<ul>
+<li>two-dimensional project classification:<ul>
+<li>greenfield AI-DLC construction workspace;</li>
+<li>existing/brownfield MindCraft product baseline;</li>
+</ul>
+</li>
+<li>a declared canonical SSOT path and no-duplicate policy;</li>
+<li>supplementary evidence contracts for FR-01, FR-05, FR-09, FR-10, and FR-11;</li>
+<li>a D5 measurement contract;</li>
+<li>explicit JavaScript type-safety tasks;</li>
+<li>extension source/tag/commit/path/hash provenance.</li>
+</ul>
+<h3 id="e-revision-2-review">E. Revision 2 review</h3>
+<p>Artifact:</p>
+<ul>
+<li><code>docs/aidlc/inception/requirements/requirements-rev2-review.md</code></li>
+</ul>
+<p>Remaining blockers:</p>
+<ol>
+<li>Workspace identity and canonical paths could not be independently verified from the connected workspace.</li>
+<li>The recovery target said “100% of committed checkpoints restored” while the corruption test intentionally rejects a corrupt committed checkpoint and falls back to the previous valid checkpoint.</li>
+</ol>
+<p>Remaining non-blocking improvements:</p>
+<ul>
+<li>add missing NFR section heading;</li>
+<li>attach machine-verifiable extension-rule manifest;</li>
+<li>define cross-mode/workspace resume behavior;</li>
+<li>define Knowledge/file conflict semantics;</li>
+<li>clarify credential-presence diagnostics;</li>
+<li>pin the JSDoc/type-check toolchain;</li>
+<li>map PBT IDs to exact source headings.</li>
+</ul>
+<p>Disposition:</p>
+<ul>
+<li>Request targeted changes before final Requirements approval.</li>
+</ul>
+<h2 id="2-lessons-for-a-future-rewrite">2. Lessons for a future rewrite</h2>
+<h3 id="21-establish-provenance-before-content-expansion">2.1 Establish provenance before content expansion</h3>
+<p>Before writing functional requirements, record:</p>
+<pre><code class="language-text">workspace identity
+canonical requirements path
+canonical constraints path
+product baseline path
+reference-only paths
+AI-DLC rules repository/tag/commit
+installed rule-file paths and hashes
+</code></pre>
+<p>If any value is not verified, mark it <code>Pending verification</code>; never present it as an established fact.</p>
+<h3 id="22-separate-three-kinds-of-truth">2.2 Separate three kinds of truth</h3>
+<p>Every statement should be labeled or traceable as one of:</p>
+<ol>
+<li>product SSOT;</li>
+<li>AI-DLC process rule;</li>
+<li>proposed decision or acceptance refinement.</li>
+</ol>
+<p>Do not turn a proposed answer into a product fact without recording the decision source.</p>
+<h3 id="23-define-invariants-before-metrics">2.3 Define invariants before metrics</h3>
+<p>For stateful systems, define valid/invalid states before writing percentage targets. For checkpoint recovery, distinguish:</p>
+<ul>
+<li>intact committed data;</li>
+<li>uncommitted/torn data;</li>
+<li>checksum-invalid data;</li>
+<li>fallback behavior;</li>
+<li>immutable historical records.</li>
+</ul>
+<p>Only then define “100% recovery” precisely.</p>
+<h3 id="24-keep-extension-ids-source-backed">2.4 Keep extension IDs source-backed</h3>
+<p>Do not introduce identifiers such as <code>SECURITY-*</code> or <code>PBT-*</code> unless the exact source rule set is attached or pinned by repository, tag/commit, path, and hash.</p>
+<h3 id="25-keep-classification-multidimensional">2.5 Keep classification multidimensional</h3>
+<p>“Greenfield” and “brownfield” can describe different dimensions:</p>
+<ul>
+<li>construction workspace state;</li>
+<li>product/repository baseline state.</li>
+</ul>
+<p>State both instead of forcing one label to describe both.</p>
+<h3 id="26-make-acceptance-evidence-executable-or-auditable">2.6 Make acceptance evidence executable or auditable</h3>
+<p>Every acceptance contract should name:</p>
+<ul>
+<li>the observable behavior;</li>
+<li>the evidence type;</li>
+<li>the test/manual owner;</li>
+<li>the environment;</li>
+<li>the reproducible command or checklist;</li>
+<li>what the evidence does not prove.</li>
+</ul>
+<h2 id="3-workspace-provenance-split--pending-resolution">3. Workspace provenance split — pending resolution</h2>
+<p>A later review identified that the project owner is working in a separate AI-DLC agent environment from this Discord agent. The project owner directly verified the intended workspace, canonical requirements/constraints, and extension-rule files there. This Discord agent must not expose or substitute its own environment-specific paths when discussing that project.</p>
+<p>Current handling rule:</p>
+<ul>
+<li>Treat the project owner&#39;s stated AI-DLC workspace as the intended target for project decisions.</li>
+<li>Do not mention or substitute paths from this Discord agent&#39;s separate environment.</li>
+<li>Do not claim that separate agent environments are synchronized unless the project owner explicitly provides synchronization evidence.</li>
+<li>Keep provenance verification scoped to the intended project environment and the artifacts supplied from it.</li>
+</ul>
+<h2 id="4-historical-status">4. Historical status</h2>
+<p>This file is a reasoning record for future Requirements rewrites. It is not itself approval, does not authorize Construction, and must not be promoted into MindCraft runtime Knowledge automatically.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-timeline">1. Timeline</a></li><li><a href="#a-initial-inception-documents">A. Initial Inception documents</a></li><li><a href="#b-verification-answers">B. Verification answers</a></li><li><a href="#c-first-consolidated-requirements-review">C. First consolidated Requirements review</a></li><li><a href="#d-consolidated-requirements-revision-2">D. Consolidated Requirements revision 2</a></li><li><a href="#e-revision-2-review">E. Revision 2 review</a></li><li><a href="#2-lessons-for-a-future-rewrite">2. Lessons for a future rewrite</a></li><li><a href="#21-establish-provenance-before-content-expansion">2.1 Establish provenance before content expansion</a></li><li><a href="#22-separate-three-kinds-of-truth">2.2 Separate three kinds of truth</a></li><li><a href="#23-define-invariants-before-metrics">2.3 Define invariants before metrics</a></li><li><a href="#24-keep-extension-ids-source-backed">2.4 Keep extension IDs source-backed</a></li><li><a href="#25-keep-classification-multidimensional">2.5 Keep classification multidimensional</a></li><li><a href="#26-make-acceptance-evidence-executable-or-auditable">2.6 Make acceptance evidence executable or auditable</a></li><li><a href="#3-workspace-provenance-split--pending-resolution">3. Workspace provenance split — pending resolution</a></li><li><a href="#4-historical-status">4. Historical status</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../assets/pages.js"></script></body></html>

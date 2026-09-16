@@ -1,0 +1,100 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phase 4 — Knowledge 검색·검토·재사용 · MindCraft</title><link rel="stylesheet" href="../../assets/pages.css"></head><body><header><a class="brand" href="../../index.html">MindCraft <span>문서</span></a><nav><a href="../../index.html">← 전체 문서</a><a href="phase-04-knowledge-reuse.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="phase-4--knowledge-검색검토재사용">Phase 4 — Knowledge 검색·검토·재사용</h1>
+<h2 id="목표">목표</h2>
+<p>첫 번째 작업 결과가 Knowledge로 축적되고, 사용자가 승인한 내용만 다음 Run에 재사용되는 모습을 TUI에서 보여준다.</p>
+<h2 id="작업">작업</h2>
+<ol>
+<li>Knowledge 목록 화면을 추가한다.</li>
+<li>검색어와 관련도 정렬을 지원한다.</li>
+<li><code>captured</code>, <code>promoted</code>, <code>rejected</code> 상태를 명확히 표시한다.</li>
+<li>provenance(Task/Episode/Run/source)를 표시한다.</li>
+<li>상세 보기와 promote/reject action을 추가한다.</li>
+<li>다음 Run에 포함될 context preview를 제공한다.</li>
+<li>실제 포함된 Knowledge item과 제외된 item을 구분한다.</li>
+<li>검색 결과 부족 시 fallback 범위를 표시한다.</li>
+<li>redacted candidate가 승인 전 context에 들어가지 않는지 검증한다.</li>
+</ol>
+<h2 id="수정-후보">수정 후보</h2>
+<ul>
+<li><code>src/knowledge.mjs</code></li>
+<li><code>src/tui-runner.mjs</code></li>
+<li><code>src/tui-adapter.mjs</code></li>
+<li><code>src/mindcraft-app.mjs</code></li>
+<li><code>test/knowledge-ui-flow.test.mjs</code></li>
+<li><code>test/knowledge-reuse.test.mjs</code></li>
+</ul>
+<h2 id="완료-조건">완료 조건</h2>
+<pre><code class="language-text">Run 1 완료
+→ candidate 생성
+→ knowledge 목록 확인
+→ candidate promote
+→ Run 2 시작
+→ approved Knowledge attached 표시
+</code></pre>
+<p>화면에 다음 정보가 있어야 한다.</p>
+<ul>
+<li>Knowledge ID</li>
+<li>relevance</li>
+<li>status</li>
+<li>source</li>
+<li>연결 Task/Run</li>
+<li>이번 Run 포함 여부</li>
+<li>context 문자 수</li>
+</ul>
+<h2 id="검증">검증</h2>
+<pre><code class="language-sh">npm run build
+npm test
+</code></pre>
+<h2 id="작업-시작-프롬프트">작업 시작 프롬프트</h2>
+<pre><code class="language-text">MindCraft 저장소에서 Phase 4인 Knowledge 검색·검토·재사용 workflow를 구현해줘.
+
+목표:
+- TUI에서 Knowledge 목록, 검색, 상세, promote, reject를 사용할 수 있게 한다.
+- provenance와 relevance를 표시한다.
+- promoted Knowledge만 다음 Run context에 포함한다.
+- captured/rejected item은 자동 context에 포함하지 않는다.
+- context preview와 fallback 범위를 표시한다.
+
+보안/데이터 요구:
+- candidate와 promoted 상태를 혼동하지 않는다.
+- raw data와 metadata/provenance를 분리 보존한다.
+- secret redaction을 유지한다.
+- Knowledge 내용을 Run record에 불필요하게 중복 저장하지 않는다.
+
+완료 조건:
+- 첫 Run 결과 capture → promote → 두 번째 Run 재사용 테스트
+- 검색/관련도/상태 표시 테스트
+- 승인 전 candidate 제외 테스트
+- npm run build와 npm test 통과
+
+변경한 schema가 기존 state/knowledge reload와 호환되는지 확인해줘.
+</code></pre>
+<h2 id="phase-4-수행-기록">Phase 4 수행 기록</h2>
+<h3 id="기준선">기준선</h3>
+<ul>
+<li>시작 branch: <code>master</code></li>
+<li>시작 HEAD: <code>9ddee48f3117339765d5c2eb1d4502d601bf6db9</code></li>
+<li>시작 working tree: clean; staged/unstaged 변경 없음</li>
+<li>기존 Phase 1~3: 기존 follow-up 문서와 105개 baseline 테스트로 확인</li>
+</ul>
+<h3 id="이번-변경">이번 변경</h3>
+<p>기존 <code>KnowledgeService</code>와 application dispatcher/Pi session 경계를 유지하면서 다음만 보완했다.</p>
+<ul>
+<li>capture candidate는 redacted content와 SHA-256 revision/digest, Task/Episode/Run/source URI/timestamp provenance를 저장하고, 같은 source Run의 재시도는 기존 item을 반환한다.</li>
+<li><code>buildContext</code>가 promoted 필터→관련 검색→동일 budget의 전체 promoted 검색→scope/secret/internal/binary/generated/vendor 제외 파일 fallback 순서를 단일 경로로 제공한다. 실제 점수가 없으므로 score를 만들지 않고 manifest와 제외 사유를 보존한다.</li>
+<li><code>MindCraftApp.previewKnowledge</code>와 Run 실행이 같은 context builder를 사용한다. Run manifest에는 실제 Knowledge ID/revision 또는 workspace digest, 순서, 길이, fallback/제외 사유가 기록된다.</li>
+<li>CLI/TUI 공통 command dispatcher에 <code>knowledge [query]</code>, <code>knowledge-detail</code>, <code>promote</code>, <code>reject-knowledge</code>, <code>preview</code>를 연결했다. captured/rejected는 context에 들어가지 않는다.</li>
+<li>capture 실패는 Run 성공과 분리되고 <code>knowledgeCapture.status=failed, retryable=true</code>로 남는다. provider/tool 재실행 없이 <code>retryCapture</code>를 호출할 수 있다.</li>
+</ul>
+<h3 id="실제-검증">실제 검증</h3>
+<ul>
+<li><code>npm run build</code> — 통과</li>
+<li><code>npm test</code> — 통과, 108 tests / 108 pass / 0 fail</li>
+</ul>
+<p>추가한 <code>test/phase-04-knowledge-reuse.test.mjs</code>가 capture→promote→실제 Run 2 prompt/manifest, 안전한 파일 fallback, idempotent capture retry를 검증한다. Windows Terminal 및 live provider 호출은 로컬 검증에 포함하지 않았다.</p>
+<h3 id="남은-문제와-다음-조건">남은 문제와 다음 조건</h3>
+<ul>
+<li>파일 fallback의 실제 디렉터리 스캔은 기존 Agent tool 승인 경계를 우회하지 않도록 자동 추가하지 않았다. 호출자가 승인된/허용된 파일 목록을 context builder에 제공해야 한다.</li>
+<li>tokenizer 기반 상한은 아직 없으며 기존 보수적 문자 예산(2,000)을 사용한다.</li>
+<li>Phase 5는 이 Run manifest와 <code>knowledgeCapture</code>/provenance를 조회해 status/history를 구성해야 한다.</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#목표">목표</a></li><li><a href="#작업">작업</a></li><li><a href="#수정-후보">수정 후보</a></li><li><a href="#완료-조건">완료 조건</a></li><li><a href="#검증">검증</a></li><li><a href="#작업-시작-프롬프트">작업 시작 프롬프트</a></li><li><a href="#phase-4-수행-기록">Phase 4 수행 기록</a></li><li><a href="#기준선">기준선</a></li><li><a href="#이번-변경">이번 변경</a></li><li><a href="#실제-검증">실제 검증</a></li><li><a href="#남은-문제와-다음-조건">남은 문제와 다음 조건</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../assets/pages.js"></script></body></html>

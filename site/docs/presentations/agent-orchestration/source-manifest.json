@@ -1,0 +1,160 @@
+{
+  "collectedAt": "2026-09-07T14:59:54.453694+00:00",
+  "sourceContext": "Two DDT research calls, product Git, separate AI-DLC workspace, Astra activity and Windows execution. Raw histories remain private.",
+  "files": [
+    {
+      "artifact": "ddt-story-plan-review.txt",
+      "sha256": "2883f52e3921230a285d423768125d8ab94011bc8cbcc1afda1a70a060a8fad6",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "ddt-stories-review.txt",
+      "sha256": "59ca8694ccbad36ad122ba46359936016d26e4346bf5139feaac54d96a32ea3e",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "ddt-stories-rereview.txt",
+      "sha256": "a3991822fc861c59add1312467bd5a547b188082db026013b6f6b9c470923e16",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "ddt-workflow-review.txt",
+      "sha256": "5897202fd39facb02e60eeaf33986ce0564fc88b5ba02c479bfc97ef878f695b",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "ddt-workflow-rereview.txt",
+      "sha256": "9bfa3df43874d696cdf33b0ff6e2ff7ccfdec97a1253997881cd65633223dbf0",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "ddt-workflow-final-review.txt",
+      "sha256": "0c4b601697ada73502e8a5db4fe17cfe91ce4ede4a67da70ef659363844425c0",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "ddt-application-plan-rereview.txt",
+      "sha256": "cc247d42e7e17dec734dbc39df91f062cc1e9653f5d735bc54159ab07d2dfe5e",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "inception/user-stories/review-response.md",
+      "sha256": "78445bf903edf0629de67386ed3ca196d037eb26e5a2e95d68c4f1ee427d248d",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "inception/application-design/plan-approval.md",
+      "sha256": "09e750b71b842baa9a913b1dba57f1deb7b28d500aa270e354d1f99fad1e6d0d",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "aidlc-state.md",
+      "sha256": "b1f7d1130abdfe65054fccb61eddb4dd45e3c7d11a7613ac898d807b39d382fb",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "interaction-001-claude-result.json",
+      "sha256": "7cfb4c84210e6e6e389b9ebfca54272ddae2d6daf84825501bd63714784b7653",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "stories-revision-claude-result.json",
+      "sha256": "1870c32aaaf1f79c5b14d0d63a8a61c40a00783fe7612b1d519a8dafa85ce765",
+      "type": "local-ai-dlc-record",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "tools/Invoke-AiDlc.ps1",
+      "sha256": "2b38b767179dd81e484f3f39d4254801268bf822165b97bc7cc8a91d6eff78cc",
+      "type": "local-orchestration-source",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "tools/claude-hook.mjs",
+      "sha256": "29ea3896bf3724b142ffd6c2146a78f5889d289364b72011aa6f35efb1415be7",
+      "type": "local-orchestration-source",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "tools/checkpoint.mjs",
+      "sha256": "6cdcfd033e859585ad6d14570c1261db18874b2a1f83ce272151e63d6c9f57ca",
+      "type": "local-orchestration-source",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "tools/review.mjs",
+      "sha256": "8cab1cf0d31990a187a2d76f4295543ba2f1e08ce3c511c4fc570a2853e64fe3",
+      "type": "local-orchestration-source",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    },
+    {
+      "artifact": "ddt-history-response.txt",
+      "sha256": "a83b7874cc877f3fc76069e6fe9188796832a3932b77201ece4c259a3c237521",
+      "type": "private-research-capture",
+      "publication": "curated-summary-only; raw-private"
+    },
+    {
+      "artifact": "ddt-followup-response.txt",
+      "sha256": "af727f4e0684e107811a3ea1ba12f1b0273628eeecd9dbd0d65ae1da0a8e7623",
+      "type": "private-research-capture",
+      "publication": "curated-summary-only; raw-private"
+    },
+    {
+      "artifact": "wsl-workflow.json",
+      "sha256": "38d3a4cfd663ba131273346d2f701f14ea2a674e8ccfc34903c208bce09184e4",
+      "type": "private-research-capture",
+      "publication": "curated-summary-only; raw-private"
+    },
+    {
+      "artifact": "wsl-excerpts.json",
+      "sha256": "c3845d727174de597b0c58d3bd5e9faac52a5ad819591762fe9a58de9b834617",
+      "type": "private-research-capture",
+      "publication": "curated-summary-only; raw-private"
+    },
+    {
+      "artifact": "aidlc-continue.json",
+      "sha256": "23e9e292b689a1ced8a522396e83f6327e81e22a5f275058f227953879b41065",
+      "type": "private-research-capture",
+      "publication": "curated-summary-only; raw-private"
+    },
+    {
+      "artifact": "windows-build.json",
+      "sha256": "da97f5d801e41e6482a8c14ee93a2c7a0b69e88e62d6c9fed9d94d1d668d223d",
+      "type": "private-research-capture",
+      "publication": "curated-summary-only; raw-private"
+    },
+    {
+      "artifact": "assets/windows-tui-before.png",
+      "sha256": "ffc05ef4754c4f793661508158996c496cf2ced76d1167ddbe4899cef19add53",
+      "type": "actual-windows-tui-screenshot",
+      "publication": "included-unmodified"
+    },
+    {
+      "artifact": "assets/windows-tui-fixed.png",
+      "sha256": "14e040b9af77d5eceb3f6d22349a8a2e9c5167837483c6cb2b5997d04efc2363",
+      "type": "actual-windows-tui-screenshot",
+      "publication": "included-unmodified"
+    },
+    {
+      "artifact": "windows-tui-20260907/DDT-REVIEW.md",
+      "sha256": "f63c7b6197ce32f1a185a42337b78c45097a007c6b477c24c364815ac3be00f6",
+      "type": "ddt-external-results-receipt",
+      "publication": "summary-in-research-dossier.md-and-evidence.md"
+    }
+  ],
+  "ddtResearchSessions": [
+    "20260907_143253_bd52ac",
+    "20260907_143851_3d4daf"
+  ]
+}

@@ -1,0 +1,69 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phase 5 — 상태·복구·관찰성 · MindCraft</title><link rel="stylesheet" href="../../assets/pages.css"></head><body><header><a class="brand" href="../../index.html">MindCraft <span>문서</span></a><nav><a href="../../index.html">← 전체 문서</a><a href="phase-05-status-recovery.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="phase-5--상태복구관찰성">Phase 5 — 상태·복구·관찰성</h1>
+<h2 id="목표">목표</h2>
+<p>데모 중 실패·중단이 발생해도 상태를 잃지 않고, 사용자가 다음 행동을 알 수 있게 한다.</p>
+<h2 id="작업">작업</h2>
+<ol>
+<li><code>status</code>를 사람이 읽기 좋은 화면으로 개선한다.</li>
+<li>Task/Episode/Run별 상태와 ID를 표시한다.</li>
+<li>latest event, approval 결과, Knowledge metric을 요약한다.</li>
+<li>Run 중단 시 aborted, process 재시작 시 recoverable을 명확히 표시한다.</li>
+<li>recoverable Run에 대해 resume action을 제공한다.</li>
+<li>기존 Run을 덮어쓰지 않고 resumedFrom 연결을 유지한다.</li>
+<li>실패 원인과 다음 행동을 표시한다.</li>
+<li>JSONL torn tail과 checksum 오류 복구를 검증한다.</li>
+<li>session dispose와 event unsubscribe를 성공·실패·cancel 모두에서 보장한다.</li>
+</ol>
+<h2 id="수정-후보">수정 후보</h2>
+<ul>
+<li><code>src/mindcraft-app.mjs</code></li>
+<li><code>src/workflow-repository.mjs</code></li>
+<li><code>src/tui-runner.mjs</code></li>
+<li><code>src/tui-adapter.mjs</code></li>
+<li><code>test/recovery-ui.test.mjs</code></li>
+<li><code>test/status-summary.test.mjs</code></li>
+</ul>
+<h2 id="완료-조건">완료 조건</h2>
+<pre><code class="language-text">Run 실행 중 중단
+→ 재시작
+→ recoverable 표시
+→ resume
+→ 기존 Run 보존
+→ 새 Run 생성 및 resumedFrom 표시
+</code></pre>
+<p>status 화면은 최소 다음을 보여준다.</p>
+<ul>
+<li>workspace</li>
+<li>current Task</li>
+<li>latest Run</li>
+<li>Run status</li>
+<li>Model/purpose</li>
+<li>Knowledge 사용량</li>
+<li>승인/거부 요약</li>
+<li>next action</li>
+</ul>
+<h2 id="검증">검증</h2>
+<pre><code class="language-sh">npm run build
+npm test
+</code></pre>
+<h2 id="작업-시작-프롬프트">작업 시작 프롬프트</h2>
+<pre><code class="language-text">MindCraft 저장소에서 Phase 5인 상태·복구·관찰성을 구현해줘.
+
+목표:
+- TUI status를 사람이 읽기 쉬운 요약 화면으로 개선한다.
+- interrupted running Run을 recoverable로 표시한다.
+- resume은 기존 Run을 보존하고 새 Run을 만들며 resumedFrom을 기록한다.
+- cancel, provider/session failure, knowledge capture failure를 서로 구분한다.
+- 각 실패 상황에서 사용자가 취할 다음 행동을 표시한다.
+
+제약:
+- append-only/checksum persistence를 유지한다.
+- 기존 completed/failed/aborted 상태를 recoverable로 잘못 분류하지 않는다.
+- session dispose와 unsubscribe를 모든 terminal path에서 보장한다.
+
+완료 조건:
+- 중단→재시작→resume 테스트
+- status 요약 테스트
+- torn JSONL tail 및 checksum recovery 테스트
+- npm run build와 npm test 통과
+</code></pre>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#목표">목표</a></li><li><a href="#작업">작업</a></li><li><a href="#수정-후보">수정 후보</a></li><li><a href="#완료-조건">완료 조건</a></li><li><a href="#검증">검증</a></li><li><a href="#작업-시작-프롬프트">작업 시작 프롬프트</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../assets/pages.js"></script></body></html>

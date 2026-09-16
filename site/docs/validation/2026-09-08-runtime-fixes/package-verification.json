@@ -1,0 +1,27 @@
+{
+  "sourceRevision": "57c859f6ea6f229fe3260dbd5f5a1a18ca530fb6",
+  "launcherReused": true,
+  "files": 27602,
+  "checks": [
+    {
+      "sourceMatchesPackage": true,
+      "manifestMatchesPackage": true,
+      "file": "cli.mjs"
+    },
+    {
+      "sourceMatchesPackage": true,
+      "manifestMatchesPackage": true,
+      "file": "mindcraft-app.mjs"
+    },
+    {
+      "sourceMatchesPackage": true,
+      "manifestMatchesPackage": true,
+      "file": "pi-tools.mjs"
+    },
+    {
+      "sourceMatchesPackage": true,
+      "manifestMatchesPackage": true,
+      "file": "tui-runner.mjs"
+    }
+  ]
+}

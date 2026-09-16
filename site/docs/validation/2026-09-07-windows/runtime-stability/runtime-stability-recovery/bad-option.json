@@ -1,0 +1,10 @@
+{
+  "name": "bad-option",
+  "code": 2,
+  "events": [
+    {
+      "at": 1788791186665,
+      "output": "error: Unknown launch option: --unknown\n"
+    }
+  ]
+}

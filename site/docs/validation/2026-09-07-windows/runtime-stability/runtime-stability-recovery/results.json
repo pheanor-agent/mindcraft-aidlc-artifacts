@@ -1,0 +1,56 @@
+{
+  "time": "2026-09-07T14:26:42.245Z",
+  "exe": "C:\\Users\\bot\\Documents\\ChatGPT\\mindcraft\\windows-validation\\dist\\windows-package\\MindCraft.exe",
+  "results": [
+    {
+      "name": "ConPTY resize 50x15",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ConPTY resize 180x50",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ConPTY resize 80x24",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ConPTY resize 120x35",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "TUI quit after resize",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "unknown option rejected",
+      "pass": false,
+      "detail": "error: Unknown launch option: --unknown\n"
+    },
+    {
+      "name": "corrupt config controlled failure",
+      "pass": false,
+      "detail": "error: invalid config — Expected property name or '}' in JSON at position 1 (line 1 column 2)\n"
+    },
+    {
+      "name": "cancel approval-waiting run",
+      "pass": true,
+      "detail": "> cancel\nevent=tool_decision\nevent=tool_decision\nevent=undefined\ncancel=aborted\nmindcraft> event=tool_decision\nevent=tool_decision\nerror: session.prompt cancelled\nmindcraft> event=tool_decision\n"
+    },
+    {
+      "name": "responsive after cancellation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "force kill command",
+      "pass": false,
+      "detail": "{\"status\":1,\"stdout\":\"\",\"stderr\":\"ERROR: Access denied\\r\\r\\n\"}"
+    }
+  ]
+}

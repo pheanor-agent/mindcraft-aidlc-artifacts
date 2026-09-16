@@ -1,0 +1,128 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft Requirements Rev. 2 — Review · MindCraft</title><link rel="stylesheet" href="../../../../assets/pages.css"></head><body><header><a class="brand" href="../../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../../index.html">← 전체 문서</a><a href="requirements-rev2-review.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-requirements-rev-2--review">MindCraft Requirements Rev. 2 — Review</h1>
+<ul>
+<li>Review target: user-provided <code>requirements.md</code> (Requirements, Inception, Consolidated, rev. 2)</li>
+<li>Review type: consistency, traceability, acceptance-readiness, approval-gate review</li>
+<li>Review basis: original requirements/constraints, verification answers, prior review, and the supplied rev. 2 content</li>
+<li>Verdict: <strong>Nearly ready — conditional approval after targeted corrections</strong></li>
+<li>Construction authorization: <strong>Not granted by this review</strong></li>
+</ul>
+<h2 id="1-executive-summary">1. Executive summary</h2>
+<p>Rev. 2 successfully addresses the previous review&#39;s major concerns:</p>
+<ul>
+<li>It distinguishes the greenfield AI-DLC construction workspace from the existing/brownfield product baseline.</li>
+<li>It declares a single canonical SSOT path and rejects duplicate editable copies.</li>
+<li>It adds supplementary acceptance/evidence contracts for D1–D4.</li>
+<li>It adds a quantitative measurement contract for D5.</li>
+<li>It registers concrete JavaScript type-safety tasks.</li>
+<li>It adds extension-rule provenance, source paths, version, commit, and hashes.</li>
+</ul>
+<p>The document is therefore substantially stronger and is suitable as an <strong>Inception Requirements candidate</strong>. Two issues remain blocking for final approval, plus several non-blocking clarifications.</p>
+<h2 id="2-blocking-findings">2. Blocking findings</h2>
+<h3 id="b-01--canonical-path-and-workspace-identity-cannot-be-verified-from-the-current-evidence">B-01 — Canonical path and workspace identity cannot be verified from the current evidence</h3>
+<p><strong>Severity:</strong> High — provenance/SSOT blocker</p>
+<p>The document claims that the canonical files are physically present at:</p>
+<pre><code class="language-text">requirements/requirement.md
+requirements/constraint.md
+</code></pre>
+<p>and that the construction workspace is:</p>
+<pre><code class="language-text">/home/bot/ai-dlc/mindcraft
+</code></pre>
+<p>In the currently connected workspace used for this review, the discoverable files are instead:</p>
+<pre><code class="language-text">/opt/data/workspace/mindcraft/docs/aidlc/inception/requirements/requirement.md
+/opt/data/workspace/mindcraft/docs/aidlc/inception/constraints/constraint.md
+/opt/data/workspace/mindcraft/package.json
+</code></pre>
+<p>No <code>requirements/requirement.md</code> or <code>requirements/constraint.md</code> was discoverable there, and no <code>.aidlc-rule-details</code> extension files were discoverable there.</p>
+<p>This may simply mean that the submitted document describes a different AI-DLC workspace. It must not be silently treated as the same workspace.</p>
+<p><strong>Required action:</strong> record one of the following explicitly:</p>
+<ol>
+<li>The review is for <code>/home/bot/ai-dlc/mindcraft</code>, and provide/attach a manifest proving the canonical files and extension files exist there; or</li>
+<li>The review is for the connected <code>/opt/data/workspace/mindcraft</code> workspace, and update the paths to the actual canonical locations; or</li>
+<li>Mark the submitted paths and provenance as an external workspace claim that is pending independent verification.</li>
+</ol>
+<p>Do not approve final Requirements provenance until workspace identity is unambiguous.</p>
+<h3 id="b-02--recovery-target-conflicts-with-corruption-fallback-behavior">B-02 — Recovery target conflicts with corruption fallback behavior</h3>
+<p><strong>Severity:</strong> High — acceptance-contract blocker</p>
+<p>The D5 definition says:</p>
+<blockquote>
+<p>recovery success = 100% of committed checkpoints restored</p>
+</blockquote>
+<p>But the corruption test intentionally corrupts a committed checkpoint and expects the system to reject it and fall back to the prior valid committed checkpoint.</p>
+<p>A corrupted committed checkpoint cannot simultaneously be restored and rejected. The intended contract is likely:</p>
+<ul>
+<li>all <strong>valid committed checkpoints</strong> before interruption are recoverable;</li>
+<li>a corrupt or checksum-invalid checkpoint is detected and rejected;</li>
+<li>recovery falls back to the latest prior valid checkpoint;</li>
+<li>no uncommitted/torn checkpoint is accepted;</li>
+<li>the recovery outcome records that data loss may exist after the last valid checkpoint.</li>
+</ul>
+<p><strong>Required action:</strong> replace the 100% statement with a two-part target, for example:</p>
+<pre><code class="language-text">For an intact store, 100% of committed checkpoints are restorable.
+For corruption scenarios, invalid checkpoints are detected and rejected, and recovery selects the latest prior valid checkpoint without mutating the original Run.
+</code></pre>
+<p>Then define whether “100%” applies per test fixture, per checkpoint, or across a CI run.</p>
+<h2 id="3-non-blocking-findings-and-recommended-corrections">3. Non-blocking findings and recommended corrections</h2>
+<h3 id="n-01--section-numberingstructure">N-01 — Section numbering/structure</h3>
+<p>After <code>## 2a. Supplementary Acceptance &amp; Evidence Contracts</code>, the NFR bullets appear without an explicit <code>## 3. Non-Functional Requirements</code> heading. Add the missing heading and renumber subsequent sections if needed. This is a documentation-quality issue but important for traceability citations.</p>
+<h3 id="n-02--extension-provenance-should-include-verification-evidence">N-02 — Extension provenance should include verification evidence</h3>
+<p>The provenance block is much improved. Before final approval, add one machine-verifiable manifest entry or attached evidence containing:</p>
+<ul>
+<li>source file path;</li>
+<li>exact file size;</li>
+<li>SHA-256 computed from the installed file;</li>
+<li>commit/tag resolution evidence;</li>
+<li>date and command used for verification.</li>
+</ul>
+<p>The current connected workspace does not contain the claimed installed rule paths, so the hashes and commit cannot be independently verified here. Treat them as supplied claims until verified in the named workspace.</p>
+<h3 id="n-03--d3-processworkspace-isolation-needs-lifecycle-semantics">N-03 — D3 process/workspace isolation needs lifecycle semantics</h3>
+<p>The document correctly requires separate process and workspace per mode. Add the rule for what happens when a user attempts to resume a Run in a different mode/workspace:</p>
+<ul>
+<li>reject by default, or</li>
+<li>create a new Run only after explicit migration/reconciliation approval.</li>
+</ul>
+<p>Also specify that the persisted mode/workspace identity is immutable for the Run.</p>
+<h3 id="n-04--d4-source-precedence-needs-conflict-semantics">N-04 — D4 source precedence needs conflict semantics</h3>
+<p>The document says the live explicit file is authoritative when it overlaps approved Knowledge. Define how conflicts are represented:</p>
+<ul>
+<li>both source IDs remain in the manifest;</li>
+<li>the Knowledge item is not silently overwritten;</li>
+<li>the conflict is visible to the user or audit record;</li>
+<li>context assembly uses the selected precedence deterministically.</li>
+</ul>
+<h3 id="n-05--d2-credential-check-wording">N-05 — D2 credential check wording</h3>
+<p>“Credential presence” should mean a non-secret reference/configuration is available, not that a credential value is copied into diagnostic output. Add an explicit statement that <code>doctor</code> reports presence/usable configuration status only and never logs credential material.</p>
+<h3 id="n-06--nfr-ts-02-toolchain-is-still-open">N-06 — NFR-TS-02 toolchain is still open</h3>
+<p><code>tsc --checkJs --noEmit or equivalent</code> is reasonable, but the exact tool and version should be selected during NFR Design. The phrase “no new any-equivalent gaps” needs an enforceable rule or should be removed until a lint/type policy is approved.</p>
+<h3 id="n-07--pbt-property-identifiers-need-exact-rule-mapping">N-07 — PBT property identifiers need exact rule mapping</h3>
+<p>The document says PBT-02/03/07/08/09 correspond to summarized concepts. Add the exact section/heading names from the pinned rule file, so a future rule update cannot silently change their meaning.</p>
+<h2 id="4-consistency-checks">4. Consistency checks</h2>
+<h3 id="passed">Passed</h3>
+<ul>
+<li>Greenfield construction workspace versus existing product baseline: clearly separated.</li>
+<li>AI-DLC versus runtime boundary: preserved.</li>
+<li>FR-05 isolation: consistent with D3.</li>
+<li>FR-09 resume: consistent with D1 and same-Episode contract.</li>
+<li>FR-01 freshness/reverification: concrete and testable.</li>
+<li>FR-10/FR-11 explicit files plus promoted Knowledge: bounded and manifestable.</li>
+<li>JavaScript ESM baseline: consistent with the existing product baseline.</li>
+<li>Security full + PBT partial + Resiliency formal extension off: internally coherent.</li>
+<li>Approval gate remains explicit and does not authorize implementation.</li>
+</ul>
+<h3 id="needs-the-corrections-above">Needs the corrections above</h3>
+<ul>
+<li>Workspace/path provenance.</li>
+<li>Checkpoint recovery wording.</li>
+<li>Extension-file verification evidence.</li>
+<li>Final document heading/section structure.</li>
+</ul>
+<h2 id="5-approval-recommendation">5. Approval recommendation</h2>
+<p><strong>Request targeted changes for B-01 and B-02.</strong></p>
+<p>After the workspace identity/canonical paths are verified and the recovery contract is corrected, the document can be approved as the Requirements Analysis output and used to produce:</p>
+<ul>
+<li>user stories and acceptance criteria;</li>
+<li>NFR Requirements and NFR Design;</li>
+<li>application design;</li>
+<li>construction-unit planning.</li>
+</ul>
+<p>Even after Requirements approval, a separate AI-DLC gate is still required before source-code generation or implementation begins.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-executive-summary">1. Executive summary</a></li><li><a href="#2-blocking-findings">2. Blocking findings</a></li><li><a href="#b-01--canonical-path-and-workspace-identity-cannot-be-verified-from-the-current-evidence">B-01 — Canonical path and workspace identity cannot be verified from the current evidence</a></li><li><a href="#b-02--recovery-target-conflicts-with-corruption-fallback-behavior">B-02 — Recovery target conflicts with corruption fallback behavior</a></li><li><a href="#3-non-blocking-findings-and-recommended-corrections">3. Non-blocking findings and recommended corrections</a></li><li><a href="#n-01--section-numberingstructure">N-01 — Section numbering/structure</a></li><li><a href="#n-02--extension-provenance-should-include-verification-evidence">N-02 — Extension provenance should include verification evidence</a></li><li><a href="#n-03--d3-processworkspace-isolation-needs-lifecycle-semantics">N-03 — D3 process/workspace isolation needs lifecycle semantics</a></li><li><a href="#n-04--d4-source-precedence-needs-conflict-semantics">N-04 — D4 source precedence needs conflict semantics</a></li><li><a href="#n-05--d2-credential-check-wording">N-05 — D2 credential check wording</a></li><li><a href="#n-06--nfr-ts-02-toolchain-is-still-open">N-06 — NFR-TS-02 toolchain is still open</a></li><li><a href="#n-07--pbt-property-identifiers-need-exact-rule-mapping">N-07 — PBT property identifiers need exact rule mapping</a></li><li><a href="#4-consistency-checks">4. Consistency checks</a></li><li><a href="#passed">Passed</a></li><li><a href="#needs-the-corrections-above">Needs the corrections above</a></li><li><a href="#5-approval-recommendation">5. Approval recommendation</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../../assets/pages.js"></script></body></html>

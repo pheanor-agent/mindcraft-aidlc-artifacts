@@ -1,0 +1,78 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phase 1 — 초기화·Preflight·Model 설정 · MindCraft</title><link rel="stylesheet" href="../../assets/pages.css"></head><body><header><a class="brand" href="../../index.html">MindCraft <span>문서</span></a><nav><a href="../../index.html">← 전체 문서</a><a href="phase-01-preflight-and-config.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="phase-1--초기화preflightmodel-설정">Phase 1 — 초기화·Preflight·Model 설정</h1>
+<h2 id="목표">목표</h2>
+<p>새 사용자가 설정 파일을 직접 편집하지 않고도 데모를 시작할 수 있게 한다.</p>
+<h2 id="작업">작업</h2>
+<ol>
+<li><code>mindcraft init</code> 명령을 추가한다.</li>
+<li><code>mindcraft doctor</code> 명령을 추가한다.</li>
+<li>Model registry 설정 상태를 TUI 첫 화면에 표시한다.</li>
+<li>Model 0개, 1개, 2개 및 purpose 오류를 읽기 쉬운 메시지로 안내한다.</li>
+<li>provider/credential은 값 자체를 출력하지 않고 상태만 표시한다.</li>
+<li>workspace root와 state/knowledge 저장 가능 여부를 진단한다.</li>
+<li>데모용 설정을 초기화하는 경로를 제공한다.</li>
+<li>preflight 실패 시 AgentSession 또는 외부 Model 호출을 만들지 않는다.</li>
+</ol>
+<h2 id="수정-후보">수정 후보</h2>
+<ul>
+<li><code>src/cli.mjs</code></li>
+<li><code>src/config-store.mjs</code></li>
+<li><code>src/mindcraft-app.mjs</code></li>
+<li><code>src/tui-runner.mjs</code></li>
+<li><code>src/model-routing.mjs</code></li>
+<li><code>test/preflight.test.mjs</code></li>
+<li><code>test/config-flow.test.mjs</code></li>
+</ul>
+<h2 id="완료-조건">완료 조건</h2>
+<pre><code class="language-text">mindcraft doctor
+</code></pre>
+<p>실행 결과에 다음이 표시된다.</p>
+<ul>
+<li>Node.js</li>
+<li>Pi runtime</li>
+<li>workspace</li>
+<li>Model registry</li>
+<li>provider availability</li>
+<li>credential 상태</li>
+<li>storage 상태</li>
+</ul>
+<p>Model이 없으면 실행을 차단하고 다음 명령을 안내한다.</p>
+<pre><code class="language-text">mindcraft config add-model
+</code></pre>
+<h2 id="검증">검증</h2>
+<pre><code class="language-sh">npm run build
+npm test
+</code></pre>
+<p>추가로 다음 시나리오를 검증한다.</p>
+<ul>
+<li>빈 config</li>
+<li>잘못된 config</li>
+<li>Model 1개</li>
+<li>purpose가 다른 Model 2개</li>
+<li>unavailable Model</li>
+<li>credential 값 redaction</li>
+</ul>
+<h2 id="작업-시작-프롬프트">작업 시작 프롬프트</h2>
+<pre><code class="language-text">MindCraft 저장소에서 Phase 1인 초기화·Preflight·Model 설정을 구현해줘.
+
+목표:
+- 사용자가 config JSON을 직접 편집하지 않고 데모를 시작할 수 있게 한다.
+- mindcraft init과 mindcraft doctor를 제공한다.
+- 첫 실행 화면에서 workspace, Model, provider, storage 상태를 보여준다.
+- preflight 실패 시 AgentSession과 외부 Model 호출을 만들지 않는다.
+
+반드시 지킬 정책:
+- Model 0개는 fail-closed
+- Model 1개는 모든 용도에 사용
+- Model 2개는 서로 다른 purpose에 명시적으로 매핑
+- 자동 Model 추가와 자동 fallback 금지
+- credential 원문을 출력하지 않음
+
+완료 조건:
+- 빈/잘못된/정상 config 테스트 추가 및 통과
+- doctor 출력과 actionable error 구현
+- npm run build 통과
+- npm test 통과
+
+변경 파일, 정책 영향, 테스트 결과를 보고해줘.
+</code></pre>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#목표">목표</a></li><li><a href="#작업">작업</a></li><li><a href="#수정-후보">수정 후보</a></li><li><a href="#완료-조건">완료 조건</a></li><li><a href="#검증">검증</a></li><li><a href="#작업-시작-프롬프트">작업 시작 프롬프트</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../assets/pages.js"></script></body></html>

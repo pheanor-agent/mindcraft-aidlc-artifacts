@@ -1,0 +1,259 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft 상세 설계 및 리뷰 · MindCraft</title><link rel="stylesheet" href="assets/pages.css"></head><body><header><a class="brand" href="index.html">MindCraft <span>문서</span></a><nav><a href="index.html">← 전체 문서</a><a href="DESIGN.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-상세-설계-및-리뷰">MindCraft 상세 설계 및 리뷰</h1>
+<blockquote>
+<p>현재 제품은 Pi 기반 terminal TUI와 Episode 시작 시 1회 purpose-based Model selection을 기준으로 합니다. 과거 컨셉은 <code>docs/legacy/</code>에 보존합니다.</p>
+</blockquote>
+<p>작성 목적: 현재 0.1.0 구현을 실제 설치·실행 가능한 MVP로 정리하기 위한 설계 기준과 사전 리뷰 기록.</p>
+<h2 id="1-목표와-완료-기준">1. 목표와 완료 기준</h2>
+<h3 id="목표">목표</h3>
+<p>사용자가 프로젝트 directory에서 MindCraft를 실행하고 다음의 한 사이클을 안전하게 완료할 수 있어야 한다.</p>
+<pre><code class="language-text">초기화
+-&gt; 환경 preflight
+-&gt; Task 생성
+-&gt; Episode 생성
+-&gt; 승인된 Knowledge context 구성
+-&gt; 실행 전 승인/범위 확인
+-&gt; Pi AgentSession 실행
+-&gt; 결과 검증
+-&gt; Run/Knowledge 기록
+-&gt; status에서 결과 확인
+</code></pre>
+<h3 id="mvp-완료-기준">MVP 완료 기준</h3>
+<ul>
+<li>Node.js <code>&gt;=22.19.0</code>, npm, 선택한 provider의 credential/endpoint readiness를 실행 전에 명확히 검사한다.</li>
+<li>preflight 실패 시 외부 model 호출이나 agent session 생성을 하지 않는다.</li>
+<li>Task/Episode/Run의 상태 전이가 명시된 순서로만 일어난다.</li>
+<li>process 중단 뒤 <code>running</code> Run은 <code>recoverable</code>로 식별되고, resume은 새 Run을 만든다.</li>
+<li>승인된 Knowledge만 prompt context에 포함하며 candidate는 자동 승인하지 않는다.</li>
+<li>모든 custom tool은 GrantedScope와 approval 정책을 통과해야 실행된다.</li>
+<li>테스트에서 성공·실패·복구·scope 거부·credential 누락·CLI smoke flow를 검증한다.</li>
+<li>요구 Node runtime에서 <code>npm run build</code>, <code>npm test</code>, <code>npm run release:check</code>가 통과한다.</li>
+</ul>
+<h2 id="2-구성-요소와-책임">2. 구성 요소와 책임</h2>
+<pre><code class="language-text">CLI / TUI adapter
+        |
+        v
+MindCraftApp (orchestrator)
+  |       |          |
+  v       v          v
+Domain  Workflow   Knowledge
+        Repository  Service
+  |
+  v
+Preflight + Approval Policy
+        |
+        v
+Pi AgentSession -- selected provider/model
+        |
+        v
+MindCraft custom tools -&gt; GrantedScope -&gt; operation
+</code></pre>
+<h3 id="clitui">CLI/TUI</h3>
+<ul>
+<li>사용자 명령을 공통 application command dispatcher로 변환한다.</li>
+<li>상태 출력은 저장소의 최신 상태를 기준으로 한다.</li>
+<li>실행 중에는 prompt 중복 입력을 막고, <code>cancel</code>을 제공한다.</li>
+<li>비동기 입력은 <code>CommandQueue</code>로 직렬화하며, streaming event와 tool decision을 표시한다.</li>
+<li>상단 상태 표시에는 현재 Task/Episode/Run을 노출한다.</li>
+<li>UI는 orchestration/business rule을 포함하지 않는다.</li>
+</ul>
+<h3 id="mindcraftapp">MindCraftApp</h3>
+<ul>
+<li>Task/Episode/Run lifecycle을 조정한다.</li>
+<li><code>init()</code>은 repository journal 무결성을 먼저 확인한 뒤 runtime, knowledge를 준비하고 preflight 결과를 보관한다. 손상 시 runtime/provider/session을 시작하지 않는다.</li>
+<li><code>runNextEpisode()</code>는 preflight와 approval을 통과한 뒤에만 Run을 실행한다.</li>
+<li>모든 terminal path에서 Run과 Episode를 일관되게 저장한다.</li>
+<li>session dispose와 event unsubscribe는 성공·실패 모두 수행한다.</li>
+</ul>
+<h3 id="workflowrepository">WorkflowRepository</h3>
+<ul>
+<li>append-only JSONL과 checksum으로 기록한다.</li>
+<li>load 시 유효한 마지막 prefix만 replay하고 첫 손상 지점 이후는 무시한다.</li>
+<li>손상이 감지되면 <code>JOURNAL_CORRUPTED</code>를 반환하고 모든 append를 fail-closed한다.</li>
+<li>동일 entity의 latest record를 기준으로 상태를 재구성한다.</li>
+<li>향후 동시 writer가 필요하면 lock 또는 단일 writer queue를 추가한다.</li>
+</ul>
+<h3 id="knowledgeservice">KnowledgeService</h3>
+<ul>
+<li>candidate에는 task/episode/run/source/capturedAt provenance를 기록한다.</li>
+<li><code>captured -&gt; promoted|rejected</code> 전이는 review command만 수행한다.</li>
+<li>prompt에 들어가는 slice는 <code>promoted</code> 상태만 대상으로 하고 문자 수 제한을 지킨다.</li>
+<li>저장·출력·오류 경로에서 secret 패턴을 redaction한다.</li>
+</ul>
+<h3 id="safety-boundary">Safety boundary</h3>
+<ul>
+<li>read/write/command/network 요청을 서로 독립된 capability로 판단한다.</li>
+<li>default는 deny이며, write/command/network는 approval 없이는 실행하지 않는다.</li>
+<li>경로는 <code>realpath</code>/허용 root 기준으로 검증해 <code>..</code>, symlink escape를 차단한다.</li>
+<li>tool decision은 audit event로 Run에 기록한다.</li>
+</ul>
+<h2 id="3-상태-모델">3. 상태 모델</h2>
+<h3 id="task">Task</h3>
+<pre><code class="language-text">active -&gt; completed
+active -&gt; cancelled
+</code></pre>
+<h3 id="episode">Episode</h3>
+<pre><code class="language-text">queued -&gt; running -&gt; completed
+queued -&gt; running -&gt; failed|aborted
+</code></pre>
+<h3 id="run">Run</h3>
+<pre><code class="language-text">queued -&gt; running -&gt; completed
+queued -&gt; running -&gt; failed|aborted
+running (process restart) -&gt; recoverable -&gt; resumed
+</code></pre>
+<p><code>resumed</code>는 기존 Run의 terminal 상태이며, 실제 재실행은 새로운 Run ID로 기록한다. 상태 변경은 메모리 변경보다 repository commit을 우선한다.</p>
+<h2 id="4-실행-시퀀스">4. 실행 시퀀스</h2>
+<ol>
+<li>CLI가 App을 생성한다.</li>
+<li><code>init()</code>이 repository journal 무결성을 먼저 확인하고, 정상이면 Node/runtime/dependency와 선택한 provider/model 설정을 preflight한다.</li>
+<li>repository가 정상이면 knowledge를 load하고 recoverable Run을 표시한다.</li>
+<li><code>task</code>가 유효성 검사 후 Task를 생성하고 commit한다.</li>
+<li><code>run</code>이 현재 Task와 prompt를 검증한다.</li>
+<li>Episode와 queued Run을 commit한다.</li>
+<li>approval policy와 model availability를 확인한다.</li>
+<li>Run을 running으로 commit한다.</li>
+<li>Pi AgentSession을 생성하고 승인된 custom tools만 등록한다.</li>
+<li>prompt 및 Knowledge slice를 전달하고 idle까지 기다린다.</li>
+<li>assistant output을 검증하고 Run/Episode를 completed로 commit한다.</li>
+<li>결과를 redacted candidate로 capture한다.</li>
+<li>예외 시 error를 redaction한 뒤 failed/aborted 상태를 commit하고 원래 오류를 사용자에게 표시한다.</li>
+</ol>
+<h2 id="5-실패복구-설계">5. 실패·복구 설계</h2>
+<ul>
+<li>preflight 실패: Run을 생성하지 않고 actionable error를 출력한다.</li>
+<li>session 생성 실패: queued Run을 failed로 commit한다.</li>
+<li>prompt/idle 실패: running Run을 failed 또는 aborted로 commit한다.</li>
+<li>process restart: latest running Run을 recoverable로 재구성한다.</li>
+<li>resume: 기존 Run은 resumed로 commit하고, 새 Episode/Run을 생성한다.</li>
+<li>JSONL의 checksum 불일치 또는 잘린 마지막 줄: 해당 줄 이후를 replay하지 않는다.</li>
+<li>외부 API timeout/retry 정책은 provider adapter에 두고 App은 terminal 결과만 처리한다.</li>
+</ul>
+<h2 id="51-persistence-contract">5.1 Persistence contract</h2>
+<ul>
+<li>0.1.x는 하나의 MindCraft 프로세스가 state/Knowledge writer를 소유하는 단일 프로세스 모델이다. 여러 번의 순차 session은 지원하며, 각 session은 <code>sessionId</code>와 start/close record를 남긴다.</li>
+<li>동일 workspace의 process-level writer는 <code>${statePath}.lock</code> directory lock으로 하나만 허용한다. 소유 process가 종료된 stale lock만 다음 시작 시 복구한다. 병렬 writer/session은 현재 지원하지 않는다.</li>
+<li>프로세스 내부 append는 single-writer 순서로 처리한다. 메모리 상태를 먼저 성공으로 보고하지 않고, append 완료 이후에만 저장 성공으로 간주한다.</li>
+<li>JSONL은 record별 checksum을 사용하고, 첫 손상 이후의 record는 replay하지 않는다. 손상 이후 append는 <code>JOURNAL_CORRUPTED</code>로 차단한다. <code>mindcraft repair</code>만 원본을 backup하고 유효 prefix를 새 journal로 atomic 전환하며 <code>journal_repaired</code> audit를 남긴 뒤 쓰기를 재개한다.</li>
+<li>저장 실패는 호출자에게 전파한다. 승인·실행 시작 기록 실패는 side effect를 시작하지 않는 차단 사유다.</li>
+<li>journal rotation/compaction은 현재 MVP 범위가 아니다. journal 크기와 startup/status latency를 관찰한 뒤 별도 Task로 설계한다.</li>
+</ul>
+<h2 id="52-side-effect-uncertainty-contract">5.2 Side-effect uncertainty contract</h2>
+<pre><code class="language-text">approval_pending -&gt; approved -&gt; execution_started -&gt; executed
+                                  \-&gt; failed
+                                  \-&gt; unknown
+</code></pre>
+<ul>
+<li>승인 request는 immutable snapshot이며 requestId/runId, canonical target, payload digest 또는 exact executable/argv/cwd를 포함한다.</li>
+<li>decision과 execution_started 기록이 각각 성공한 뒤에만 write/command effect를 시작한다.</li>
+<li>effect 이후 결과 기록이 없거나 저장 실패가 발생하면 성공/미실행을 확정하지 않고 <code>unknown</code>/확인 필요로 표시한다.</li>
+<li><code>unknown</code> effect는 자동 재실행하지 않는다. read-only 확인 또는 사용자의 명시적 확인이 선행되어야 한다.</li>
+<li>journal과 외부 effect 사이의 원자적 exactly-once는 보장하지 않으며, 이를 보장한다고 문서화하지 않는다.</li>
+</ul>
+<h2 id="53-context-contract">5.3 Context contract</h2>
+<ul>
+<li>preview와 실제 Run은 동일한 ContextBuilder 경로를 사용한다.</li>
+<li>context 순서는 <code>관련 promoted Knowledge -&gt; 같은 범위의 전체 promoted Knowledge -&gt; 허용된 workspace 자료</code>다.</li>
+<li>captured/rejected Knowledge는 context에 포함하지 않는다.</li>
+<li>workspace 자료는 execution root 내부에서만 수집하며 <code>.mindcraft</code>, credential, binary, generated, vendor, 대형 파일을 제외하고 redaction과 자료 예산을 적용한다.</li>
+<li>Run 시작 직전에 context를 재계산하고, 확정된 item ID/revision 또는 file digest, 순서, 길이, 제외 사유를 manifest로 저장한다.</li>
+<li>tokenizer 기반 상한은 현재 제공하지 않으며, 보수적 문자 예산을 사용한다. 자동 Model switching은 하지 않는다.</li>
+</ul>
+<h2 id="54-phase-handoff-and-contextmanifest-contract">5.4 Phase handoff and ContextManifest contract</h2>
+<p>Workflow phase와 subagent 결과는 자유 형식 요약만으로 다음 단계에 전달하지 않는다. 각 handoff는 <code>src/context-handoff.mjs</code>의 schema v1 envelope로 source artifact path/SHA-256, producer, phase/status, projection, constraints, unresolved, validation을 기록한다.</p>
+<ul>
+<li>원본 artifact는 append-only로 보존하고 projection은 원본을 대체하지 않는다.</li>
+<li>다음 phase는 파일명·최신 수정시간이 아니라 handoff manifest와 digest를 사용한다.</li>
+<li>missing/stale/conflicting source, redaction 누락, budget 초과는 validator가 차단하거나 omission 사유를 기록한다.</li>
+<li><code>partial</code>/<code>blocked</code> subagent 결과는 <code>complete</code> 또는 <code>approved</code>로 자동 승격하지 않는다.</li>
+<li>ContextManifest는 included projection/claim, omitted claim/reason, handoff ID, source digest, handoff status/control metadata, execution eligibility, budget을 기록한다.</li>
+<li>현재 <code>src/context-handoff.mjs</code>는 독립 contract/validator와 테스트로 제공되며, 모든 runtime phase/subagent 전이에 자동 연결된 것은 아니다.</li>
+<li>runtime 연결 시 source snapshot/resolver를 반드시 전달해 missing/stale/conflict를 실행 전 검증한다.</li>
+</ul>
+<p>Phase 최소 handoff:</p>
+<pre><code class="language-text">investigation -&gt; evidence/claims/unresolved
+ design        -&gt; design/acceptance/traceability
+ review        -&gt; decision/blocking conditions
+ approval      -&gt; attestation snapshot
+ execution     -&gt; plan/attempt/observed result
+ test          -&gt; evidence/pass-fail
+</code></pre>
+<h2 id="55-process-cleanup-contract">5.5 Process cleanup contract</h2>
+<ul>
+<li>정상 완료·실패·cancel은 session dispose, event unsubscribe, child process 정리를 한 번만 시도한다.</li>
+<li>cancel은 <code>aborted</code>, timeout은 <code>failed</code> 또는 실행 결과 불확실 시 <code>unknown</code>으로 구분한다.</li>
+<li><code>AbortSignal</code>은 Run에서 custom tool과 command runner까지 전달한다. 승인 대기 중에는 pending approval을 무효화하고, 실행 중에는 signal abort가 process cleanup을 시작한다.</li>
+<li>child process를 생성하는 command는 timeout/cancel/output-limit 시 process tree 정리 정책을 적용한다. POSIX는 detached process group, Windows는 <code>taskkill /T /F</code>를 사용하며 단일 child 종료만으로 cleanup 완료를 주장하지 않는다.</li>
+<li><code>cancelRun</code>은 실행 중인 command/session의 completion barrier와 journal 기록이 정리된 뒤에만 <code>aborted</code>를 반환한다. cleanup 확인 전 사용자에게 중단 완료를 보고하지 않는다.</li>
+<li>command 결과 journal은 <code>cleanup.requested</code>, <code>cleanup.confirmed</code>, <code>cleanup.method</code>, <code>effectStatus</code>를 기록한다. 이미 관측된 완료 effect와 cancel/timeout 이후의 <code>uncertain</code> effect를 구분하며, 완료된 effect를 되돌렸다고 주장하지 않는다.</li>
+<li>강제 kill에서는 cleanup이 실행됐다고 가정하지 않고, 다음 시작 시 nonterminal Run을 recovery 규칙으로 처리한다.</li>
+</ul>
+<h2 id="55-mvp-performance-envelope">5.5 MVP performance envelope</h2>
+<ul>
+<li>현재 MVP는 소규모 개인 workspace와 단일 프로세스 실행을 대상으로 한다.</li>
+<li>state/Knowledge는 현재 전체 replay/search 구조를 사용하므로, 대규모 데이터에서의 성능을 보장하지 않는다.</li>
+<li>다음 최적화는 실제 benchmark 이후 결정한다: journal rotation/compaction, history pagination, Knowledge indexing, streaming parser.</li>
+<li>benchmark는 startup, status/history, Knowledge search, repair, peak memory, journal size를 측정하며 결과가 없는 성능 주장은 완료로 기록하지 않는다.</li>
+</ul>
+<h2 id="6-구현-단계와-검증-게이트">6. 구현 단계와 검증 게이트</h2>
+<h3 id="p0--실행-차단-제거">P0 — 실행 차단 제거</h3>
+<ul>
+<li>runtime preflight와 명확한 Node version error</li>
+<li>selected provider credential/model availability preflight</li>
+<li>초기화·session 생성 실패 시 상태 정리</li>
+<li>검증: Node 22 전체 test + CLI smoke + credential 누락 test</li>
+</ul>
+<h3 id="p1--안전성-보강--완료">P1 — 안전성 보강 — 완료</h3>
+<ul>
+<li>canonical path 및 symlink escape 방지</li>
+<li>approval decision과 denied operation audit</li>
+<li>검증: <code>..</code>, 절대경로, symlink, write/command deny 및 승인 전 side-effect 없음 test</li>
+</ul>
+<p>구현된 approval 상태는 <code>pending → approved|rejected → executed</code>이며, 모든 decision은
+Run event와 append-only repository audit record에 저장한다. TUI/CLI에서 <code>approvals</code>,
+<code>approve &lt;id&gt;</code>, <code>reject &lt;id&gt;</code> 명령을 사용한다.</p>
+<h3 id="p2--사용자-흐름--완료">P2 — 사용자 흐름 — 완료</h3>
+<ul>
+<li>CLI/TUI 공통 command dispatcher 및 command queue</li>
+<li><code>doctor</code>, <code>task</code>, <code>tasks</code>, <code>use</code>, <code>run</code>, <code>status</code>, <code>runs</code>, <code>resume</code>, <code>cancel</code>, <code>knowledge</code>, <code>promote</code> 연결</li>
+<li>TUI streaming event, tool decision, 승인 대기 대상/영향/위험, 현재 Task/Episode/Run 표시</li>
+<li>실행 중 중복 Run 차단 및 cancel 상태 영속화</li>
+<li>검증: command queue 순서 보장, approval 전 side-effect 없음, path/command deny, 기존 회귀 테스트 포함 99 tests pass</li>
+</ul>
+<h3 id="p3--배포">P3 — 배포</h3>
+<ul>
+<li>README와 package branch/version 정보 일치</li>
+<li>clean checkout 설치 test</li>
+<li><code>npm audit --audit-level=high</code></li>
+<li>release artifact 검토 후 승인 요청</li>
+</ul>
+<h2 id="7-사전-리뷰-결과">7. 사전 리뷰 결과</h2>
+<h3 id="critical">Critical</h3>
+<ol>
+<li><strong>Runtime mismatch</strong>: package는 Node <code>&gt;=22.19.0</code>인데 검증 환경은 Node 20이었다. Node 20에서 <code>undici</code> import 단계가 실패한다. 설치 script의 차단은 정상이며, 배포 전 Node 22가 필수다.</li>
+<li><strong>실패 상태 고착 가능성</strong>: <code>runNextEpisode()</code>에서 model 조회 또는 session 생성이 <code>try</code> 바깥에 있어 실패 시 이미 저장된 Run이 <code>running</code>으로 남을 수 있다. P0에서 terminal failure commit으로 수정해야 한다.</li>
+<li><strong>경로 escape 위험</strong>: 현재 scope 판정은 문자열 prefix만 검사하고 <code>readFile(params.path)</code>를 직접 호출한다. 상대경로·symlink 기준의 canonical root 검증이 필요하다.</li>
+</ol>
+<h3 id="high">High</h3>
+<ol start="4">
+<li><strong>Approval boundary</strong>: Phase 3에서 write/command approval lifecycle과 audit schema를 구현했다. network tool은 여전히 기본 차단 상태다.</li>
+<li><strong>TUI 범위</strong>: Phase 3에서 실제 write/command approval UX를 연결했다. Windows Terminal 실환경 리허설은 Phase 6의 후속 범위다.</li>
+<li><strong>통합 테스트 의존성</strong>: vertical slice test는 Airouter 환경/credential에 의존한다. credential 없는 CI에서는 deterministic mock provider와 별도 live smoke test를 분리해야 한다.</li>
+</ol>
+<h3 id="medium">Medium</h3>
+<ol start="7">
+<li>0.1.x는 single-process/single-workspace writer contract를 사용하며 workspace lock으로 두 번째 writer를 차단한다. multi-writer는 현재 비범위다.</li>
+<li><code>Task/Episode/Run</code> state transition이 domain 함수로 강제되지 않아 임의 상태 변경이 가능하다. P1 이후 transition API를 도입한다.</li>
+<li>README의 배포 branch(<code>master</code>)와 현재 local branch(<code>master</code>) 정보가 불일치한다는 문제는 해결했다. <code>main</code>은 초기 release/documentation 이력으로 보존한다.</li>
+<li><code>@sinclair/typebox</code>와 transitive <code>typebox</code>가 동시에 존재한다. 실제 API 호환성을 확인하고 불필요한 직접 dependency는 제거 검토한다.</li>
+</ol>
+<h2 id="8-리뷰-결론">8. 리뷰 결론</h2>
+<p>현재 구현은 <strong>Node 22.19.0 환경에서 실행 가능한 vertical-slice MVP</strong>로 판단된다. 다만 일반 사용자에게 &quot;즉시 사용 가능&quot;으로 배포하려면 최소한 P0의 세 항목(runtime/preflight, failure finalization, path boundary)을 먼저 통과시켜야 한다.</p>
+<p>리뷰 게이트:</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 요구 runtime에서 build/test/release-check 통과</li>
+<li><input checked="" disabled="" type="checkbox"> CLI 기동·status·quit smoke 확인</li>
+<li><input disabled="" type="checkbox"> P0 코드 보강</li>
+<li><input checked="" disabled="" type="checkbox"> P1 safety test 보강</li>
+<li><input disabled="" type="checkbox"> clean checkout 설치 검증</li>
+<li><input disabled="" type="checkbox"> 최종 배포 승인</li>
+</ul>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-목표와-완료-기준">1. 목표와 완료 기준</a></li><li><a href="#목표">목표</a></li><li><a href="#mvp-완료-기준">MVP 완료 기준</a></li><li><a href="#2-구성-요소와-책임">2. 구성 요소와 책임</a></li><li><a href="#clitui">CLI/TUI</a></li><li><a href="#mindcraftapp">MindCraftApp</a></li><li><a href="#workflowrepository">WorkflowRepository</a></li><li><a href="#knowledgeservice">KnowledgeService</a></li><li><a href="#safety-boundary">Safety boundary</a></li><li><a href="#3-상태-모델">3. 상태 모델</a></li><li><a href="#task">Task</a></li><li><a href="#episode">Episode</a></li><li><a href="#run">Run</a></li><li><a href="#4-실행-시퀀스">4. 실행 시퀀스</a></li><li><a href="#5-실패복구-설계">5. 실패·복구 설계</a></li><li><a href="#51-persistence-contract">5.1 Persistence contract</a></li><li><a href="#52-side-effect-uncertainty-contract">5.2 Side-effect uncertainty contract</a></li><li><a href="#53-context-contract">5.3 Context contract</a></li><li><a href="#54-phase-handoff-and-contextmanifest-contract">5.4 Phase handoff and ContextManifest contract</a></li><li><a href="#55-process-cleanup-contract">5.5 Process cleanup contract</a></li><li><a href="#55-mvp-performance-envelope">5.5 MVP performance envelope</a></li><li><a href="#6-구현-단계와-검증-게이트">6. 구현 단계와 검증 게이트</a></li><li><a href="#p0--실행-차단-제거">P0 — 실행 차단 제거</a></li><li><a href="#p1--안전성-보강--완료">P1 — 안전성 보강 — 완료</a></li><li><a href="#p2--사용자-흐름--완료">P2 — 사용자 흐름 — 완료</a></li><li><a href="#p3--배포">P3 — 배포</a></li><li><a href="#7-사전-리뷰-결과">7. 사전 리뷰 결과</a></li><li><a href="#critical">Critical</a></li><li><a href="#high">High</a></li><li><a href="#medium">Medium</a></li><li><a href="#8-리뷰-결론">8. 리뷰 결론</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="assets/pages.js"></script></body></html>

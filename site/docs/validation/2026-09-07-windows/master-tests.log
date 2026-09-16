@@ -1,0 +1,551 @@
+
+> mindcraft@0.1.0 test
+> node --test test/*.test.mjs
+
+✔ write remains pending without approval and executes only after approval (33.1453ms)
+✔ rejected writes have no side effect and produce a rejection audit state (26.6877ms)
+✔ CommandQueue preserves rapid input order even when commands await (11.8633ms)
+✔ application command flow selects a Task and lists its Run state (2.2173ms)
+✔ minimal Pi TUI adapter renders passive status only (2.2115ms)
+✔ resume rejects non-recoverable runs without asking (5.303ms)
+✔ release demo fixture creates the documented workspace from an empty checkout (143.3179ms)
+✔ fixture generation is deterministic and refuses unsafe content (86.1256ms)
+✔ scenario acceptance states are explicit (0.5724ms)
+✖ execution scope normalizes root and distinguishes contained paths (2.6896ms)
+✔ first-run setup configures a model and makes the same app runnable (87.6951ms)
+✔ installer stages, activates, rolls back, and preserves user data (72.0441ms)
+✔ metric separates promoted, matched, and included candidates (125.3744ms)
+✔ executionPromptChars equals the prompt sent to the session (13.8616ms)
+✔ execution prompt budget fails hard before session creation without truncation (3.8903ms)
+✔ baseline context is never smaller than selected context (6.4447ms)
+✔ no Knowledge produces zero savings (6.9294ms)
+✔ zero baseline has finite zero metrics (9.179ms)
+✔ oversized and query matching policies are reflected in metrics (4.4542ms)
+✔ Run metric survives repository reload (45.6224ms)
+✔ failed Run retains metric calculated before execution (53.476ms)
+✔ metric JSON does not duplicate Knowledge content or credentials (78.5392ms)
+✔ successful Run still completes with Knowledge capture after metric calculation (56.3297ms)
+✖ Knowledge candidate stores metadata and raw data reference (12.7657ms)
+✖ Knowledge search falls back from relevant results to all Knowledge then files (26.0343ms)
+✔ a meaningful query token selects related Knowledge (6.853ms)
+✔ matching is case-insensitive (0.4178ms)
+✔ punctuation differences do not prevent matching (0.9667ms)
+✔ completely unrelated Knowledge is excluded (0.463ms)
+✔ captured and rejected Knowledge are excluded (0.3499ms)
+✔ empty query preserves existing all-promoted behavior (1.2969ms)
+✔ punctuation-only query does not select every Knowledge (0.326ms)
+✔ newer related Knowledge remains first (0.279ms)
+✔ maxChars and oversized-item skipping remain in force (2.3235ms)
+✔ existing exact substring matching continues to work (0.4557ms)
+✔ mixed Korean and English query matches lexical overlap (1.1084ms)
+✔ matching does not mutate stored Knowledge items (3.0918ms)
+✔ oversized latest item does not stop the whole slice (4.2463ms)
+✔ small valid promoted item after an oversized item is included (0.698ms)
+✔ captured and rejected items are excluded (0.412ms)
+✔ final slice never exceeds maxChars (0.3597ms)
+✔ separator length is included in the budget (0.3287ms)
+✔ an item exactly matching the budget is included (0.1801ms)
+✔ non-positive maxChars returns an empty slice (0.2065ms)
+✔ no matching items returns an empty slice (0.3237ms)
+✔ selection does not mutate stored Knowledge items (1.3079ms)
+✔ Knowledge capture, promote, save, and reload remain compatible (27.7931ms)
+✔ knowledge candidate provenance, review, bounded slice, and redaction (105.5088ms)
+✔ Korean UI catalog covers onboarding and runtime statuses (2.3835ms)
+✔ launch options preserve structured workspace and explicit modes (1.5409ms)
+✔ cli launch mode remains explicit and unknown flags fail closed (0.7774ms)
+✔ default selection remains airouter/Qwen3.6 (2.7762ms)
+✔ OpenAI-compatible selection is inferred and validates required values (0.8214ms)
+✔ local preset is keyless and supports base URL override (0.5078ms)
+✔ optional auth prefers environment key and falls back to local placeholder (0.6467ms)
+✔ vLLM provider registration exposes the selected model and useful missing-model error (116.7413ms)
+✔ MindCraft runs an OpenAI-compatible SSE endpoint with the selected model (1571.2015ms)
+✔ one user-selected Model serves every purpose (1.6523ms)
+✔ two Models select only the explicitly mapped purpose (0.3259ms)
+✔ two Models require a purpose (0.6206ms)
+✔ zero enabled Models fails closed (1.3321ms)
+✔ duplicate purposes and more than two Models are rejected (0.4404ms)
+✔ unavailable selected Model fails closed without fallback (0.2479ms)
+✔ offline vertical slice completes without API access (35.5157ms)
+✔ onboarding draft validates mock mode and commits without credential plaintext (21.2632ms)
+✔ onboarding stores credential in session and removes it when config commit fails (12.301ms)
+✔ cancelled onboarding cannot be committed and leaves no active draft (1.6628ms)
+✖ read/write reject parent traversal and symlink escape (13.9979ms)
+✔ command is default-deny, allowlisted, workspace-bound, and approval-gated (3.9339ms)
+✔ default preflight storage diagnosis does not create directories (9.5866ms)
+✔ control commands can use a separate path while work is queued (7.3927ms)
+✔ approval request snapshots mutable command arguments and rejects duplicate decisions (5.688ms)
+✔ cancelRun invalidates pending tool approval before execution (9.3675ms)
+✔ command string allowlist does not authorize arbitrary arguments (1.5132ms)
+✔ agent tools cannot target MindCraft control files (2.1657ms)
+✔ approval journal failure blocks the side effect (1.0437ms)
+✔ execution-start journal failure blocks the side effect (1.3358ms)
+✔ capture is candidate-only, promote is required, and promoted item is in real Run 2 context manifest (163.3779ms)
+✖ workspace fallback excludes secrets/internal/binary/outside files and stays within budget (5.0381ms)
+✔ capture retry is idempotent and preserves the original Run result (14.1529ms)
+✔ journal repair preserves the corrupt original, replays only the valid prefix, and keeps new records (148.2512ms)
+✔ status is derived from the journal and marks an execution without a result unknown (31.3164ms)
+✔ a completed execution with a matching result is not marked unknown after reload (15.201ms)
+✔ terminal statuses remain terminal after reload and status exposes the next action (20.3475ms)
+✔ workflow repository serializes concurrent commits and preserves order (19.9038ms)
+✔ workflow repository blocks later writes after a persistence failure (15.7655ms)
+✖ release rehearsal command exists in a clean fixture copy (1885.0605ms)
+✔ provider readiness separates configured credentials from connectivity (1.9245ms)
+✔ mock readiness never claims live readiness and unknown providers fail closed (0.5497ms)
+✔ release manifest records file hashes and verifies integrity (27.3867ms)
+✔ release manifest rejects missing version and non-file entries (3.4216ms)
+✔ runs lists only Runs belonging to the selected Task (90.544ms)
+✔ runs displays Run ID, Episode ID, and status (5231.6395ms)
+✔ runs safely 안내s when no Task is selected (4471.2465ms)
+✔ runs reports an explicit empty result (5166.1079ms)
+✔ reloaded running Run is shown as recoverable (28.1336ms)
+✔ resumeRun resumes an exact recoverable Run and stores resumedFrom (38.8242ms)
+✔ completed, failed, and aborted Runs are rejected by resume (2.8403ms)
+✔ resume rejects a recoverable Run belonging to another Task (22.5654ms)
+✔ CLI routes resume through the application guard (4902.5965ms)
+✔ resumed old and new Run states remain consistent after reload (33.677ms)
+✔ resume failure preserves the original recoverable Run (38.3676ms)
+✔ session prompt failure persists failed Run and Episode (67.8583ms)
+✔ session creation failure persists failed Run and Episode (79.1145ms)
+✔ missing model persists failed Run and Episode (132.8731ms)
+✔ AbortError persists aborted Run and failed-status is not used (79.8761ms)
+✔ reloaded failed and aborted Runs are not recoverable (18.8721ms)
+✔ only an actually running Run is recoverable after reload (18.4378ms)
+✔ Knowledge capture failure does not turn a successful Run into failed (54.2442ms)
+✔ session is disposed on both success and prompt failure paths (56.5437ms)
+✔ Pi custom tool enforces GrantedScope before read (2.9801ms)
+✔ workflow repository reloads committed records and recovers running (28.6501ms)
+✔ GrantedScope fails closed and never invokes denied tools (1.7913ms)
+✔ checkpoint recovery ignores torn tail and marks running as recoverable (29.2325ms)
+✔ sequential sessions persist identity and close records (49.8782ms)
+✖ same workspace rejects a second process-style writer (742.5274ms)
+✔ doctor separates local readiness from live provider readiness (4.2283ms)
+✔ mode cannot switch after the first Run (31.682ms)
+✔ shutdown coordinator executes the safety order exactly once (2.8433ms)
+✔ shutdown failure reports the phase and prevents false completion (1.0544ms)
+✔ Task creation immediately persists a task record (34.8933ms)
+✔ Task reloads without running an Episode (18.2743ms)
+✔ Task save failure does not return success (8.6158ms)
+✔ Task save failure leaves no ghost Task in memory (9.1516ms)
+✔ Task creation works in memory mode without a repository (1.8798ms)
+✖ CLI prints task ID only after Task persistence (672.496ms)
+✔ Existing offline Episode execution remains compatible (5.2474ms)
+✖ all saved Tasks are listed after restart (666.0957ms)
+✖ tasks displays Task ID, title, and status (574.817ms)
+✖ use selects an existing Task by exact ID (494.1512ms)
+✖ status displays the selected Task (466.9003ms)
+✖ unknown Task ID returns a safe error (461.67ms)
+✖ tasks reports an explicit empty result for an empty repository (476.7315ms)
+✖ run is safely rejected without a selected Task (477.4514ms)
+✔ existing Task creation and Episode execution remain compatible (7.3722ms)
+✔ Token Doctor scores a prompt and returns actionable guidance (3.2487ms)
+✔ Token Doctor handles empty and punctuation-only prompts safely (0.6875ms)
+✔ default mode does not add Token Doctor analysis (14.5836ms)
+✔ Token Doctor mode preserves the execution prompt and stores analysis (2.4015ms)
+✔ Token Doctor report stores estimates explicitly, never as actual usage (2.544ms)
+✔ Token Doctor analysis survives Run persistence and reload (21.401ms)
+✔ TUI status renders streaming event and pending approval state (1.9127ms)
+✔ wincred client passes secret through stdin, never argv (9.6517ms)
+✔ workspace selection is canonical and containment is boundary-safe (7.8041ms)
+✔ bootstrap persists recent workspace only after explicit preparation (27.8263ms)
+✔ effective config has one revision and never contains credential values (1.6588ms)
+✔ credential store supports session/env references without plaintext persistence (1.1178ms)
+✔ credential adapter fails closed off Windows and never falls back to plaintext (2.3751ms)
+✔ credential adapter delegates only when all native operations are supplied (1.0415ms)
+✔ launcher resolves active version and passes structured runtime context (41.4439ms)
+✔ process tree adapter exposes Windows native capability without claiming it on Linux (0.6542ms)
+✔ install layout verification is explicit and does not confuse user data with current version (7.9243ms)
+ℹ tests 152
+ℹ suites 0
+ℹ pass 137
+ℹ fail 15
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58711.3037
+
+✖ failing tests:
+
+test at test\execution-root.test.mjs:5:1
+✖ execution scope normalizes root and distinguishes contained paths (2.6896ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'C:/tmp/mindcraft-root'
+  - '/tmp/mindcraft-root'
+
+      at TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/execution-root.test.mjs:8:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.start (node:internal/test_runner/test:1003:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'C:/tmp/mindcraft-root',
+    expected: '/tmp/mindcraft-root',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\knowledge-fallback.test.mjs:5:1
+✖ Knowledge candidate stores metadata and raw data reference (12.7657ms)
+  Error: EPERM: operation not permitted, open 'C:\tmp\mindcraft-knowledge-metadata.jsonl'
+      at async open (node:internal/fs/promises:637:25)
+      at async writeFile (node:internal/fs/promises:1239:14)
+      at async KnowledgeService.append (file:///<VALIDATION_ROOT>/repo/src/knowledge.mjs:44:78)
+      at async TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/knowledge-fallback.test.mjs:7:16)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'open',
+    path: 'C:\\tmp\\mindcraft-knowledge-metadata.jsonl'
+  }
+
+test at test\knowledge-fallback.test.mjs:14:1
+✖ Knowledge search falls back from relevant results to all Knowledge then files (26.0343ms)
+  Error: EPERM: operation not permitted, open 'C:\tmp\mindcraft-knowledge-fallback.jsonl'
+      at async open (node:internal/fs/promises:637:25)
+      at async writeFile (node:internal/fs/promises:1239:14)
+      at async KnowledgeService.append (file:///<VALIDATION_ROOT>/repo/src/knowledge.mjs:44:78)
+      at async TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/knowledge-fallback.test.mjs:16:16)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'open',
+    path: 'C:\\tmp\\mindcraft-knowledge-fallback.jsonl'
+  }
+
+test at test\path-security.test.mjs:9:1
+✖ read/write reject parent traversal and symlink escape (13.9979ms)
+  Error: EPERM: operation not permitted, symlink '<USERPROFILE>\AppData\Local\Temp\mindcraft-outside-2nO9bm' -> '<USERPROFILE>\AppData\Local\Temp\mindcraft-path-dD7DsL\safe\link'
+      at async symlink (node:internal/fs/promises:999:10)
+      at async TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/path-security.test.mjs:14:3)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: '<USERPROFILE>\\AppData\\Local\\Temp\\mindcraft-outside-2nO9bm',
+    dest: '<USERPROFILE>\\AppData\\Local\\Temp\\mindcraft-path-dD7DsL\\safe\\link'
+  }
+
+test at test\phase-04-knowledge-reuse.test.mjs:28:1
+✖ workspace fallback excludes secrets/internal/binary/outside files and stays within budget (5.0381ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /hidden|internal|outside|binary/. Input:
+
+  '[workspace:README.md]\nsafe release notes\n\n[workspace:../outside.md]\noutside'
+
+      at TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/phase-04-knowledge-reuse.test.mjs:34:111)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '[workspace:README.md]\nsafe release notes\n\n[workspace:../outside.md]\noutside',
+    expected: /hidden|internal|outside|binary/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at test\phase-06-release-rehearsal.test.mjs:12:1
+✖ release rehearsal command exists in a clean fixture copy (1885.0605ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /1\.\.1/. Input:
+
+  '✔ release checklist has a review gate (1.2487ms)\n' +
+    'ℹ tests 1\n' +
+    'ℹ suites 0\n' +
+    'ℹ pass 1\n' +
+    'ℹ fail 0\n' +
+    'ℹ cancelled 0\n' +
+    'ℹ skipped 0\n' +
+    'ℹ todo 0\n' +
+    'ℹ duration_ms 817.1521\n' +
+    '\n'
+
+      at TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/phase-06-release-rehearsal.test.mjs:18:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '✔ release checklist has a review gate (1.2487ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 817.1521\n\n',
+    expected: /1\.\.1/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test\session-boundaries.test.mjs:44:1
+✖ same workspace rejects a second process-style writer (742.5274ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Command failed: C:\Program Files\nodejs\node.exe --input-type=module -e import { WorkspaceLock } from "<VALIDATION_ROOT>\\repo\\src\\workspace-lock.mjs"; const lock = new WorkspaceLock(process.argv[1]); try { await lock.acquire(); process.exit(0); } catch (error) { process.exit(error.code === "WORKSPACE_LOCKED" ? 42 : 43); } <USERPROFILE>\AppData\Local\Temp\mindcraft-session-FogUTw\state.jsonl
+  node:internal/modules/esm/load:195
+      throw new ERR_UNSUPPORTED_ESM_URL_SCHEME(parsed, schemes);
+            ^
+
+  Error [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'c:'
+      at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:195:11)
+      at defaultLoadSync (node:internal/modules/esm/load:142:3)
+      at #loadAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:795:12)
+      at #loadSync (node:internal/modules/esm/loader:815:49)
+      at ModuleLoader.load (node:internal/modules/esm/loader:780:26)
+      at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:526:31)
+      at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:571:36)
+      at afterResolve (node:internal/modules/esm/loader:624:52)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:630:12)
+      at ModuleJob.syncLink (node:internal/modules/esm/module_job:143:33) {
+    code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'
+  }
+
+  Node.js v24.13.0
+
+      at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+      at async TestContext.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/session-boundaries.test.mjs:50:3)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Command failed: C:\Program Files\nodejs\node.exe --input-type=module -e import { WorkspaceLock } from "<VALIDATION_ROOT>\\repo\\src\\workspace-lock.mjs"; const lock = new WorkspaceLock(process.argv[1]); try { await lock.acquire(); process.exit(0); } catch (error) { process.exit(error.code === "WORKSPACE_LOCKED" ? 42 : 43); } <USERPROFILE>\AppData\Local\Temp\mindcraft-session-FogUTw\state.jsonl
+    node:internal/modules/esm/load:195
+        throw new ERR_UNSUPPORTED_ESM_URL_SCHEME(parsed, schemes);
+              ^
+
+    Error [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'c:'
+        at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:195:11)
+        at defaultLoadSync (node:internal/modules/esm/load:142:3)
+        at #loadAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:795:12)
+        at #loadSync (node:internal/modules/esm/loader:815:49)
+        at ModuleLoader.load (node:internal/modules/esm/loader:780:26)
+        at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:526:31)
+        at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:571:36)
+        at afterResolve (node:internal/modules/esm/loader:624:52)
+        at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:630:12)
+        at ModuleJob.syncLink (node:internal/modules/esm/module_job:143:33) {
+      code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'
+    }
+
+    Node.js v24.13.0
+
+        at genericNodeError (node:internal/errors:985:15)
+        at wrappedFn (node:internal/errors:539:14)
+        at ChildProcess.exithandler (node:child_process:417:12)
+        at ChildProcess.emit (node:events:508:28)
+        at maybeClose (node:internal/child_process:1101:16)
+        at ChildProcess._handle.onexit (node:internal/child_process:305:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test\task-persistence.test.mjs:79:1
+✖ CLI prints task ID only after Task persistence (672.496ms)
+  Error: CLI exited 1: node:internal/modules/cjs/loader:1424
+    throw err;
+    ^
+
+  Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+      at Module._load (node:internal/modules/cjs/loader:1227:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+
+  Node.js v24.13.0
+
+      at ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-persistence.test.mjs:18:90)
+      at ChildProcess.emit (node:events:508:28)
+      at maybeClose (node:internal/child_process:1101:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+
+test at test\task-selection.test.mjs:35:1
+✖ all saved Tasks are listed after restart (666.0957ms)
+  Error: CLI exited 1: node:internal/modules/cjs/loader:1424
+    throw err;
+    ^
+
+  Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+      at Module._load (node:internal/modules/cjs/loader:1227:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+
+  Node.js v24.13.0
+
+      at ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+      at ChildProcess.emit (node:events:508:28)
+      at maybeClose (node:internal/child_process:1101:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+
+test at test\task-selection.test.mjs:45:1
+✖ tasks displays Task ID, title, and status (574.817ms)
+  Error: CLI exited 1: node:internal/modules/cjs/loader:1424
+    throw err;
+    ^
+
+  Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+      at Module._load (node:internal/modules/cjs/loader:1227:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+
+  Node.js v24.13.0
+
+      at ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+      at ChildProcess.emit (node:events:508:28)
+      at maybeClose (node:internal/child_process:1101:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+
+test at test\task-selection.test.mjs:52:1
+✖ use selects an existing Task by exact ID (494.1512ms)
+  Error: CLI exited 1: node:internal/modules/cjs/loader:1424
+    throw err;
+    ^
+
+  Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+      at Module._load (node:internal/modules/cjs/loader:1227:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+
+  Node.js v24.13.0
+
+      at ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+      at ChildProcess.emit (node:events:508:28)
+      at maybeClose (node:internal/child_process:1101:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+
+test at test\task-selection.test.mjs:59:1
+✖ status displays the selected Task (466.9003ms)
+  Error: CLI exited 1: node:internal/modules/cjs/loader:1424
+    throw err;
+    ^
+
+  Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+      at Module._load (node:internal/modules/cjs/loader:1227:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+
+  Node.js v24.13.0
+
+      at ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+      at ChildProcess.emit (node:events:508:28)
+      at maybeClose (node:internal/child_process:1101:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+
+test at test\task-selection.test.mjs:67:1
+✖ unknown Task ID returns a safe error (461.67ms)
+  Error: CLI exited 1: node:internal/modules/cjs/loader:1424
+    throw err;
+    ^
+
+  Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+      at Module._load (node:internal/modules/cjs/loader:1227:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+
+  Node.js v24.13.0
+
+      at ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+      at ChildProcess.emit (node:events:508:28)
+      at maybeClose (node:internal/child_process:1101:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+
+test at test\task-selection.test.mjs:73:1
+✖ tasks reports an explicit empty result for an empty repository (476.7315ms)
+  Error: CLI exited 1: node:internal/modules/cjs/loader:1424
+    throw err;
+    ^
+
+  Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+      at Module._load (node:internal/modules/cjs/loader:1227:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+
+  Node.js v24.13.0
+
+      at ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+      at ChildProcess.emit (node:events:508:28)
+      at maybeClose (node:internal/child_process:1101:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+
+test at test\task-selection.test.mjs:79:1
+✖ run is safely rejected without a selected Task (477.4514ms)
+  Error: CLI exited 1: node:internal/modules/cjs/loader:1424
+    throw err;
+    ^
+
+  Error: Cannot find module 'C:\<VALIDATION_ROOT>\repo\src\cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+      at Module._load (node:internal/modules/cjs/loader:1227:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+
+  Node.js v24.13.0
+
+      at ChildProcess.<anonymous> (file:///<VALIDATION_ROOT>/repo/test/task-selection.test.mjs:19:90)
+      at ChildProcess.emit (node:events:508:28)
+      at maybeClose (node:internal/child_process:1101:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)

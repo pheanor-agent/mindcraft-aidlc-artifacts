@@ -1,0 +1,122 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MindCraft Requirements Consolidated Document — Review · MindCraft</title><link rel="stylesheet" href="../../../../assets/pages.css"></head><body><header><a class="brand" href="../../../../index.html">MindCraft <span>문서</span></a><nav><a href="../../../../index.html">← 전체 문서</a><a href="requirements-review.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="mindcraft-requirements-consolidated-document--review">MindCraft Requirements Consolidated Document — Review</h1>
+<ul>
+<li>Review target: user-provided <code>requirements.md</code></li>
+<li>Review basis:<ul>
+<li><code>docs/aidlc/inception/requirements/requirement.md</code></li>
+<li><code>docs/aidlc/inception/constraints/constraint.md</code></li>
+<li><code>docs/aidlc/inception/requirements/requirement-verification-answers.md</code></li>
+<li>current MindCraft product SSOT and prior AI-DLC review records</li>
+</ul>
+</li>
+<li>Review status: <strong>Conditionally acceptable — changes required before final approval</strong></li>
+<li>Construction status: <strong>Not authorized by this review</strong></li>
+</ul>
+<h2 id="1-executive-verdict">1. Executive verdict</h2>
+<p>The consolidated document is structurally strong and correctly preserves the central product/process boundary. FR-01–FR-12, the NFR summary, the six resolved decisions, MVP exclusions, and the approval gate are substantially aligned with the original documents.</p>
+<p>However, it should not yet be treated as the final approved Requirements artifact because four traceability/consistency issues remain:</p>
+<ol>
+<li>The document introduces extension rule identifiers (<code>SECURITY-01..15</code>, <code>PBT-02/03/07/08/09</code>) without attaching their authoritative rule source or copying the applicable rule definitions into the AI-DLC artifact set.</li>
+<li><code>Project Type: Greenfield</code> needs an explicit clarification because the product repository and implementation baseline already exist, while the AI-DLC project may be a greenfield construction workspace. These are different classifications.</li>
+<li>The claimed SSOT paths use <code>requirements/requirement.md</code> and <code>requirements/constraint.md</code>, while the prepared files currently live under <code>docs/aidlc/inception/...</code>. The canonical path must be fixed or both paths must be explicitly declared aliases.</li>
+<li>The newly fixed quantitative targets need concrete measurement definitions and test ownership before they can serve as acceptance criteria.</li>
+</ol>
+<p>Recommended disposition: <strong>Request Changes, then Approve &amp; Continue after the four corrections are recorded.</strong></p>
+<h2 id="2-alignment-review">2. Alignment review</h2>
+<h3 id="21-correctly-aligned">2.1 Correctly aligned</h3>
+<ul>
+<li>AI-DLC is kept outside MindCraft runtime state.</li>
+<li>Product workflow remains <code>Task → Episode → Run</code>.</li>
+<li>Mock/live process and workspace separation is consistent with the approved decision input.</li>
+<li>Live readiness is separated from local/mock readiness and remains fail-closed.</li>
+<li>Same-Episode + new-Run resume preserves original history.</li>
+<li>Explicit-read-only context ingestion is consistent with the safety boundary.</li>
+<li>Security is treated as blocking.</li>
+<li>Partial PBT is scoped to deterministic/stateful logic rather than all external integrations.</li>
+<li>Formal Resiliency extension is excluded while product recovery requirements remain mandatory.</li>
+<li>The document correctly does not authorize code changes, live calls, credentials, external push, or deployment.</li>
+</ul>
+<h2 id="3-findings-requiring-correction">3. Findings requiring correction</h2>
+<h3 id="f-01--extension-rule-provenance-is-incomplete">F-01 — Extension rule provenance is incomplete</h3>
+<p><strong>Severity:</strong> High — traceability blocker</p>
+<p>The document states:</p>
+<ul>
+<li><code>SECURITY-01..15</code></li>
+<li><code>PBT-02/03/07/08/09</code></li>
+<li><code>fast-check</code></li>
+</ul>
+<p>Those identifiers and the exact rule contents do not exist in the two original requirement/constraint documents reviewed here. They may be valid AI-DLC extension rules, but the consolidated document does not identify their authoritative version/tag/commit or include the source artifact.</p>
+<p><strong>Required correction:</strong> choose one of the following and record it:</p>
+<ul>
+<li>attach/import the exact AI-DLC extension rule files and record provenance (repository, tag/commit, path, checksum if available); or</li>
+<li>remove the numeric identifiers and describe the obligations directly until the extension source is attached.</li>
+</ul>
+<p><code>fast-check</code> should remain a proposed framework choice until NFR/design approval, as the document already says.</p>
+<h3 id="f-02--greenfield-classification-is-ambiguous">F-02 — Greenfield classification is ambiguous</h3>
+<p><strong>Severity:</strong> Medium — project metadata blocker</p>
+<p>The document says <code>Project Type: Greenfield</code>, but the current MindCraft product repository, JavaScript ESM implementation, tests, and product SSOT already exist. This can be correct only if it means <strong>new AI-DLC construction workspace/project state</strong>, not a claim that no product code or baseline exists.</p>
+<p><strong>Required correction:</strong> replace with a two-dimensional classification, for example:</p>
+<pre><code class="language-text">AI-DLC project classification: Greenfield construction workspace
+Product baseline classification: Existing/brownfield MindCraft repository and design baseline
+</code></pre>
+<p>If the team truly intends a new implementation with no reuse, state that explicitly and identify the existing repository as reference-only.</p>
+<h3 id="f-03--canonical-ssot-paths-are-inconsistent">F-03 — Canonical SSOT paths are inconsistent</h3>
+<p><strong>Severity:</strong> Medium — document discovery blocker</p>
+<p>The document declares:</p>
+<pre><code class="language-text">requirements/requirement.md + requirements/constraint.md
+</code></pre>
+<p>The prepared artifacts currently exist at:</p>
+<pre><code class="language-text">docs/aidlc/inception/requirements/requirement.md
+docs/aidlc/inception/constraints/constraint.md
+</code></pre>
+<p><strong>Required correction:</strong> select one canonical location and update every reference. If the shorter paths are logical names, state the physical paths and the alias rule explicitly. Avoid two independently editable copies.</p>
+<h3 id="f-04--quantitative-targets-lack-measurement-contracts">F-04 — Quantitative targets lack measurement contracts</h3>
+<p><strong>Severity:</strong> Medium — acceptance readiness issue</p>
+<p>The p95 targets and 100% checkpoint recovery target are useful baselines, but the document does not define:</p>
+<ul>
+<li>measurement start/end timestamps;</li>
+<li>sample size and workload shape;</li>
+<li>cold-start versus warm-run conditions;</li>
+<li>whether event render latency includes provider/network delay;</li>
+<li>hardware/OS matrix;</li>
+<li>how checkpoint corruption or interrupted writes are tested;</li>
+<li>CI versus manual evidence ownership.</li>
+</ul>
+<p><strong>Required correction:</strong> add a short measurement contract or defer the numbers to NFR Requirements with an explicit placeholder. The current values should be called <code>MVP baseline targets</code>, not final proof until measured.</p>
+<h2 id="4-lower-priority-improvements">4. Lower-priority improvements</h2>
+<h3 id="l-01--fr-05-acceptance-should-name-the-isolation-evidence">L-01 — FR-05 acceptance should name the isolation evidence</h3>
+<p>Add evidence requirements for process/workspace separation, such as mode/process/workspace identifiers in the Run snapshot and a test proving a mock Run cannot resolve a live provider configuration.</p>
+<h3 id="l-02--fr-09-should-name-the-resume-linkage-field">L-02 — FR-09 should name the resume linkage field</h3>
+<p>The text mentions <code>resumedFrom</code>/provenance. Promote the field name and invariants to a small contract:</p>
+<ul>
+<li>original Run remains immutable;</li>
+<li>new Run references original Run;</li>
+<li>both Runs belong to the same Episode;</li>
+<li>resume cannot duplicate already committed side effects without an approval/reconciliation check.</li>
+</ul>
+<h3 id="l-03--d2-should-distinguish-preflight-freshness">L-03 — D2 should distinguish preflight freshness</h3>
+<p>Define whether <code>doctor</code> results are advisory and revalidated at Run start, and how stale readiness results are represented. The document says a final Run-start preflight is retained; this should become an explicit acceptance criterion.</p>
+<h3 id="l-04--d4-should-clarify-knowledge-reuse">L-04 — D4 should clarify Knowledge reuse</h3>
+<p>“Only user-selected files and approved Knowledge” is consistent with the decision, but define whether previously approved Knowledge can be included automatically after the user selects a Knowledge query/slice. This prevents “explicit reads only” from being interpreted as “no Knowledge retrieval.”</p>
+<h3 id="l-05--javascript-type-safety-approach-should-be-tracked">L-05 — JavaScript type-safety approach should be tracked</h3>
+<p>JSDoc, runtime schema validation, and contract tests are a sensible substitute for a TypeScript migration. Add them as concrete NFR/design tasks with selected schema library and validation boundaries later; do not leave them only as prose.</p>
+<h2 id="5-suggested-patch-set">5. Suggested patch set</h2>
+<p>Before approval, update the consolidated document as follows:</p>
+<ol>
+<li>Add canonical physical paths for the original and consolidated artifacts.</li>
+<li>Clarify Greenfield AI-DLC workspace versus existing product baseline.</li>
+<li>Add AI-DLC extension provenance or remove unsupported numeric rule IDs.</li>
+<li>Add the quantitative measurement contract, or move exact thresholds to NFR Requirements.</li>
+<li>Add explicit resume and mock/live isolation invariants.</li>
+<li>Add a statement that <code>doctor</code> is advisory and Run-start preflight is authoritative for live execution.</li>
+</ol>
+<h2 id="6-approval-recommendation">6. Approval recommendation</h2>
+<p><strong>Request Changes</strong> for F-01 through F-04.</p>
+<p>After those corrections are applied and reviewed, the consolidated Requirements document is suitable for:</p>
+<ul>
+<li>Requirements approval;</li>
+<li>user story and acceptance-criteria generation;</li>
+<li>NFR Requirements analysis;</li>
+<li>application-design planning.</li>
+</ul>
+<p>It is not yet sufficient by itself to authorize Construction implementation.</p>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#1-executive-verdict">1. Executive verdict</a></li><li><a href="#2-alignment-review">2. Alignment review</a></li><li><a href="#21-correctly-aligned">2.1 Correctly aligned</a></li><li><a href="#3-findings-requiring-correction">3. Findings requiring correction</a></li><li><a href="#f-01--extension-rule-provenance-is-incomplete">F-01 — Extension rule provenance is incomplete</a></li><li><a href="#f-02--greenfield-classification-is-ambiguous">F-02 — Greenfield classification is ambiguous</a></li><li><a href="#f-03--canonical-ssot-paths-are-inconsistent">F-03 — Canonical SSOT paths are inconsistent</a></li><li><a href="#f-04--quantitative-targets-lack-measurement-contracts">F-04 — Quantitative targets lack measurement contracts</a></li><li><a href="#4-lower-priority-improvements">4. Lower-priority improvements</a></li><li><a href="#l-01--fr-05-acceptance-should-name-the-isolation-evidence">L-01 — FR-05 acceptance should name the isolation evidence</a></li><li><a href="#l-02--fr-09-should-name-the-resume-linkage-field">L-02 — FR-09 should name the resume linkage field</a></li><li><a href="#l-03--d2-should-distinguish-preflight-freshness">L-03 — D2 should distinguish preflight freshness</a></li><li><a href="#l-04--d4-should-clarify-knowledge-reuse">L-04 — D4 should clarify Knowledge reuse</a></li><li><a href="#l-05--javascript-type-safety-approach-should-be-tracked">L-05 — JavaScript type-safety approach should be tracked</a></li><li><a href="#5-suggested-patch-set">5. Suggested patch set</a></li><li><a href="#6-approval-recommendation">6. Approval recommendation</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../../../assets/pages.js"></script></body></html>

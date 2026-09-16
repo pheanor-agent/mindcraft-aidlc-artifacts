@@ -1,0 +1,5 @@
+{"name":"ConPTY resize 50x15","pass":true,"detail":""}
+{"name":"ConPTY resize 180x50","pass":true,"detail":""}
+{"name":"ConPTY resize 80x24","pass":true,"detail":""}
+{"name":"ConPTY resize 120x35","pass":true,"detail":""}
+{"name":"TUI quit after resize","pass":true,"detail":""}

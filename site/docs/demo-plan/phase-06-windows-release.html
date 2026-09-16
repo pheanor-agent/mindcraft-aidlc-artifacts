@@ -1,0 +1,168 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phase 6 — Windows Terminal + WSL 검증·릴리스 · MindCraft</title><link rel="stylesheet" href="../../assets/pages.css"></head><body><header><a class="brand" href="../../index.html">MindCraft <span>문서</span></a><nav><a href="../../index.html">← 전체 문서</a><a href="phase-06-windows-release.md">Markdown 원문</a><a href="https://github.com/ddt-mindcraft/mindcraft">GitHub ↗</a></nav></header><main><article><h1 id="phase-6--windows-terminal--wsl-검증릴리스">Phase 6 — Windows Terminal + WSL 검증·릴리스</h1>
+<h2 id="목표">목표</h2>
+<p>실제 데모 환경에서 설치부터 종료까지 반복 가능하도록 검증하고 릴리스 자료를 고정한다.</p>
+<h2 id="검증-환경">검증 환경</h2>
+<pre><code class="language-text">Windows
+└─ Windows Terminal
+   └─ WSL Ubuntu
+      └─ Node.js &gt;=22.19.0
+         └─ MindCraft
+</code></pre>
+<h2 id="작업">작업</h2>
+<ol>
+<li>clean checkout에서 설치한다.</li>
+<li><code>install.sh</code> 또는 npm 설치 경로를 검증한다.</li>
+<li>Windows Terminal에서 TUI를 실행한다.</li>
+<li>한글 입력, 색상, 줄바꿈, resize를 확인한다.</li>
+<li>Ctrl-C, cancel, quit을 확인한다.</li>
+<li>긴 event/result 출력이 화면을 깨뜨리지 않는지 확인한다.</li>
+<li>WSL/Linux 경로와 Windows 경로 경계 동작을 확인한다.</li>
+<li>demo fixture와 demo 명령을 사용해 3회 이상 반복 리허설한다.</li>
+<li>README에 실제 실행 절차와 known limitation을 반영한다.</li>
+<li>release artifact와 버전을 확인한다.</li>
+</ol>
+<h2 id="완료-조건">완료 조건</h2>
+<p>다음 명령이 통과한다.</p>
+<pre><code class="language-sh">npm run build
+npm test
+npm run release:check
+npm audit --audit-level=high
+</code></pre>
+<p>Windows Terminal에서 다음 전체 흐름이 성공한다.</p>
+<pre><code class="language-text">doctor
+→ task
+→ run
+→ approval
+→ result
+→ knowledge
+→ promote
+→ second run
+→ status
+→ quit
+</code></pre>
+<h2 id="phase-6-수행-기록">Phase 6 수행 기록</h2>
+<h3 id="기준선과-변경">기준선과 변경</h3>
+<ul>
+<li>시작 branch: <code>master</code></li>
+<li>시작 HEAD/tested baseline: <code>559da013b77011c24ffb240fd26d1daea0262c65</code></li>
+<li>시작 working tree: clean; staged/unstaged 변경 없음</li>
+<li>baseline 충족: fixture validator, approval lifecycle, Knowledge promote/reuse,
+status/history/resume/cancel safety, build/test/release/audit script가 존재하고
+baseline에서 확인됨</li>
+<li>이번 보완: <code>src/mock-provider.mjs</code>에 명시적 deterministic mock runtime/session을
+추가하고, CLI의 <code>MINDCRAFT_MODE=mock</code>, mock Model/provider 표시 경로와 고정된
+<code>node --test test/release-check.test.mjs</code> command allowlist를 연결함. release-check command는 <code>examples/release-demo</code> 실행 복사본의
+ <code>test/release-check.test.mjs</code>를 대상으로 하며 저장소 루트에서 실행하는
+ 경로가 아니다. 기존 adapter/approval boundary를 우회하지 않음.</li>
+</ul>
+<h3 id="1차-후속-보완">1차 후속 보완</h3>
+<ul>
+<li>release fixture의 고정 command 경로를 검증하는 <code>test/phase-06-release-rehearsal.test.mjs</code>를 추가했다. 새 임시 fixture 복사본에서 실제 <code>node --test test/release-check.test.mjs</code>를 실행하고 validator로 fixture 무결성을 재확인한다.</li>
+<li>승인 audit 저장 실패 시 side effect 차단 보완은 Phase 3 후속 기록과 동일한 변경으로 검증했다.</li>
+</ul>
+<h3 id="실제-로컬-검증">실제 로컬 검증</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>환경</td>
+<td>Linux 6.17.0-1029-nvidia, Node v22.19.0, npm 10.9.3</td>
+</tr>
+<tr>
+<td>build</td>
+<td><code>npm run build</code> PASS</td>
+</tr>
+<tr>
+<td>unit/regression</td>
+<td><code>npm test</code> PASS, 113/113, 0 fail</td>
+</tr>
+<tr>
+<td>release artifact</td>
+<td><code>npm run release:check</code> PASS, 21 files; credential/state/temp 파일 미포함 확인</td>
+</tr>
+<tr>
+<td>audit</td>
+<td><code>npm audit --audit-level=high</code> PASS, 0 vulnerabilities</td>
+</tr>
+<tr>
+<td>fixture</td>
+<td><code>validateReleaseDemoWorkspace</code> PASS before each run</td>
+</tr>
+<tr>
+<td>mock rehearsal</td>
+<td>새 임시 workspace 3회 연속 PASS; 각 Run <code>completed</code>, 승인된 write만 report 생성, command rejection 기록</td>
+</tr>
+<tr>
+<td>live</td>
+<td><code>npm run test:live</code> PASS, 1/1 Airouter smoke test</td>
+</tr>
+</tbody></table>
+<p>mock rehearsal은 실제 <code>MindCraftApp</code>과 custom tools를 사용해 read → write pending →
+write approve → command pending → command reject 순서로 실행했다. 거부된 command는
+실행되지 않았고, 원본 fixture 파일은 덮어쓰지 않았다. 각 회차 시간은 61ms, 33ms,
+22ms였다(로컬 deterministic 실행 시간이며 5분 Windows UX 측정이 아니다).</p>
+<h3 id="windowswsl-실환경-결과와-제한">Windows/WSL 실환경 결과와 제한</h3>
+<p>이 실행 환경에는 Windows, Windows Terminal, WSL 배포판, <code>/mnt/c</code>가 없어 다음은
+<strong>미검증</strong>이다: 한글 입력/색상/줄바꿈/resize/긴 streaming 출력, 승인 입력 혼동,
+Ctrl-C와 terminal 복원, Linux·<code>/mnt/c</code>·공백/한글/unsupported drive·UNC 경로,
+Windows Terminal에서의 3회 연속 본편. Linux 테스트나 mock 결과를 Windows 증거로
+대체하지 않는다.</p>
+<p>사용자 재현 절차는 다음과 같다.</p>
+<pre><code class="language-sh">git clone &lt;repository-url&gt; mindcraft &amp;&amp; cd mindcraft
+npm ci
+./install.sh
+cd /path/to/a/copy/of/examples/release-demo
+mindcraft init
+mindcraft config add-model --id release-mock --provider mock --model deterministic
+MINDCRAFT_MODE=mock mindcraft
+</code></pre>
+<p>TUI에서 <code>doctor</code>로 <code>mode=mock</code>, Model/provider, storage를 확인하고 <code>task</code> →
+<code>run</code> 후 <code>approvals</code>에서 write를 승인하고 command를 별도로 거부한다. 이어
+<code>knowledge</code>, <code>knowledge-detail</code>, <code>promote</code>, 두 번째 <code>run</code>, <code>status</code>, <code>history</code>,
+<code>quit</code>를 실행한다. live 검증은 mock 환경변수 없이 사용자가 구성한 Model로
+별도 실행하며 실패/미가용 시 mock fallback을 하지 않는다.</p>
+<h3 id="최종-readiness">최종 readiness</h3>
+<ul>
+<li>기능/mock: <strong>준비 완료</strong> — 실제 approval/tool/Run 상태 흐름과 3회 임시 workspace 검증.</li>
+<li>clean checkout/release/audit: <strong>로컬 준비 완료</strong> — clean baseline에서 재현 가능한
+install/build/test/release/audit 경로를 확인. Windows clean checkout은 미검증.</li>
+<li>Windows 3회: <strong>미완료/차단</strong> — Windows 환경 부재.</li>
+<li>live provider smoke: <strong>통과</strong> — <code>npm run test:live</code> 1/1.</li>
+<li>전체 live 본편과 Windows 데모: <strong>미완료/차단</strong> — Windows 환경과 3회 native 리허설 부재.</li>
+<li>따라서 전체 Phase 6 또는 Windows 데모를 완료로 선언하지 않는다.</li>
+</ul>
+<h2 id="반드시-기록할-결과">반드시 기록할 결과</h2>
+<ul>
+<li>Windows/WSL 버전</li>
+<li>Node/npm 버전</li>
+<li>사용한 commit</li>
+<li>설치 명령</li>
+<li>데모 수행 시간</li>
+<li>성공/실패한 시나리오</li>
+<li>남은 known limitation</li>
+</ul>
+<h2 id="작업-시작-프롬프트">작업 시작 프롬프트</h2>
+<pre><code class="language-text">MindCraft 저장소의 Phase 6인 Windows Terminal + WSL 검증과 릴리스 준비를 수행해줘.
+
+목표:
+- clean checkout 설치부터 TUI 종료까지 실제 데모 경로를 검증한다.
+- Windows Terminal + WSL에서 색상, 한글, resize, Ctrl-C, 긴 출력, cancel을 확인한다.
+- doctor → task → run → approval → result → knowledge → promote → second run → status 흐름을 3회 반복한다.
+- build, test, release-check, audit 결과를 기록한다.
+- 실제 검증하지 못한 항목은 성공했다고 쓰지 말고 known limitation으로 남긴다.
+
+완료 조건:
+- 재현 가능한 설치/실행 절차가 README에 반영됨
+- Windows Terminal 리허설 결과 문서화
+- npm run build 통과
+- npm test 통과
+- npm run release:check 통과
+- npm audit --audit-level=high 통과
+
+실제 명령 출력과 실패 원인을 근거로 최종 데모 readiness를 판정해줘.
+</code></pre>
+</article></main><aside class="toc"><strong>이 문서에서</strong><ul><li><a href="#목표">목표</a></li><li><a href="#검증-환경">검증 환경</a></li><li><a href="#작업">작업</a></li><li><a href="#완료-조건">완료 조건</a></li><li><a href="#phase-6-수행-기록">Phase 6 수행 기록</a></li><li><a href="#기준선과-변경">기준선과 변경</a></li><li><a href="#1차-후속-보완">1차 후속 보완</a></li><li><a href="#실제-로컬-검증">실제 로컬 검증</a></li><li><a href="#windowswsl-실환경-결과와-제한">Windows/WSL 실환경 결과와 제한</a></li><li><a href="#최종-readiness">최종 readiness</a></li><li><a href="#반드시-기록할-결과">반드시 기록할 결과</a></li><li><a href="#작업-시작-프롬프트">작업 시작 프롬프트</a></li></ul></aside><footer>MindCraft · 제품 기준과 개발 이력을 함께 읽는 곳</footer><script src="../../assets/pages.js"></script></body></html>
