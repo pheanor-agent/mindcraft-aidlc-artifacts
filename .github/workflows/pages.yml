@@ -25,11 +25,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Assemble site root (site/ + retrospective/) + upload
+      - name: Assemble site root (about → index + assets + retrospective) + upload
         run: |
           mkdir -p _pages
-          cp -r site/. _pages/
-          cp -r retrospective _pages/
+          cp site/about.html _pages/index.html
+          cp -r site/assets _pages/assets
+          cp -r retrospective _pages/retrospective
           touch _pages/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

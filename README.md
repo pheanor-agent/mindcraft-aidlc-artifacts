@@ -6,9 +6,8 @@ ddt 에이전트가 AI-DLC 하네스로 개발한 **MindCraft**(LLM 기반 Windo
 
 | | |
 |---|---|
-| [**🏠 프로젝트 소개**](https://pheanor-agent.github.io/mindcraft-aidlc-artifacts/about.html) | MindCraft란 · 리포 구성 · 개발/배포 정보 (Pages) |
+| [**🏠 프로젝트 소개**](https://pheanor-agent.github.io/mindcraft-aidlc-artifacts/) | MindCraft란 · 바로가기 (Pages 루트) |
 | [**🎤 개발 회고**](https://pheanor-agent.github.io/mindcraft-aidlc-artifacts/retrospective/mindcraft-presentation/index.html) | 개발 과정 회고 발표 (13장 슬라이드 + 발표 대본) |
-| [**📚 문서 허브**](https://pheanor-agent.github.io/mindcraft-aidlc-artifacts/) | 설계·개발·검증 문서 101개 검색·탐색 (Pages) |
 | [**⬇️ Windows 실행 파일**](https://github.com/pheanor-agent/mindcraft-aidlc-artifacts/releases) | standalone `win-unpacked` (449M) — Release v0.1.0 |
 
 > ⚠️ 이 리포는 기존 발표 리포 [`pheanor-agent/mindcraft-presentation`](https://github.com/pheanor-agent/mindcraft-presentation)과 **별개**입니다. 발표 전용 사이트는 그대로 유지되며, 여기서는 MindCraft **전체 산출물 아카이브**를 다룹니다.
@@ -30,7 +29,7 @@ mindcraft-aidlc-artifacts/
 |---|---|---|---|
 | ① 구현 코드 | `implementation/` | src(39), web(29), desktop(3), native(2), tools(19), scripts(6), installer(1) + package.json/lock | node_modules·캐시 제외 |
 | ② 빌드 산출물 | `build/` | `app.asar`(81M)·LICENSES·`builder-debug.yml` | `.exe`(235M)는 GitHub 100MB 제한 초과 → **Release 전용** |
-| ③ html 산출물 | `site/` | 문서 허브 `_site/` 전체 (287 files / 101 html) + `about.html` | GitHub Pages 서빙 대상 |
+| ③ html 산출물 | `site/` | 문서 허브 `_site/` 전체 (287 files / 101 html) + `about.html` | Pages는 `about.html`(루트)만 서빙 |
 | ④ 개발 회고 | `retrospective/mindcraft-presentation/` | 발표 사이트 (index.html, speaker-script.html, slides.*, assets/) | 원본 site/ 그대로 |
 
 ## 원본 출처 · 무결성 (읽기 전용)
@@ -47,13 +46,12 @@ mindcraft-aidlc-artifacts/
 
 ## GitHub Pages
 
-`site/` 디렉토리가 GitHub Pages로 서빙됩니다 (`/mindcraft-aidlc-artifacts/`):
+GitHub Pages는 **2개 콘텐츠만** 서빙합니다 (`/mindcraft-aidlc-artifacts/`):
 
-- **루트** `…/mindcraft-aidlc-artifacts/` — 문서 허브 (프로젝트 소개·개발 회고 진입 카드 포함)
-- **프로젝트 소개** `…/about.html`
+- **루트** `…/mindcraft-aidlc-artifacts/` — 프로젝트 소개 (about.html)
 - **개발 회고** `…/retrospective/mindcraft-presentation/`
 
-상대경로 설계 그대로라 문서 링크가 그대로 동작하며, `retrospective/`는 서브경로로 제공됩니다.
+AI-DLC 문서·문서 허브(html)는 **git 트리(`site/`, `docs/`)에 그대로 유지**되되 Pages 서빙에서 제외됩니다.
 
 ## 제외 사항
 
