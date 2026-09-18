@@ -20,7 +20,6 @@ mindcraft-aidlc-artifacts/
 ├── build/                    # ② 빌드 산출물 최소 본질 (app.asar, LICENSES, builder-debug.yml)
 ├── site/                     # ③ 관련 html 산출물 (문서 허브 + 101 html) + about.html(프로젝트 소개)
 ├── retrospective/            # ④ 개발 과정 회고 발표 사이트 (mindcraft-presentation)
-├── MANIFEST.md               # 원본 경로·SHA-256·수집 시각·선별/제외 기준 (immutable)
 ├── .hermes-manifest/         # 개별 파일 전체 SHA-256 JSON
 └── README.md
 ```
@@ -37,7 +36,7 @@ mindcraft-aidlc-artifacts/
 - **MindCraft 구현·빌드·html**: ddt-agent 컨테이너 `/opt/data/workspace/mindcraft/` — git `github.com/ddt-mindcraft/mindcraft.git` (브랜치 `feature/desktop-ui`)
 - **개발 회고 html**: `ddt-astra-aidlc-presentation/site/` — 라이브 https://pheanor-agent.github.io/mindcraft-presentation/
 
-원본은 **어떤 파일도 수정하지 않았습니다.** 리포 내 복사본의 동일성은 `MANIFEST.md`와 `.hermes-manifest/`의 SHA-256으로 증명합니다.
+원본은 **어떤 파일도 수정하지 않았습니다.** 리포 내 복사본의 동일성은 `.hermes-manifest/`의 SHA-256으로 증명합니다.
 
 ## 빌드 산출물 처리
 
@@ -59,4 +58,4 @@ AI-DLC 문서·문서 허브(html)는 **git 트리(`site/`, `docs/`)에 그대�
 - node_modules/.next/.wrangler 등 재생성 가능 캐시, credential 계열 템플릿(`.env.example`)
 - 원본 `.git/` 메타데이터
 
-상세 선별/제외 근거는 [`MANIFEST.md`](MANIFEST.md) 참조.
+상세 선별/제외 근거는 초기 커밋(JOB-3653)의 MANIFEST.md — git history 참조.

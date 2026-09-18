@@ -2,7 +2,6 @@
 
 ## 문서와 발표 자료
 
-- [전체 문서 목록](docs/README.md)
 - [해커톤 HTML 발표: DDT 개발 협업과 Astra의 AI-DLC 오케스트레이션](docs/presentations/README.md)
 
 발표 자료는 MindCraft를 개발하는 외부 협업 프로세스를 설명하며 제품 런타임 SSOT를 대체하지 않습니다.
@@ -17,9 +16,9 @@ MindCraft는 반복 가능한 Task/Episode 작업 루프, 영속 상태, 제한�
 
 ## Windows 배포
 
-> **TUI 후속 검증:** 실제 Windows ConPTY에서 Pi TUI를 실행해 출력 누적·설정 안내·quit 종료 문제를 수정했습니다. 수정 후 회귀는 **141/155 통과, 기존 14개 실패 유지**입니다. [실제 TUI 스크린샷·수정 전후·DDT 산출물](docs/windows-tui-validation-2026-09-07.md)을 확인하세요. Native Windows Terminal 및 IME 검증과는 구분합니다.
+> **TUI 후속 검증:** 실제 Windows ConPTY에서 Pi TUI를 실행해 출력 누적·설정 안내·quit 종료 문제를 수정했습니다. 수정 후 회귀는 **141/155 통과, 기존 14개 실패 유지**입니다. Native Windows Terminal 및 IME 검증과는 구분합니다.
 
-> **2026-09-07 Windows 실기기 검증:** portable 실행파일의 기본 스모크와 27,602개 파일 무결성 검사는 통과했습니다. 동봉 Node.js 22.19.0의 회귀 테스트는 **138/152 통과, 14개 실패**로 기록되어 있으며, 해당 결과는 당시 검증 시점의 evidence입니다. [테스트 이력·실패 원인·재현 방법](docs/windows-validation-2026-09-07.md)을 확인하세요. 해당 프리릴리즈에는 NSIS installer가 포함되지 않았습니다.
+> **2026-09-07 Windows 실기기 검증:** portable 실행파일의 기본 스모크와 27,602개 파일 무결성 검사는 통과했습니다. 동봉 Node.js 22.19.0의 회귀 테스트는 **138/152 통과, 14개 실패**로 기록되어 있으며, 해당 결과는 당시 검증 시점의 evidence입니다. 해당 프리릴리즈에는 NSIS installer가 포함되지 않았습니다.
 
 Windows x64 배포 구조는 PATH의 Node.js를 사용하지 않습니다. native `MindCraft.exe`가 설치 위치의 `current/runtime/node.exe`와 `current/app/src/cli.mjs`를 구조화된 인자로 실행하고, Win32 Job Object로 child process tree를 관리합니다.
 
@@ -28,7 +27,7 @@ Windows x64 배포 구조는 PATH의 Node.js를 사용하지 않습니다. nativ
 | 구분 | Portable ZIP | NSIS installer | 기준 |
 |---|---:|---:|---|
 | Windows build output | 생성 가능 | 생성 가능 | build/installer evidence |
-| 2026-09-07 검증 prerelease | 포함 | 미포함 | `docs/windows-validation-2026-09-07.md` |
+| 2026-09-07 검증 prerelease | 포함 | 미포함 | 당시 실기기 검증 기록 (git history 참조) |
 | 공개 release | release manifest 기준 | release manifest 기준 | release evidence |
 
 
@@ -251,14 +250,7 @@ mindcraft config add-model --id release-mock --provider mock --model determinist
 MINDCRAFT_MODE=mock mindcraft
 ```
 
-demo workspace에서 mock이 요청하는 고정 검사는 다음과 같습니다.
-
-Run it from a fresh copy of `examples/release-demo` (the fixture contains the
-`test/release-check.test.mjs` file):
-
-```sh
-node --test test/release-check.test.mjs
-```
+demo workspace에서 mock이 요청하는 고정 검사는 `npm test`로 실행됩니다 (release-readiness 데모 fixture: 승인 게이트된 write 요청과 네트워크 없는 검증 확인).
 
 write 승인 후 command 요청은 별도로 거부해야 하며, `release-report.md`는 승인
 이후에만 생성됩니다. `mock`은 Windows Terminal의 native 검증이나 실제

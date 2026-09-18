@@ -1,6 +1,6 @@
 # 슬라이드별 주장과 근거
 
-2026-09-07 조사 기준. [조사 보고서](research-dossier.md)는 조사 범위, 작성자 확인, 출처의 성격과 한계를 설명한다. [source-manifest.json](source-manifest.json)은 사용한 원본의 SHA-256 식별자다. 해시는 원문 동일성을 확인하는 값이며 내용이 옳다는 증명은 아니다.
+2026-09-07 조사 기준. [source-manifest.json](source-manifest.json)은 사용한 원본의 SHA-256 식별자다. 해시는 원문 동일성을 확인하는 값이며 내용이 옳다는 증명은 아니다. (광범위 이력 조사 보고서는 2026-09-18 프로세스 산출물 정리에서 삭제됨 — git history 참조)
 
 <a id="s1"></a>
 ## 01. 공용 에이전트에서 오케스트레이션까지
@@ -10,7 +10,7 @@ DDT에 실제로 두 차례 질의해 사전 개발 세션과 작업 이력을 �
 <a id="s2"></a>
 ## 02. MindCraft 제품 소개
 
-[제품 README](../../../README.md), [DESIGN](../../../DESIGN.md), [SSOT](../../SSOT.md), [데모 단계 기록](../../demo-plan/README.md)을 대조했다. `task`, `run`, `approve`, `history`, `knowledge` 명령과 작업 기록·지식 재사용은 제품 기준선의 설명이다. 공용 DDT는 이 제품 개발에 사용한 별도 에이전트다.
+[제품 README](../../../README.md), [SSOT](../../SSOT.md)을 대조했다. (당시 DESIGN·데모 단계 기록 문서는 2026-09-18 프로세스 산출물 정리에서 삭제됨 — git history 참조) `task`, `run`, `approve`, `history`, `knowledge` 명령과 작업 기록·지식 재사용은 제품 기준선의 설명이다. 공용 DDT는 이 제품 개발에 사용한 별도 에이전트다.
 
 <a id="s3"></a>
 ## 03. 서로 다른 팀원의 실제 요청
@@ -21,12 +21,12 @@ DDT의 2차 조사에서 원본 `user_id`를 내부 대조했다.
 - B: `20260826_111934_4b067d35`, JOB-38/40 협업·Knowledge 방향 보강.
 - A: JOB-53 목적 기반 모델 선택으로 변경.
 
-화면의 요청은 **원문 요약**이다. [JOB-38 요청](../../legacy/2026-09-03-pre-dual-model-routing/JOB-38-MindCraft-team-collaboration-and-LLM-Wiki-direction/request.md)에 협업·LLM Wiki 요구와 당시 문서 반영 범위가 보존돼 있다. [COMMIT-HISTORY](../../../COMMIT-HISTORY.md)에 JOB-53 변경 파일과 이전 자료의 legacy 보존이 기록돼 있다. A→B가 같은 스레드에서 직접 인계했다거나, 팀원 모두를 전수 확인했다는 주장은 아니다.
+화면의 요청은 **원문 요약**이다. JOB-38 요청에 협업·LLM Wiki 요구와 당시 문서 반영 범위가 보존돼 있다. (JOB-38 요청·COMMIT-HISTORY 원문은 2026-09-18 프로세스 산출물 정리에서 삭제됨 — git history 참조) A→B가 같은 스레드에서 직접 인계했다거나, 팀원 모두를 전수 확인했다는 주장은 아니다.
 
 <a id="s4"></a>
 ## 04. DDT의 스레드별 맥락과 작업 기록
 
-DDT가 읽은 `config.yaml`의 `discord.auto_thread: true`, `sessions/sessions.json`의 thread/session 키, `state.db`의 서로 다른 세션을 근거로 했다. Knowledge 정책은 `auto_promote=false`, `scope=chat_local`; 조회 코드에는 promoted 상태 필터가 있다. 정확한 locator와 제한은 [조사 보고서 2절](research-dossier.md)에 정리했다.
+DDT가 읽은 `config.yaml`의 `discord.auto_thread: true`, `sessions/sessions.json`의 thread/session 키, `state.db`의 서로 다른 세션을 근거로 했다. Knowledge 정책은 `auto_promote=false`, `scope=chat_local`; 조회 코드에는 promoted 상태 필터가 있다. 정확한 locator와 제한은 광범위 이력 조사 보고서 2절(git history 참조)에 정리했다.
 
 현재 설정이 과거 모든 시점에 동일했다고 입증한 것은 아니다. 관찰된 과거 세션 기록과 현재 설정을 대조했다. author별 완전 격리, 맥락 오염 0건을 주장하지 않는다. MindCraft 제품의 workspace lock을 DDT 대화 격리 근거로 사용하지 않는다.
 
@@ -40,14 +40,14 @@ DDT가 읽은 `config.yaml`의 `discord.auto_thread: true`, `sessions/sessions.j
 | 9/5 실행 흐름 | `416c7e6`, `1e102cb`, `ac0f0cd` |
 | 9/6 지식·복구 | `1feef1e`, `559da01`, `e47f6d6` |
 
-커밋은 이 저장소의 Git 이력에서 조회할 수 있다. [Phase 4](../../demo-plan/phase-04-knowledge-reuse.md), [Phase 5 정본](../../demo-plan/README.md)에 목표와 수행 기록이 남아 있다. 계획 문서만으로 구현을 인정하지 않고 실제 커밋을 함께 대조했다. 제품의 지식 재사용 구현은 DDT 대화 공유 메커니즘과 구분한다.
+커밋은 이 저장소의 Git 이력에서 조회할 수 있다. (Phase 4·Phase 5 데모 계획·수행 기록 문서는 2026-09-18 프로세스 산출물 정리에서 삭제됨 — git history 참조) 계획 문서만으로 구현을 인정하지 않고 실제 커밋을 함께 대조했다. 제품의 지식 재사용 구현은 DDT 대화 공유 메커니즘과 구분한다.
 
 <a id="s6"></a>
 ## 06. 기존 제품 지식을 새 개발 환경으로 인계
 
 Astra 작업 `Control WSL ClaudeCode workflow`의 `01a07a51-4ba9-7650-82a4-94c0f10c040e` 턴에 실제 DDT plan review, 근거 문서 10개 수신·해시 대조, Claude 실행과 스토리 생성이 기록돼 있다. 로컬 원본 `ddt-story-plan-review.txt`, `interaction-001-claude-result.json` 산출물과 관련 세션을 대조했다.
 
-초기 WSL 접근은 실패했고 이후 Windows Claude CLI로 전환했다. 작업 제목을 실제 실행 환경으로 오해하지 않는다. AI-DLC는 외부 개발 절차이며 [제품·프로세스 경계](../../mindcraft-ai-dlc-knowledge-audit.md)와 구분된다.
+초기 WSL 접근은 실패했고 이후 Windows Claude CLI로 전환했다. 작업 제목을 실제 실행 환경으로 오해하지 않는다. AI-DLC는 외부 개발 절차이며 (제품·프로세스 경계 분석 문서는 2026-09-18 프로세스 산출물 정리에서 삭제됨 — git history 참조) 제품과 구분된다.
 
 <a id="s7"></a>
 ## 07. 실제 작성·검토·수정 오케스트레이션
@@ -105,6 +105,6 @@ DDT 접수 문서는 출력 누적·설정 안내·quit 종료 수정과 관련 
 <a id="s13"></a>
 ## 부록
 
-[조사 보고서](research-dossier.md)와 [원본 식별 목록](source-manifest.json)에 원천·관찰 범위·확인 한계를 보존했다. 사용자 ID와 전체 대화·접속·인증 정보는 싣지 않았다.
+광범위 이력 조사 보고서와 [원본 식별 목록](source-manifest.json)에 원천·관찰 범위·확인 한계를 보존했다. (조사 보고서는 2026-09-18 프로세스 산출물 정리에서 삭제됨 — git history 참조) 사용자 ID와 전체 대화·접속·인증 정보는 싣지 않았다.
 
 [슬라이드](index.html) · [발표 대본](speaker-script.md) · [발표 자료 목록](../README.md)

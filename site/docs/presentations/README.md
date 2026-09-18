@@ -2,7 +2,7 @@
 
 ## 팀이 함께 쓰는 AI, 팀을 연결하는 AI
 
-[HTML 슬라이드](agent-orchestration/index.html) · [7분 발표 대본](agent-orchestration/speaker-script.md) · [광범위 이력 조사 보고서](agent-orchestration/research-dossier.md) · [슬라이드별 근거](agent-orchestration/evidence.md)
+[HTML 슬라이드](agent-orchestration/index.html) · [7분 발표 대본](agent-orchestration/speaker-script.md) · [슬라이드별 근거](agent-orchestration/evidence.md)
 
 공용 DDT를 통한 컨셉·MVP 공동개발과, 본 행사에서 Astra가 Claude Code·DDT를 연결한 경험을 실제 이력으로 소개한다. DDT에 두 차례 직접 질의해 세션·작업대장·작성자·운영 구조를 조사하고, 로컬 Git·AI-DLC 원문·Astra 도구 호출·Windows 실행 결과와 대조했다.
 
@@ -39,8 +39,7 @@ GitHub 파일 보기에서는 HTML이 실행되지 않는다. 저장소를 내�
 행사 전 제품 MVP와 행사 당일 AI-DLC 신규 개발은 별도 이력이다. 계획 승인·구현·실행 검증을 구분한다. 공용 DDT의 대화 분리는 스레드/세션을 기준으로 설명하고, 모든 사용자의 맥락 오염이 0건이었다는 주장은 하지 않는다. 실제 Windows 캡처는 ConPTY의 Pi TUI이며 Windows Terminal·한글 IME 검증을 대신하지 않는다.
 
 - [출처 파일 SHA-256](agent-orchestration/source-manifest.json)
-- [구성·레이아웃 설계](agent-orchestration/redesign-plan.md)
 - [초기 대표 디자인 시안](agent-orchestration/design-review.html) — 디자인 참고용, 최신 발표 내용은 본편 기준
 - [이미지 출처](agent-orchestration/assets/README.md)
 
-[전체 문서 목록](../README.md) · [제품 README](../../README.md)
+[제품 README](../../README.md)
